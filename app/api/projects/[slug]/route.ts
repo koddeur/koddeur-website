@@ -45,3 +45,17 @@ export async function PUT(request: Request, context: RouteContext<"/api/projects
     return NextResponse.json({ error: "Impossible de mettre à jour le projet." }, { status: 500 });
   }
 }
+
+export async function DELETE(request: Request, context: RouteContext<"/api/projects/[slug]">) {
+  const { slug } = await context.params;
+  if (!isValidSlug(slug)) return NextResponse.json({ error: "Projet introuvable." }, { status: 404 });
+
+  try {
+    await fs.unlink(path.join(projectsDirectory, `${slug}.md`));
+    await fs.unlink(path.join(projectsDirectory, `${slug}.en.md`)).catch(() => {});
+    return NextResponse.json({ slug });
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return NextResponse.json({ error: "Projet introuvable." }, { status: 404 });
+    return NextResponse.json({ error: "Impossible de supprimer le projet." }, { status: 500 });
+  }
+}

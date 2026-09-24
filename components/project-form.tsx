@@ -29,6 +29,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
   const [formStatus, setFormStatus] = useState<{ type: "error" | "success"; message: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const editingProject = projects.find((project) => project.slug === editingSlug);
@@ -84,6 +85,21 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
     finally { setLoading(false); }
   }
 
+  async function handleDelete() {
+    if (!editingProject) return;
+    if (!window.confirm(`Supprimer définitivement « ${editingProject.name} » ? Cette action est irréversible.`)) return;
+    setDeleting(true); setFormStatus(null);
+    try {
+      const response = await fetch(`/api/projects/${editingProject.slug}`, { method: "DELETE" });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      resetEditor();
+      setFormStatus({ type: "success", message: "Projet supprimé." });
+      router.refresh();
+    } catch (error) { setFormStatus({ type: "error", message: error instanceof Error ? error.message : "Impossible de supprimer le projet." }); }
+    finally { setDeleting(false); }
+  }
+
   return <div className="admin-editor">
     <aside className="article-index" aria-label="Projets disponibles">
       <button type="button" className={!editingSlug ? "article-index-new active" : "article-index-new"} onClick={resetEditor}>+ Nouveau projet</button>
@@ -122,7 +138,10 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
       </div>
       <div className="field"><label htmlFor="date">Date</label><input id="date" type="date" value={date} onChange={(event) => setDate(event.target.value)} required /></div>
       {formStatus && <p className={`form-status ${formStatus.type}`} role="status">{formStatus.message}</p>}
-      <button type="submit" disabled={loading}>{loading ? "enregistrement..." : editingProject ? "Enregistrer les modifications →" : "Publier le projet →"}</button>
+      <div className="article-form-actions">
+        <button type="submit" disabled={loading}>{loading ? "enregistrement..." : editingProject ? "Enregistrer les modifications →" : "Publier le projet →"}</button>
+        {editingProject ? <button type="button" className="delete-button" onClick={handleDelete} disabled={deleting}>{deleting ? "suppression..." : "Supprimer le projet"}</button> : null}
+      </div>
     </form>
   </div>;
 }
