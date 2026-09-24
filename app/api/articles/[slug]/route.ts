@@ -87,6 +87,7 @@ export async function DELETE(request: Request, context: RouteContext<"/api/artic
 
   try {
     await fs.unlink(path.join(articlesDirectory, `${slug}.md`));
+    await fs.unlink(path.join(articlesDirectory, `${slug}.en.md`)).catch(() => {});
     return NextResponse.json({ slug });
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return NextResponse.json({ error: "Article introuvable." }, { status: 404 });
