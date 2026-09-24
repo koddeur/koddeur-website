@@ -1,9 +1,9 @@
 ---
 title: "Mon année 2025, mois par mois"
 description: "Résumé de mon année 2025, les moments marquants, les rencontres"
-createdAt: "2026-03-23T00:00:00.000Z"
+createdAt: "2025-02-12T00:00:00.000Z"
 keywords: ["general"]
-published: true
+published: false
 ---
 
 ## JANVIER

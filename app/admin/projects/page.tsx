@@ -13,13 +13,12 @@ export default async function AdminProjectsPage() {
     <header className="article-nav">
       <Logo href="/" mark={false} />
       <div className="admin-nav-actions">
-        <Link href="/blog" className="back-link">Voir le blog</Link>
         <form action="/api/auth/logout" method="POST"><button type="submit" className="reset-button">Se déconnecter</button></form>
         <ThemeToggle />
       </div>
     </header>
     <AdminSectionSwitch active="projects" />
-    <section className="admin-heading"><span className="eyebrow">admin / projets</span><h1>Mes projets</h1><p>Chaque projet est un fichier <code>.md</code>. Ajoutez-les à la main ou sélectionnez-en un ci-dessous pour le modifier.</p></section>
+    <section className="admin-heading"><span className="eyebrow">admin / projets</span><h1>Mes projets</h1><p><Link href="/projects" className="preview-link">Voir les projets ↗</Link></p></section>
     <ProjectForm projects={projects} />
   </main>;
 }

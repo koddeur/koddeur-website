@@ -3,7 +3,7 @@ title: "*Comment* j'ai trié mes mails ?"
 description: "Aujourd’hui on est noyé par le nombre d’e-mail qu’on reçoit, le problème c’est qu’on rate les mails vraiment important, c’est pourquoi j’ai décidé de trier et d’organiser le tri de mes boites mails, je t’explique comment j’ai fait."
 createdAt: "2026-08-10T00:00:00.000Z"
 keywords: ["organisation", "life", "mail"]
-published: true
+published: false
 ---
 
 ## Pourquoi c’est important de trier ?

@@ -3,7 +3,7 @@ title: "Comment je m’*organise* au quotidien, mes outils"
 description: "Pour être bien organisé, j’ai besoin d’outils, je vais te les donner et t’expliquer comment je les utilise"
 createdAt: "2026-03-20T00:00:00.000Z"
 keywords: ["general", "tools"]
-published: true
+published: false
 ---
 
 # Comment je m’organise au quotidien, mes outils
