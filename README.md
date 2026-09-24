@@ -29,6 +29,14 @@ ADMIN_PASSWORD=votre-mot-de-passe
 
 Sans ces variables, la connexion échoue. La session est stockée dans un cookie signé et httpOnly valable 7 jours ; le bouton « Se déconnecter » dans l'admin le supprime.
 
+## Compteur de vues
+
+Le nombre de vues par article est stocké dans un fichier JSON **en dehors** du dossier du projet (par défaut `../koddeur-data/views.json`, c'est-à-dire un dossier `koddeur-data` juste à côté du dossier du site). C'est volontaire : `content/` fait partie du dépôt git, donc un redéploiement (nouveau `git clone`, rebuild) l'écraserait et remettrait les compteurs à zéro. Le dossier `koddeur-data` n'étant pas versionné, il survit aux redéploiements tant que le disque du serveur persiste.
+
+Si votre disposition de serveur ne convient pas à ce chemin par défaut (par exemple si le dossier parent n'est pas accessible en écriture), définissez `VIEWS_DATA_DIR` dans vos variables d'environnement pour pointer vers un chemin absolu stable sur le serveur.
+
+> Si le site est un jour déployé sur une plateforme sans disque persistant (Vercel, etc.), ce mécanisme ne suffira plus : il faudra alors une vraie base de données externe (Redis, Postgres…).
+
 ## Écrire un article
 
 Le dashboard est disponible sur `/admin`. Il crée un nouveau fichier dans `content/articles/` avec les métadonnées suivantes : titre, description, date de création, mots-clés et contenu Markdown. Il détecte aussi les fichiers ajoutés directement dans ce dossier et permet de les modifier sans quitter l’interface.
