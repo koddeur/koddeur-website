@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { contentRoot } from "@/lib/content-root";
 
 export type ProjectTranslation = {
   name: string;
@@ -26,7 +27,7 @@ export type Project = {
   en?: ProjectTranslation;
 };
 
-export const projectsDirectory = path.join(process.cwd(), "content", "projects");
+export const projectsDirectory = path.join(contentRoot, "projects");
 
 function unquote(value: string) {
   return value.trim().replace(/^['\"]|['\"]$/g, "");

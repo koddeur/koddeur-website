@@ -29,6 +29,12 @@ ADMIN_PASSWORD=votre-mot-de-passe
 
 Sans ces variables, la connexion échoue. La session est stockée dans un cookie signé et httpOnly valable 7 jours ; le bouton « Se déconnecter » dans l'admin le supprime.
 
+## Contenu en local vs en prod
+
+En développement (`npm run dev`), les articles et projets créés ou modifiés via `/admin` sont écrits dans `content-local/` (une copie de `content/`, non versionnée) au lieu de `content/`. Comme `content-local/` est dans `.gitignore`, rien de ce que vous testez en local ne peut se retrouver dans un `git push`, donc jamais en production.
+
+En production (`next build && next start`, `NODE_ENV=production`), le site utilise automatiquement le vrai dossier `content/` versionné dans git — aucune configuration nécessaire. Pour changer ce comportement (par exemple pointer explicitement vers un autre dossier), définissez `CONTENT_DIR` dans les variables d'environnement.
+
 ## Compteur de vues
 
 Le nombre de vues par article est stocké dans un fichier JSON **en dehors** du dossier du projet (par défaut `../koddeur-data/views.json`, c'est-à-dire un dossier `koddeur-data` juste à côté du dossier du site). C'est volontaire : `content/` fait partie du dépôt git, donc un redéploiement (nouveau `git clone`, rebuild) l'écraserait et remettrait les compteurs à zéro. Le dossier `koddeur-data` n'étant pas versionné, il survit aux redéploiements tant que le disque du serveur persiste.
