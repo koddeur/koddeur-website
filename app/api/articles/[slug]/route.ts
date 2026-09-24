@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
 import { articlesDirectory, parseArticle } from "@/lib/articles";
+import { renameViewSlug } from "@/lib/views";
 
 export const runtime = "nodejs";
 
@@ -53,9 +54,27 @@ export async function PUT(request: Request, context: RouteContext<"/api/articles
     if (Number.isNaN(createdAt.getTime())) return NextResponse.json({ error: "La date de création n'est pas valide." }, { status: 400 });
     const published = payload.published !== false;
 
+    const requestedSlug = clean(payload.slug) || slug;
+    if (!isValidSlug(requestedSlug)) return NextResponse.json({ error: "L'URL ne peut contenir que des minuscules, chiffres et tirets." }, { status: 400 });
+    if (requestedSlug.length > 70) return NextResponse.json({ error: "L'URL est trop longue (70 caractères max)." }, { status: 400 });
+
+    const renaming = requestedSlug !== slug;
+    const newFilePath = path.join(articlesDirectory, `${requestedSlug}.md`);
+    if (renaming) {
+      const alreadyTaken = await fs.access(newFilePath).then(() => true, () => false);
+      if (alreadyTaken) return NextResponse.json({ error: "Cette URL est déjà utilisée par un autre article." }, { status: 409 });
+    }
+
     const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt.toISOString())}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n---\n\n${content}\n`;
-    await fs.writeFile(filePath, markdown, "utf8");
-    return NextResponse.json({ slug });
+    await fs.writeFile(newFilePath, markdown, "utf8");
+
+    if (renaming) {
+      await fs.unlink(filePath);
+      await fs.rename(path.join(articlesDirectory, `${slug}.en.md`), path.join(articlesDirectory, `${requestedSlug}.en.md`)).catch(() => {});
+      await renameViewSlug(slug, requestedSlug);
+    }
+
+    return NextResponse.json({ slug: requestedSlug });
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return NextResponse.json({ error: "Article introuvable." }, { status: 404 });
     return NextResponse.json({ error: "Impossible de mettre à jour l’article." }, { status: 500 });

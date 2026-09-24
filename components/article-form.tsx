@@ -86,6 +86,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
   const router = useRouter();
   const latestArticle = articles[0] ?? null;
   const [editingSlug, setEditingSlug] = useState<string | null>(latestArticle?.slug ?? null);
+  const [slug, setSlug] = useState(latestArticle?.slug ?? "");
   const [title, setTitle] = useState(latestArticle?.title ?? "");
   const [description, setDescription] = useState(latestArticle?.description ?? "");
   const [keywords, setKeywords] = useState(latestArticle?.keywords.join(", ") ?? "");
@@ -103,6 +104,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
 
   function startEditing(article: EditableArticle) {
     setEditingSlug(article.slug);
+    setSlug(article.slug);
     setTitle(article.title);
     setDescription(article.description);
     setKeywords(article.keywords.join(", "));
@@ -114,7 +116,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
 
   function resetEditor() {
     setEditingSlug(null);
-    setTitle(""); setDescription(""); setKeywords(""); setContent(""); setCreatedAt(today()); setPublished(true); setStatus(null);
+    setSlug(""); setTitle(""); setDescription(""); setKeywords(""); setContent(""); setCreatedAt(today()); setPublished(true); setStatus(null);
   }
 
   async function uploadImage(file: File) {
@@ -184,6 +186,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       }
 
       setEditingSlug(null);
+      setSlug("");
       setTitle((parsed.title || markdownFile.name.replace(/\.md$/i, "")).slice(0, limits.title));
       setDescription(parsed.description.slice(0, limits.description));
       setKeywords(parsed.keywords);
@@ -212,12 +215,21 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       setStatus({ type: "error", message: "La date de création n'est pas valide." }); setLoading(false); return;
     }
     try {
-      const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published }) });
+      const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published, slug: editingSlug ? slug : undefined }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       const wasNew = !editingSlug;
-      if (wasNew) setEditingSlug(result.slug);
-      setStatus({ type: "success", message: wasNew ? "Article publié. Le fichier Markdown a été créé." : "Article mis à jour dans son fichier Markdown." });
+      const renamed = !wasNew && result.slug !== editingSlug;
+      setEditingSlug(result.slug);
+      setSlug(result.slug);
+      setStatus({
+        type: "success",
+        message: wasNew
+          ? "Article publié. Le fichier Markdown a été créé."
+          : renamed
+            ? `Article mis à jour et déplacé vers /articles/${result.slug}.`
+            : "Article mis à jour dans son fichier Markdown.",
+      });
       router.refresh();
     } catch (error) { setStatus({ type: "error", message: error instanceof Error ? error.message : "Une erreur est survenue." }); }
     finally { setLoading(false); }
@@ -270,6 +282,17 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
         </div>
       </div>
       {editingArticle ? <p className="preview-note">La preview ouvre la dernière version enregistrée.</p> : null}
+    {editingArticle ? (
+      <div className="field">
+        <label htmlFor="slug">URL de l’article <span>/articles/{slug || "…"}</span></label>
+        <input id="slug" value={slug} maxLength={70} pattern="[a-z0-9]+(-[a-z0-9]+)*" onChange={(event) => setSlug(event.target.value)} placeholder="mon-article" required />
+        {slug !== editingArticle.slug ? (
+          <p className="form-status error" role="alert">
+            ⚠️ Changer l’URL casse tous les liens existants vers <code>/articles/{editingArticle.slug}</code> (partages, favoris, résultats de recherche déjà indexés) — ils renverront une page 404. L’historique des vues sera reporté sur la nouvelle URL, mais pas les liens externes.
+          </p>
+        ) : null}
+      </div>
+    ) : null}
     <div className="field"><label htmlFor="title">Titre <span>{title.length}/{limits.title}</span></label><input id="title" value={title} maxLength={limits.title} onChange={(event) => setTitle(event.target.value)} placeholder="Le titre de votre note" required /></div>
     <div className="field"><label htmlFor="description">Description <span>{description.length}/{limits.description}</span></label><textarea id="description" value={description} maxLength={limits.description} onChange={(event) => setDescription(event.target.value)} placeholder="Une entrée en matière concise." rows={3} required /></div>
     <div className="field"><label htmlFor="keywords">Mots-clés <span>séparés par des virgules</span></label><input id="keywords" value={keywords} onChange={(event) => setKeywords(event.target.value)} placeholder="nextjs, react, tutoriel" /></div>
