@@ -33,6 +33,13 @@ export async function POST(request: Request) {
     const createdAt = createdAtDate.toISOString();
     const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt)}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n---\n\n${content}\n`;
     await fs.writeFile(path.join(articlesDirectory, `${slug}.md`), markdown, "utf8");
+
+    const titleEn = clean(payload.titleEn) || title;
+    const descriptionEn = clean(payload.descriptionEn) || description;
+    const contentEn = clean(payload.contentEn) || content;
+    const translationMarkdown = `---\ntitle: ${yamlString(titleEn)}\ndescription: ${yamlString(descriptionEn)}\n---\n\n${contentEn}\n`;
+    await fs.writeFile(path.join(articlesDirectory, `${slug}.en.md`), translationMarkdown, "utf8");
+
     return NextResponse.json({ slug }, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Impossible de créer l’article." }, { status: 500 });

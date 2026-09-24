@@ -39,6 +39,12 @@ export async function PUT(request: Request, context: RouteContext<"/api/projects
 
     const markdown = `---\nname: ${yamlString(name)}\ndate: ${yamlString(date.toISOString())}\nimage: ${yamlString(image)}\ndescription: ${yamlString(description)}\ngithubUrl: ${yamlString(githubUrl)}\nlink: ${yamlString(link)}\nstatus: ${yamlString(status)}\n---\n`;
     await fs.writeFile(filePath, markdown, "utf8");
+
+    const nameEn = clean(payload.nameEn) || name;
+    const descriptionEn = clean(payload.descriptionEn) || description;
+    const translationMarkdown = `---\nname: ${yamlString(nameEn)}\ndescription: ${yamlString(descriptionEn)}\n---\n`;
+    await fs.writeFile(path.join(projectsDirectory, `${slug}.en.md`), translationMarkdown, "utf8");
+
     return NextResponse.json({ slug });
   } catch (error) {
     if ((error as NodeJS.ErrnoException).code === "ENOENT") return NextResponse.json({ error: "Projet introuvable." }, { status: 404 });

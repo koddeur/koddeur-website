@@ -6,7 +6,7 @@ import type { Article } from "@/lib/articles";
 
 const limits = { title: 50, description: 300, content: 10000, keywords: 30 };
 
-type EditableArticle = Pick<Article, "slug" | "title" | "description" | "content" | "keywords" | "createdAt" | "published">;
+type EditableArticle = Pick<Article, "slug" | "title" | "description" | "content" | "keywords" | "createdAt" | "published" | "en">;
 
 function unquoteValue(value: string) {
   return value.trim().replace(/^['"]|['"]$/g, "");
@@ -91,6 +91,9 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
   const [description, setDescription] = useState(latestArticle?.description ?? "");
   const [keywords, setKeywords] = useState(latestArticle?.keywords.join(", ") ?? "");
   const [content, setContent] = useState(latestArticle?.content ?? "");
+  const [titleEn, setTitleEn] = useState(latestArticle?.en?.title ?? "");
+  const [descriptionEn, setDescriptionEn] = useState(latestArticle?.en?.description ?? "");
+  const [contentEn, setContentEn] = useState(latestArticle?.en?.content ?? "");
   const [createdAt, setCreatedAt] = useState(latestArticle ? latestArticle.createdAt.slice(0, 10) : today);
   const [published, setPublished] = useState(latestArticle?.published ?? true);
   const [status, setStatus] = useState<{ type: "error" | "success"; message: string } | null>(null);
@@ -109,6 +112,9 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     setDescription(article.description);
     setKeywords(article.keywords.join(", "));
     setContent(article.content);
+    setTitleEn(article.en?.title ?? "");
+    setDescriptionEn(article.en?.description ?? "");
+    setContentEn(article.en?.content ?? "");
     setCreatedAt(article.createdAt.slice(0, 10));
     setPublished(article.published);
     setStatus(null);
@@ -116,7 +122,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
 
   function resetEditor() {
     setEditingSlug(null);
-    setSlug(""); setTitle(""); setDescription(""); setKeywords(""); setContent(""); setCreatedAt(today()); setPublished(true); setStatus(null);
+    setSlug(""); setTitle(""); setDescription(""); setKeywords(""); setContent(""); setTitleEn(""); setDescriptionEn(""); setContentEn(""); setCreatedAt(today()); setPublished(true); setStatus(null);
   }
 
   async function uploadImage(file: File) {
@@ -191,6 +197,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       setDescription(parsed.description.slice(0, limits.description));
       setKeywords(parsed.keywords);
       setContent(content);
+      setTitleEn(""); setDescriptionEn(""); setContentEn("");
       const parsedDate = parsed.createdAt && !Number.isNaN(new Date(parsed.createdAt).getTime()) ? parsed.createdAt.slice(0, 10) : today();
       setCreatedAt(parsedDate);
       setPublished(parsed.published);
@@ -215,7 +222,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       setStatus({ type: "error", message: "La date de création n'est pas valide." }); setLoading(false); return;
     }
     try {
-      const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published, slug: editingSlug ? slug : undefined }) });
+      const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published, slug: editingSlug ? slug : undefined, titleEn, descriptionEn, contentEn }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       const wasNew = !editingSlug;
@@ -299,6 +306,11 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     <div className="field"><label htmlFor="createdAt">Date de création</label><input id="createdAt" type="date" value={createdAt} onChange={(event) => setCreatedAt(event.target.value)} required /></div>
     <div className="field field-toggle"><label htmlFor="published">Visible sur le blog <span>{published ? "publié" : "désactivé, visible en admin uniquement"}</span></label><input id="published" type="checkbox" checked={published} onChange={(event) => setPublished(event.target.checked)} /></div>
     <div className="field field-content"><label htmlFor="content">Contenu Markdown <span>{content.length}/{limits.content}</span></label><textarea id="content" value={content} maxLength={limits.content} onChange={(event) => setContent(event.target.value)} placeholder={"## Une idée claire\n\nÉcrivez votre article ici. **Markdown** et `code` sont pris en charge."} required /></div>
+
+    <p className="preview-note">Traduction anglaise — laissez vide pour reprendre le texte français tel quel.</p>
+    <div className="field"><label htmlFor="titleEn">Titre (EN) <span>{titleEn.length}/{limits.title}</span></label><input id="titleEn" value={titleEn} maxLength={limits.title} onChange={(event) => setTitleEn(event.target.value)} placeholder={title || "English title"} /></div>
+    <div className="field"><label htmlFor="descriptionEn">Description (EN) <span>{descriptionEn.length}/{limits.description}</span></label><textarea id="descriptionEn" value={descriptionEn} maxLength={limits.description} onChange={(event) => setDescriptionEn(event.target.value)} placeholder={description || "English description"} rows={3} /></div>
+    <div className="field field-content"><label htmlFor="contentEn">Contenu Markdown (EN) <span>{contentEn.length}/{limits.content}</span></label><textarea id="contentEn" value={contentEn} maxLength={limits.content} onChange={(event) => setContentEn(event.target.value)} placeholder={content || "English content"} /></div>
     {status && <p className={`form-status ${status.type}`} role="status">{status.message}</p>}
       <div className="article-form-actions">
         <button type="submit" disabled={loading}>{loading ? "enregistrement..." : editingArticle ? "Enregistrer les modifications →" : "Publier l’article →"}</button>

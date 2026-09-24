@@ -36,6 +36,12 @@ export async function POST(request: Request) {
     const date = dateValue.toISOString();
     const markdown = `---\nname: ${yamlString(name)}\ndate: ${yamlString(date)}\nimage: ${yamlString(image)}\ndescription: ${yamlString(description)}\ngithubUrl: ${yamlString(githubUrl)}\nlink: ${yamlString(link)}\nstatus: ${yamlString(status)}\n---\n`;
     await fs.writeFile(path.join(projectsDirectory, `${slug}.md`), markdown, "utf8");
+
+    const nameEn = clean(payload.nameEn) || name;
+    const descriptionEn = clean(payload.descriptionEn) || description;
+    const translationMarkdown = `---\nname: ${yamlString(nameEn)}\ndescription: ${yamlString(descriptionEn)}\n---\n`;
+    await fs.writeFile(path.join(projectsDirectory, `${slug}.en.md`), translationMarkdown, "utf8");
+
     return NextResponse.json({ slug }, { status: 201 });
   } catch {
     return NextResponse.json({ error: "Impossible de créer le projet." }, { status: 500 });

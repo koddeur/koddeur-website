@@ -23,6 +23,8 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
   const [date, setDate] = useState(latestProject ? latestProject.date.slice(0, 10) : today);
   const [image, setImage] = useState(latestProject?.image ?? "");
   const [description, setDescription] = useState(latestProject?.description ?? "");
+  const [nameEn, setNameEn] = useState(latestProject?.en?.name ?? "");
+  const [descriptionEn, setDescriptionEn] = useState(latestProject?.en?.description ?? "");
   const [githubUrl, setGithubUrl] = useState(latestProject?.githubUrl ?? "");
   const [link, setLink] = useState(latestProject?.link ?? "");
   const [projectStatus, setProjectStatus] = useState<ProjectStatus>(latestProject?.status ?? "online");
@@ -40,6 +42,8 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
     setDate(project.date.slice(0, 10));
     setImage(project.image);
     setDescription(project.description);
+    setNameEn(project.en?.name ?? "");
+    setDescriptionEn(project.en?.description ?? "");
     setGithubUrl(project.githubUrl);
     setLink(project.link);
     setProjectStatus(project.status);
@@ -48,7 +52,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
 
   function resetEditor() {
     setEditingSlug(null);
-    setName(""); setDate(today()); setImage(""); setDescription(""); setGithubUrl(""); setLink(""); setProjectStatus("online"); setFormStatus(null);
+    setName(""); setDate(today()); setImage(""); setDescription(""); setNameEn(""); setDescriptionEn(""); setGithubUrl(""); setLink(""); setProjectStatus("online"); setFormStatus(null);
   }
 
   async function handleImageUpload(event: ChangeEvent<HTMLInputElement>) {
@@ -74,7 +78,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
       setFormStatus({ type: "error", message: "La date n'est pas valide." }); setLoading(false); return;
     }
     try {
-      const response = await fetch(editingSlug ? `/api/projects/${editingSlug}` : "/api/projects", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, date, image, description, githubUrl, link, status: projectStatus }) });
+      const response = await fetch(editingSlug ? `/api/projects/${editingSlug}` : "/api/projects", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, date, image, description, githubUrl, link, status: projectStatus, nameEn, descriptionEn }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       const wasNew = !editingSlug;
@@ -137,6 +141,10 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
         </select>
       </div>
       <div className="field"><label htmlFor="date">Date</label><input id="date" type="date" value={date} onChange={(event) => setDate(event.target.value)} required /></div>
+
+      <p className="preview-note">Traduction anglaise — laissez vide pour reprendre le texte français tel quel.</p>
+      <div className="field"><label htmlFor="nameEn">Nom (EN) <span>{nameEn.length}/{limits.name}</span></label><input id="nameEn" value={nameEn} maxLength={limits.name} onChange={(event) => setNameEn(event.target.value)} placeholder={name || "Project name"} /></div>
+      <div className="field"><label htmlFor="descriptionEn">Description (EN) <span>{descriptionEn.length}/{limits.description}</span></label><textarea id="descriptionEn" value={descriptionEn} maxLength={limits.description} onChange={(event) => setDescriptionEn(event.target.value)} placeholder={description || "English description"} rows={2} /></div>
       {formStatus && <p className={`form-status ${formStatus.type}`} role="status">{formStatus.message}</p>}
       <div className="article-form-actions">
         <button type="submit" disabled={loading}>{loading ? "enregistrement..." : editingProject ? "Enregistrer les modifications →" : "Publier le projet →"}</button>

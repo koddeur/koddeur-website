@@ -68,9 +68,15 @@ export async function PUT(request: Request, context: RouteContext<"/api/articles
     const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt.toISOString())}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n---\n\n${content}\n`;
     await fs.writeFile(newFilePath, markdown, "utf8");
 
+    const titleEn = clean(payload.titleEn) || title;
+    const descriptionEn = clean(payload.descriptionEn) || description;
+    const contentEn = clean(payload.contentEn) || content;
+    const translationMarkdown = `---\ntitle: ${yamlString(titleEn)}\ndescription: ${yamlString(descriptionEn)}\n---\n\n${contentEn}\n`;
+    await fs.writeFile(path.join(articlesDirectory, `${requestedSlug}.en.md`), translationMarkdown, "utf8");
+
     if (renaming) {
       await fs.unlink(filePath);
-      await fs.rename(path.join(articlesDirectory, `${slug}.en.md`), path.join(articlesDirectory, `${requestedSlug}.en.md`)).catch(() => {});
+      await fs.unlink(path.join(articlesDirectory, `${slug}.en.md`)).catch(() => {});
       await renameViewSlug(slug, requestedSlug);
     }
 

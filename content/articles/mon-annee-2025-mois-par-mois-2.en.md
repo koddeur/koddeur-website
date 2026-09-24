@@ -1,6 +1,6 @@
 ---
 title: "My 2025, month by month"
-description: "A recap of my 2025 — the highlights, the people I met, and the harder moments"
+description: "A recap of my 2025 — the highlights and the people I met"
 ---
 
 ## JANUARY
