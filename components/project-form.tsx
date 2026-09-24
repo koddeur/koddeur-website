@@ -17,14 +17,15 @@ function today() {
 
 export function ProjectForm({ projects }: { projects: Project[] }) {
   const router = useRouter();
-  const [editingSlug, setEditingSlug] = useState<string | null>(null);
-  const [name, setName] = useState("");
-  const [date, setDate] = useState(today);
-  const [image, setImage] = useState("");
-  const [description, setDescription] = useState("");
-  const [githubUrl, setGithubUrl] = useState("");
-  const [link, setLink] = useState("");
-  const [projectStatus, setProjectStatus] = useState<ProjectStatus>("online");
+  const latestProject = projects[0] ?? null;
+  const [editingSlug, setEditingSlug] = useState<string | null>(latestProject?.slug ?? null);
+  const [name, setName] = useState(latestProject?.name ?? "");
+  const [date, setDate] = useState(latestProject ? latestProject.date.slice(0, 10) : today);
+  const [image, setImage] = useState(latestProject?.image ?? "");
+  const [description, setDescription] = useState(latestProject?.description ?? "");
+  const [githubUrl, setGithubUrl] = useState(latestProject?.githubUrl ?? "");
+  const [link, setLink] = useState(latestProject?.link ?? "");
+  const [projectStatus, setProjectStatus] = useState<ProjectStatus>(latestProject?.status ?? "online");
   const [formStatus, setFormStatus] = useState<{ type: "error" | "success"; message: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -84,6 +85,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
 
   return <div className="admin-editor">
     <aside className="article-index" aria-label="Projets disponibles">
+      <button type="button" className={!editingSlug ? "article-index-new active" : "article-index-new"} onClick={resetEditor}>+ Nouveau projet</button>
       <div className="article-index-heading"><span>projets détectés</span><strong>{String(projects.length).padStart(2, "0")}</strong></div>
       <p>Ajoutez directement un <code>.md</code> dans <code>content/projects</code> : il apparaîtra ici après rechargement.</p>
       <div className="article-index-list">
@@ -97,7 +99,6 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
         <span className="eyebrow">{editingProject ? `édition / ${editingProject.slug}.md` : "nouveau projet"}</span>
         <div className="editor-actions">
           {editingProject?.githubUrl ? <a href={editingProject.githubUrl} target="_blank" rel="noreferrer" className="preview-link">Voir sur GitHub ↗</a> : null}
-          {editingProject ? <button type="button" className="reset-button" onClick={resetEditor}>+ nouveau projet</button> : null}
         </div>
       </div>
       <div className="field"><label htmlFor="name">Nom <span>{name.length}/{limits.name}</span></label><input id="name" value={name} maxLength={limits.name} onChange={(event) => setName(event.target.value)} placeholder="Nom du projet" required /></div>

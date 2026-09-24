@@ -84,13 +84,14 @@ function today() {
 
 export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
   const router = useRouter();
-  const [editingSlug, setEditingSlug] = useState<string | null>(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [keywords, setKeywords] = useState("");
-  const [content, setContent] = useState("");
-  const [createdAt, setCreatedAt] = useState(today);
-  const [published, setPublished] = useState(true);
+  const latestArticle = articles[0] ?? null;
+  const [editingSlug, setEditingSlug] = useState<string | null>(latestArticle?.slug ?? null);
+  const [title, setTitle] = useState(latestArticle?.title ?? "");
+  const [description, setDescription] = useState(latestArticle?.description ?? "");
+  const [keywords, setKeywords] = useState(latestArticle?.keywords.join(", ") ?? "");
+  const [content, setContent] = useState(latestArticle?.content ?? "");
+  const [createdAt, setCreatedAt] = useState(latestArticle ? latestArticle.createdAt.slice(0, 10) : today);
+  const [published, setPublished] = useState(latestArticle?.published ?? true);
   const [status, setStatus] = useState<{ type: "error" | "success"; message: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [importing, setImporting] = useState(false);
@@ -238,6 +239,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
 
   return <div className="admin-editor">
     <aside className="article-index" aria-label="Articles disponibles">
+      <button type="button" className={!editingSlug ? "article-index-new active" : "article-index-new"} onClick={resetEditor}>+ Nouvel article</button>
       <div className="article-index-heading"><span>fichiers détectés</span><strong>{String(articles.length).padStart(2, "0")}</strong></div>
       <p>Ajoutez directement un <code>.md</code> dans <code>content/articles</code> : il apparaîtra ici après rechargement.</p>
       <div className="article-index-list">
@@ -264,7 +266,6 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
             // @ts-expect-error webkitdirectory is a non-standard attribute not covered by the DOM typings
             webkitdirectory=""
           />
-          {editingArticle ? <button type="button" className="reset-button" onClick={resetEditor}>+ nouvel article</button> : null}
         </div>
       </div>
       {editingArticle ? <p className="preview-note">La preview ouvre la dernière version enregistrée.</p> : null}

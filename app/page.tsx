@@ -10,7 +10,7 @@ const socials = [
   { id: "linkedin", href: "https://www.linkedin.com/in/mael-avennec/" },
   { id: "gmail", href: "mailto:koddeur@gmail.com" },
   { id: "codingame", href: "https://www.codingame.com/profile/9c87f98642ce1c438c2e010e79c7198e9241736" },
-  { id: "roadmap", href: "https://roadmap.sh/u/koddeur" },
+  { id: "bluesky", href: "https://bsky.app/profile/koddeur.bsky.social" },
   { id: "cal", href: "https://cal.com/mael-avennec" },
   { id: "x", href: "https://x.com/koddeur" },
 ];
