@@ -76,8 +76,9 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
       const response = await fetch(editingSlug ? `/api/projects/${editingSlug}` : "/api/projects", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, date, image, description, githubUrl, link, status: projectStatus }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
-      if (!editingSlug) resetEditor();
-      setFormStatus({ type: "success", message: editingSlug ? "Projet mis à jour." : "Projet publié." });
+      const wasNew = !editingSlug;
+      if (wasNew) setEditingSlug(result.slug);
+      setFormStatus({ type: "success", message: wasNew ? "Projet publié." : "Projet mis à jour." });
       router.refresh();
     } catch (error) { setFormStatus({ type: "error", message: error instanceof Error ? error.message : "Une erreur est survenue." }); }
     finally { setLoading(false); }

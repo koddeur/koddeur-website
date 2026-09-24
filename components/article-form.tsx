@@ -215,8 +215,9 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
-      if (!editingSlug) resetEditor();
-      setStatus({ type: "success", message: editingSlug ? "Article mis à jour dans son fichier Markdown." : "Article publié. Le fichier Markdown a été créé." });
+      const wasNew = !editingSlug;
+      if (wasNew) setEditingSlug(result.slug);
+      setStatus({ type: "success", message: wasNew ? "Article publié. Le fichier Markdown a été créé." : "Article mis à jour dans son fichier Markdown." });
       router.refresh();
     } catch (error) { setStatus({ type: "error", message: error instanceof Error ? error.message : "Une erreur est survenue." }); }
     finally { setLoading(false); }
