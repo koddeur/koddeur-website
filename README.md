@@ -29,19 +29,25 @@ ADMIN_PASSWORD=votre-mot-de-passe
 
 Sans ces variables, la connexion échoue. La session est stockée dans un cookie signé et httpOnly valable 7 jours ; le bouton « Se déconnecter » dans l'admin le supprime.
 
-## Contenu en local vs en prod
+## Contenu : éditer en local, puis pousser
 
-En développement (`npm run dev`), les articles et projets créés ou modifiés via `/admin` sont écrits dans `content-local/` (une copie de `content/`, non versionnée) au lieu de `content/`. Comme `content-local/` est dans `.gitignore`, rien de ce que vous testez en local ne peut se retrouver dans un `git push`, donc jamais en production.
+L'hébergement actuel reconstruit l'application à partir de git à chaque déploiement : tout ce qui est écrit sur le disque du serveur (fichiers `content/`, images uploadées) est perdu au déploiement suivant s'il n'a pas été commité. Les articles et projets doivent donc être créés/modifiés via `/admin` **en local** (`npm run dev`), puis commités et poussés — ne pas éditer directement en production tant que ce n'est pas migré vers un stockage externe.
 
-En production (`next build && next start`, `NODE_ENV=production`), le site utilise automatiquement le vrai dossier `content/` versionné dans git — aucune configuration nécessaire. Pour changer ce comportement (par exemple pointer explicitement vers un autre dossier), définissez `CONTENT_DIR` dans les variables d'environnement.
+## Compteur de vues (Supabase)
 
-## Compteur de vues
+Le nombre de vues par article est stocké dans Supabase plutôt que sur le disque du serveur : sur cet hébergement, le déploiement semble reconstruire l'application à chaque push (perte de tout fichier local, même en dehors du dossier du projet), donc seul un stockage externe survit de façon fiable aux redéploiements.
 
-Le nombre de vues par article est stocké dans un fichier JSON **en dehors** du dossier du projet (par défaut `../koddeur-data/views.json`, c'est-à-dire un dossier `koddeur-data` juste à côté du dossier du site). C'est volontaire : `content/` fait partie du dépôt git, donc un redéploiement (nouveau `git clone`, rebuild) l'écraserait et remettrait les compteurs à zéro. Le dossier `koddeur-data` n'étant pas versionné, il survit aux redéploiements tant que le disque du serveur persiste.
+1. Créez un projet sur [supabase.com](https://supabase.com) (le plan gratuit suffit largement).
+2. Dans l'éditeur SQL du projet, exécutez le contenu de `supabase/schema.sql` (crée la table `article_views` et la fonction d'incrément atomique).
+3. Récupérez l'URL du projet et la clé **service_role** (Project Settings → API — pas la clé `anon`, celle-ci contourne les policies RLS et ne doit être utilisée que côté serveur).
+4. Définissez ces variables d'environnement (local **et** Hostinger) :
 
-Si votre disposition de serveur ne convient pas à ce chemin par défaut (par exemple si le dossier parent n'est pas accessible en écriture), définissez `VIEWS_DATA_DIR` dans vos variables d'environnement pour pointer vers un chemin absolu stable sur le serveur.
+```bash
+SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=votre-clé-service-role
+```
 
-> Si le site est un jour déployé sur une plateforme sans disque persistant (Vercel, etc.), ce mécanisme ne suffira plus : il faudra alors une vraie base de données externe (Redis, Postgres…).
+Sans ces variables, `getViewCount`/`incrementViewCount` retombent silencieusement sur `0` au lieu de planter la page.
 
 ## Écrire un article
 

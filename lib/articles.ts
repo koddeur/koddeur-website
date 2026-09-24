@@ -1,6 +1,5 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { contentRoot } from "@/lib/content-root";
 import { getViewCount } from "@/lib/views";
 
 export type ArticleTranslation = {
@@ -21,7 +20,7 @@ export type Article = {
   views: number;
 };
 
-export const articlesDirectory = path.join(contentRoot, "articles");
+export const articlesDirectory = path.join(process.cwd(), "content", "articles");
 
 function unquote(value: string) {
   return value.trim().replace(/^['\"]|['\"]$/g, "");
