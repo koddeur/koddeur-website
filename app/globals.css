@@ -126,8 +126,7 @@ html:has(.landing-shell), body:has(.landing-shell) { background: #000000; color-
 .read-link { align-self: center; color: var(--muted); font-size: .72rem; white-space: nowrap; transition: color .2s; }
 .read-link .arrow { color: var(--electric); margin-left: 2px; }.read-link:hover { color: var(--electric); }
 
-.project-card { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: stretch; padding: 34px 8px; border-bottom: 1px solid var(--line); transition: background .2s ease; }
-.project-card:hover { background: rgba(125, 240, 199, .09); }
+.project-card { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: stretch; padding: 34px 8px; border-bottom: 1px solid var(--line); }
 .project-card-main { align-self: center; }
 .project-thumb { display: block; width: 220px; height: auto; padding: 0; overflow: hidden; border: 1px solid var(--line); background: var(--canvas-soft); cursor: zoom-in; transition: border-color .2s; }
 .project-thumb:hover { border-color: var(--electric-dim); }
