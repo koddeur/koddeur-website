@@ -22,6 +22,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
   const [name, setName] = useState(latestProject?.name ?? "");
   const [date, setDate] = useState(latestProject ? latestProject.date.slice(0, 10) : today);
   const [image, setImage] = useState(latestProject?.image ?? "");
+  const [hideImage, setHideImage] = useState(latestProject?.hideImage ?? false);
   const [description, setDescription] = useState(latestProject?.description ?? "");
   const [nameEn, setNameEn] = useState(latestProject?.en?.name ?? "");
   const [descriptionEn, setDescriptionEn] = useState(latestProject?.en?.description ?? "");
@@ -41,6 +42,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
     setName(project.name);
     setDate(project.date.slice(0, 10));
     setImage(project.image);
+    setHideImage(project.hideImage);
     setDescription(project.description);
     setNameEn(project.en?.name ?? "");
     setDescriptionEn(project.en?.description ?? "");
@@ -52,7 +54,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
 
   function resetEditor() {
     setEditingSlug(null);
-    setName(""); setDate(today()); setImage(""); setDescription(""); setNameEn(""); setDescriptionEn(""); setGithubUrl(""); setLink(""); setProjectStatus("online"); setFormStatus(null);
+    setName(""); setDate(today()); setImage(""); setHideImage(false); setDescription(""); setNameEn(""); setDescriptionEn(""); setGithubUrl(""); setLink(""); setProjectStatus("online"); setFormStatus(null);
   }
 
   async function handleImageUpload(event: ChangeEvent<HTMLInputElement>) {
@@ -78,7 +80,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
       setFormStatus({ type: "error", message: "La date n'est pas valide." }); setLoading(false); return;
     }
     try {
-      const response = await fetch(editingSlug ? `/api/projects/${editingSlug}` : "/api/projects", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, date, image, description, githubUrl, link, status: projectStatus, nameEn, descriptionEn }) });
+      const response = await fetch(editingSlug ? `/api/projects/${editingSlug}` : "/api/projects", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ name, date, image, hideImage, description, githubUrl, link, status: projectStatus, nameEn, descriptionEn }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       const wasNew = !editingSlug;
@@ -133,6 +135,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
           <input ref={fileInputRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: "none" }} />
         </div>
       </div>
+      <div className="field field-toggle field-check"><input id="showImage" type="checkbox" checked={!hideImage} onChange={(event) => setHideImage(!event.target.checked)} /><label htmlFor="showImage">Afficher l&rsquo;image</label></div>
       <div className="field"><label htmlFor="link">Lien du projet <span>facultatif</span></label><input id="link" type="url" value={link} maxLength={limits.link} onChange={(event) => setLink(event.target.value)} placeholder="https://mon-projet.com" /></div>
       <div className="field"><label htmlFor="githubUrl">Lien GitHub <span>facultatif</span></label><input id="githubUrl" type="url" value={githubUrl} maxLength={limits.githubUrl} onChange={(event) => setGithubUrl(event.target.value)} placeholder="https://github.com/…" /></div>
       <div className="field"><label htmlFor="status">Statut</label>

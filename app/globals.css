@@ -128,6 +128,9 @@ html:has(.landing-shell), body:has(.landing-shell) { background: #000000; color-
 
 .project-card { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 18px; align-items: stretch; padding: 34px 8px; border-bottom: 1px solid var(--line); }
 .project-card-main { align-self: center; }
+.project-card.no-image { grid-template-columns: 1fr; padding: 20px 8px; }
+.project-card.no-image p { max-width: none; }
+.field-toggle.field-check { justify-content: flex-start; }.field-toggle.field-check label { flex: none; cursor: pointer; }
 .project-thumb { display: block; width: 220px; height: auto; padding: 0; overflow: hidden; border: 1px solid var(--line); background: var(--canvas-soft); cursor: zoom-in; transition: border-color .2s; }
 .project-thumb:hover { border-color: var(--electric-dim); }
 .lightbox { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 40px; background: rgba(0, 0, 0, .85); cursor: zoom-out; }

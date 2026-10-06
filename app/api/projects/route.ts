@@ -15,6 +15,7 @@ export async function POST(request: Request) {
     const payload = await request.json();
     const name = clean(payload.name);
     const image = clean(payload.image);
+    const hideImage = payload.hideImage === true;
     const description = clean(payload.description);
     const githubUrl = clean(payload.githubUrl);
     const link = clean(payload.link);
@@ -34,7 +35,7 @@ export async function POST(request: Request) {
       try { await fs.access(path.join(projectsDirectory, `${slug}.md`)); slug = `${baseSlug}-${suffix++}`; } catch { break; }
     }
     const date = dateValue.toISOString();
-    const markdown = `---\nname: ${yamlString(name)}\ndate: ${yamlString(date)}\nimage: ${yamlString(image)}\ndescription: ${yamlString(description)}\ngithubUrl: ${yamlString(githubUrl)}\nlink: ${yamlString(link)}\nstatus: ${yamlString(status)}\n---\n`;
+    const markdown = `---\nname: ${yamlString(name)}\ndate: ${yamlString(date)}\nimage: ${yamlString(image)}\n${hideImage ? "hideImage: true\n" : ""}description: ${yamlString(description)}\ngithubUrl: ${yamlString(githubUrl)}\nlink: ${yamlString(link)}\nstatus: ${yamlString(status)}\n---\n`;
     await fs.writeFile(path.join(projectsDirectory, `${slug}.md`), markdown, "utf8");
 
     const nameEn = clean(payload.nameEn) || name;

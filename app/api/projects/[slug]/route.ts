@@ -25,6 +25,7 @@ export async function PUT(request: Request, context: RouteContext<"/api/projects
     const payload = await request.json();
     const name = clean(payload.name);
     const image = clean(payload.image);
+    const hideImage = payload.hideImage === true;
     const description = clean(payload.description);
     const githubUrl = clean(payload.githubUrl);
     const link = clean(payload.link);
@@ -37,7 +38,7 @@ export async function PUT(request: Request, context: RouteContext<"/api/projects
     const date = dateInput ? new Date(dateInput) : new Date(existing.date);
     if (Number.isNaN(date.getTime())) return NextResponse.json({ error: "La date n'est pas valide." }, { status: 400 });
 
-    const markdown = `---\nname: ${yamlString(name)}\ndate: ${yamlString(date.toISOString())}\nimage: ${yamlString(image)}\ndescription: ${yamlString(description)}\ngithubUrl: ${yamlString(githubUrl)}\nlink: ${yamlString(link)}\nstatus: ${yamlString(status)}\n---\n`;
+    const markdown = `---\nname: ${yamlString(name)}\ndate: ${yamlString(date.toISOString())}\nimage: ${yamlString(image)}\n${hideImage ? "hideImage: true\n" : ""}description: ${yamlString(description)}\ngithubUrl: ${yamlString(githubUrl)}\nlink: ${yamlString(link)}\nstatus: ${yamlString(status)}\n---\n`;
     await fs.writeFile(filePath, markdown, "utf8");
 
     const nameEn = clean(payload.nameEn) || name;

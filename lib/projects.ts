@@ -19,6 +19,7 @@ export type Project = {
   name: string;
   date: string;
   image: string;
+  hideImage: boolean;
   description: string;
   githubUrl: string;
   link: string;
@@ -48,6 +49,7 @@ export function parseProject(source: string, slug: string): Project | null {
     name: unquote(fields.name),
     date: unquote(fields.date),
     image: unquote(fields.image || ""),
+    hideImage: unquote(fields.hideImage || "") === "true",
     description: unquote(fields.description),
     githubUrl: unquote(fields.githubUrl || ""),
     link: unquote(fields.link || ""),

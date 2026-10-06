@@ -4,8 +4,9 @@ import type { Project } from "@/lib/projects";
 import { ProjectThumb } from "@/components/project-thumb";
 
 export function ProjectCard({ project }: { project: Project }) {
+  const showImage = project.image && !project.hideImage;
   return (
-    <article className="project-card">
+    <article className={`project-card${showImage ? "" : " no-image"}`}>
       <div className="project-card-main">
         <div className="article-meta">
           <time>{formatDate(project.date)}</time>
@@ -30,7 +31,7 @@ export function ProjectCard({ project }: { project: Project }) {
           </div>
         ) : null}
       </div>
-      {project.image ? <ProjectThumb image={project.image} alt={project.name} /> : null}
+      {showImage ? <ProjectThumb image={project.image} alt={project.name} /> : null}
     </article>
   );
 }
