@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { AboutPhoto } from "@/components/about-photo";
 import { highlightTitle } from "@/components/highlighted-title";
 import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -66,7 +66,7 @@ export default function AboutPage() {
       </header>
 
       <section className="about-profile">
-        <span className="about-photo"><Image src="/koddevr-logo.jpg" alt="Mael Avennec" width={184} height={184} /></span>
+        <AboutPhoto />
         <div className="about-identity">
           <h2>Mael Avennec</h2>
           <p><Bi fr="29 ans · Développeur Full-stack · Lille, France" en="29 y/o · Full-stack Developer · Lille, France" /></p>
@@ -75,8 +75,8 @@ export default function AboutPage() {
 
       <p className="about-bio">
         <Bi
-          fr={<>Développeur passionné, j&rsquo;aime apprendre, créer et développer afin de résoudre des problèmes du quotidien ou d&rsquo;apporter des solutions complètes à mes clients.<br /><br />Fan de football ⚽️, de football américain 🏈 et de formule 1 🏎️</>}
-          en={<>Passionate developer, I love learning, building and coding to solve everyday problems or deliver complete solutions for my clients.<br /><br />Fan of football ⚽️, American football 🏈 and Formula 1 🏎️</>}
+          fr={<>Développeur full-stack, ex-Decathlon. Ayant toujours aimé créer, notamment des projets en partant de 0, je le fais aujourd&rsquo;hui pleinement à travers différentes idées et concepts.<br /><br /><em>« Il n&rsquo;y a pas de problème, il n&rsquo;y a que des solutions. »</em> — André Gide<br /><br />Fan de football ⚽️, de football américain 🏈 et de formule 1 🏎️</>}
+          en={<>Full-stack developer, ex-Decathlon. I&rsquo;ve always loved building things, especially projects from scratch, and today I do it fully through different ideas and concepts.<br /><br /><em>&ldquo;There are no problems, only solutions.&rdquo;</em> — André Gide<br /><br />Fan of football ⚽️, American football 🏈 and Formula 1 🏎️</>}
         />
       </p>
 

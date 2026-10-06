@@ -1,0 +1,1 @@
+- Image remplacée dans public/ mais ancienne version affichée : next/image garde en cache l'image optimisée pour la même URL → changer le nom du fichier lors d'un remplacement.
