@@ -1,1 +1,2 @@
 - Image remplacée dans public/ mais ancienne version affichée : next/image garde en cache l'image optimisée pour la même URL → changer le nom du fichier lors d'un remplacement.
+- Build qui échoue sur 'Duplicate identifier' dans .next/types/* 2.ts : copies créées par la synchro iCloud de Documents → supprimer les fichiers '* 2.*' dans .next puis relancer.

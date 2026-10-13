@@ -4,7 +4,7 @@ import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { getPublishedArticles } from "@/lib/articles";
+import { getListedArticles } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +23,7 @@ function buildHref(next: { tag?: string; sort?: SortOrder }) {
 export default async function BlogHome({ searchParams }: { searchParams: Promise<{ tag?: string; sort?: string }> }) {
   const { tag, sort } = await searchParams;
   const sortOrder: SortOrder = sort === "asc" || sort === "views" ? sort : "desc";
-  const allArticles = await getPublishedArticles();
+  const allArticles = await getListedArticles();
 
   const tagCounts = new Map<string, number>();
   for (const article of allArticles) {

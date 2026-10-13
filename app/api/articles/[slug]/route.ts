@@ -53,6 +53,7 @@ export async function PUT(request: Request, context: RouteContext<"/api/articles
     const createdAt = createdAtInput ? new Date(createdAtInput) : new Date(existing.createdAt);
     if (Number.isNaN(createdAt.getTime())) return NextResponse.json({ error: "La date de création n'est pas valide." }, { status: 400 });
     const published = payload.published !== false;
+    const unlisted = published && payload.unlisted === true;
 
     const requestedSlug = clean(payload.slug) || slug;
     if (!isValidSlug(requestedSlug)) return NextResponse.json({ error: "L'URL ne peut contenir que des minuscules, chiffres et tirets." }, { status: 400 });
@@ -65,7 +66,7 @@ export async function PUT(request: Request, context: RouteContext<"/api/articles
       if (alreadyTaken) return NextResponse.json({ error: "Cette URL est déjà utilisée par un autre article." }, { status: 409 });
     }
 
-    const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt.toISOString())}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n---\n\n${content}\n`;
+    const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt.toISOString())}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n${unlisted ? "unlisted: true\n" : ""}---\n\n${content}\n`;
     await fs.writeFile(newFilePath, markdown, "utf8");
 
     const titleEn = clean(payload.titleEn) || title;

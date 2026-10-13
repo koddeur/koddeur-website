@@ -16,6 +16,7 @@ export type Article = {
   keywords: string[];
   content: string;
   published: boolean;
+  unlisted: boolean;
   en?: ArticleTranslation;
   views: number;
 };
@@ -61,6 +62,7 @@ export function parseArticle(source: string, slug: string): Article | null {
     keywords,
     content: match[2].trim(),
     published: unquote(fields.published ?? "true") !== "false",
+    unlisted: unquote(fields.unlisted ?? "") === "true",
     views: 0,
   };
 }
@@ -113,8 +115,8 @@ export async function getArticles(): Promise<Article[]> {
   }
 }
 
-export async function getPublishedArticles(): Promise<Article[]> {
-  return (await getArticles()).filter((article) => article.published);
+export async function getListedArticles(): Promise<Article[]> {
+  return (await getArticles()).filter((article) => article.published && !article.unlisted);
 }
 
 export async function getArticle(slug: string) {

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -12,6 +13,12 @@ import { formatDate, getArticle } from "@/lib/articles";
 import { isValidSessionToken, SESSION_COOKIE } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getArticle(slug).catch(() => null);
+  return article?.unlisted ? { robots: { index: false, follow: false } } : {};
+}
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;

@@ -23,6 +23,7 @@ export async function POST(request: Request) {
     const createdAtDate = createdAtInput ? new Date(createdAtInput) : new Date();
     if (Number.isNaN(createdAtDate.getTime())) return NextResponse.json({ error: "La date de création n'est pas valide." }, { status: 400 });
     const published = payload.published !== false;
+    const unlisted = published && payload.unlisted === true;
     await fs.mkdir(articlesDirectory, { recursive: true });
     const baseSlug = slugify(title);
     let slug = baseSlug;
@@ -31,7 +32,7 @@ export async function POST(request: Request) {
       try { await fs.access(path.join(articlesDirectory, `${slug}.md`)); slug = `${baseSlug}-${suffix++}`; } catch { break; }
     }
     const createdAt = createdAtDate.toISOString();
-    const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt)}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n---\n\n${content}\n`;
+    const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt)}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n${unlisted ? "unlisted: true\n" : ""}---\n\n${content}\n`;
     await fs.writeFile(path.join(articlesDirectory, `${slug}.md`), markdown, "utf8");
 
     const titleEn = clean(payload.titleEn) || title;

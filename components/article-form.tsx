@@ -6,13 +6,13 @@ import type { Article } from "@/lib/articles";
 
 const limits = { title: 50, description: 300, content: 10000, keywords: 30 };
 
-type EditableArticle = Pick<Article, "slug" | "title" | "description" | "content" | "keywords" | "createdAt" | "published" | "en">;
+type EditableArticle = Pick<Article, "slug" | "title" | "description" | "content" | "keywords" | "createdAt" | "published" | "unlisted" | "en">;
 
 function unquoteValue(value: string) {
   return value.trim().replace(/^['"]|['"]$/g, "");
 }
 
-const looseFieldKeys = ["title", "description", "createdat", "keywords", "status", "published"];
+const looseFieldKeys = ["title", "description", "createdat", "keywords", "status", "published", "unlisted"];
 
 // Notion exports skip the `---` frontmatter block: a leading "# Title" heading followed by
 // loose "key: value" property lines (no delimiters), then a blank line, then the body.
@@ -40,7 +40,7 @@ function parseLooseMarkdownFile(source: string) {
   while (index < lines.length && lines[index].trim() === "") index++;
 
   if (!headingTitle && Object.keys(fields).length === 0) {
-    return { title: "", description: "", keywords: "", createdAt: "", published: true, content: source.trim() };
+    return { title: "", description: "", keywords: "", createdAt: "", published: true, unlisted: false, content: source.trim() };
   }
 
   const keywords = fields.keywords ? fields.keywords.split(",").map((keyword) => keyword.trim()).filter(Boolean).join(", ") : "";
@@ -52,6 +52,7 @@ function parseLooseMarkdownFile(source: string) {
     keywords,
     createdAt: createdAtDate && !Number.isNaN(createdAtDate.getTime()) ? createdAtDate.toISOString() : "",
     published: true,
+    unlisted: fields.unlisted ? unquoteValue(fields.unlisted) === "true" : false,
     content: lines.slice(index).join("\n").trim(),
   };
 }
@@ -74,6 +75,7 @@ function parseMarkdownFile(source: string) {
     keywords,
     createdAt: fields.createdAt ? unquoteValue(fields.createdAt) : "",
     published: fields.published ? unquoteValue(fields.published) !== "false" : true,
+    unlisted: fields.unlisted ? unquoteValue(fields.unlisted) === "true" : false,
     content: match[2].trim(),
   };
 }
@@ -96,6 +98,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
   const [contentEn, setContentEn] = useState(latestArticle?.en?.content ?? "");
   const [createdAt, setCreatedAt] = useState(latestArticle ? latestArticle.createdAt.slice(0, 10) : today);
   const [published, setPublished] = useState(latestArticle?.published ?? true);
+  const [unlisted, setUnlisted] = useState(latestArticle?.unlisted ?? false);
   const [status, setStatus] = useState<{ type: "error" | "success"; message: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [importing, setImporting] = useState(false);
@@ -117,12 +120,13 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     setContentEn(article.en?.content ?? "");
     setCreatedAt(article.createdAt.slice(0, 10));
     setPublished(article.published);
+    setUnlisted(article.unlisted);
     setStatus(null);
   }
 
   function resetEditor() {
     setEditingSlug(null);
-    setSlug(""); setTitle(""); setDescription(""); setKeywords(""); setContent(""); setTitleEn(""); setDescriptionEn(""); setContentEn(""); setCreatedAt(today()); setPublished(true); setStatus(null);
+    setSlug(""); setTitle(""); setDescription(""); setKeywords(""); setContent(""); setTitleEn(""); setDescriptionEn(""); setContentEn(""); setCreatedAt(today()); setPublished(true); setUnlisted(false); setStatus(null);
   }
 
   async function uploadImage(file: File) {
@@ -201,6 +205,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       const parsedDate = parsed.createdAt && !Number.isNaN(new Date(parsed.createdAt).getTime()) ? parsed.createdAt.slice(0, 10) : today();
       setCreatedAt(parsedDate);
       setPublished(parsed.published);
+      setUnlisted(parsed.unlisted);
 
       const messageParts = [`Fichier « ${markdownFile.name} » importé.`];
       if (uploadedCount) messageParts.push(`${uploadedCount} image${uploadedCount > 1 ? "s" : ""} importée${uploadedCount > 1 ? "s" : ""}.`);
@@ -222,7 +227,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       setStatus({ type: "error", message: "La date de création n'est pas valide." }); setLoading(false); return;
     }
     try {
-      const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published, slug: editingSlug ? slug : undefined, titleEn, descriptionEn, contentEn }) });
+      const response = await fetch(editingSlug ? `/api/articles/${editingSlug}` : "/api/articles", { method: editingSlug ? "PUT" : "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ title, description, content, keywords: parsedKeywords, createdAt, published, unlisted, slug: editingSlug ? slug : undefined, titleEn, descriptionEn, contentEn }) });
       const result = await response.json();
       if (!response.ok) throw new Error(result.error);
       const wasNew = !editingSlug;
@@ -264,7 +269,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       <p>Ajoutez directement un <code>.md</code> dans <code>content/articles</code> : il apparaîtra ici après rechargement.</p>
       <div className="article-index-list">
         {articles.map((article) => <button type="button" key={article.slug} className={editingSlug === article.slug ? "article-choice active" : "article-choice"} onClick={() => startEditing(article)}>
-          <span>{article.title}{!article.published ? <em className="disabled-tag">désactivé</em> : null}</span><small>{article.createdAt.slice(0, 10).replaceAll("-", "/")}</small>
+          <span>{article.title}{!article.published ? <em className="disabled-tag">désactivé</em> : article.unlisted ? <em className="disabled-tag unlisted-tag">non répertorié</em> : null}</span><small>{article.createdAt.slice(0, 10).replaceAll("-", "/")}</small>
         </button>)}
       </div>
     </aside>
@@ -304,7 +309,13 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     <div className="field"><label htmlFor="description">Description <span>{description.length}/{limits.description}</span></label><textarea id="description" value={description} maxLength={limits.description} onChange={(event) => setDescription(event.target.value)} placeholder="Une entrée en matière concise." rows={3} required /></div>
     <div className="field"><label htmlFor="keywords">Mots-clés <span>séparés par des virgules</span></label><input id="keywords" value={keywords} onChange={(event) => setKeywords(event.target.value)} placeholder="nextjs, react, tutoriel" /></div>
     <div className="field"><label htmlFor="createdAt">Date de création</label><input id="createdAt" type="date" value={createdAt} onChange={(event) => setCreatedAt(event.target.value)} required /></div>
-    <div className="field field-toggle"><label htmlFor="published">Visible sur le blog <span>{published ? "publié" : "désactivé, visible en admin uniquement"}</span></label><input id="published" type="checkbox" checked={published} onChange={(event) => setPublished(event.target.checked)} /></div>
+    <div className="field"><label htmlFor="visibility">Visibilité <span>{!published ? "visible en admin uniquement" : unlisted ? "accessible par son lien, absent du blog" : "listé sur le blog"}</span></label>
+      <select id="visibility" value={!published ? "draft" : unlisted ? "unlisted" : "published"} onChange={(event) => { setPublished(event.target.value !== "draft"); setUnlisted(event.target.value === "unlisted"); }}>
+        <option value="published">Publié</option>
+        <option value="unlisted">Non répertorié</option>
+        <option value="draft">Désactivé</option>
+      </select>
+    </div>
     <div className="field field-content"><label htmlFor="content">Contenu Markdown <span>{content.length}/{limits.content}</span></label><textarea id="content" value={content} maxLength={limits.content} onChange={(event) => setContent(event.target.value)} placeholder={"## Une idée claire\n\nÉcrivez votre article ici. **Markdown** et `code` sont pris en charge."} required /></div>
 
     <p className="preview-note">Traduction anglaise — laissez vide pour reprendre le texte français tel quel.</p>
