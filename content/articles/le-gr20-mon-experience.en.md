@@ -101,7 +101,7 @@ As for battery, some huts have sockets for charging and others don't. I'd recomm
 It sounds obvious, but you really need to prepare well, especially **your knees and ankles**, which take a beating every day, with every step.
 
 - **Cardio**: it seems obvious, but above all I'd recommend training by **walking up and down stairs**, for hours on end. That's really the effort you'll be making most every day.
-- **A climbing lesson**: at least to learn how to **abseil**; there are a few technical sections like that which can quickly become dangerous without the right technique.
+- **A climbing lesson**: at least to learn how to **abseil**; there are a few technical sections which can quickly become dangerous without the right technique.
 - **Train with your gear**: it's important for anticipating possible problems and surprises, because on the trail there'll be **nowhere** to buy gear if you've forgotten something.
 
 ![IMG_8513.jpg](/uploads/eea36103-0948-4d66-98ef-6b588ceced5e.jpg)
@@ -114,7 +114,7 @@ From day one we ran into a problem: **water**. I had a 2 L water bladder and a 1
 
 ### Your bag during the day
 
-It's really important to master your bag and what's in it. You need to be able to put away or take out your clothes quickly and easily, because **the weather changes** very fast.
+It's really important to master your bag and what's in it. You need to be able to put away or take out your clothes quickly and easily, because, as I said just before, **the weather changes** very fast.
 
 ### Your things between days
 

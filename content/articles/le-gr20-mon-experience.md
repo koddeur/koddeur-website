@@ -104,8 +104,8 @@ Pour la batterie, certains refuges ont des prises pour charger, d'autres non. Je
 C’est bête à dire, mais il faut vraiment bien se préparer, notamment **les genoux et les chevilles** qui sont malmenés violemment tous les jours, à chaque pas.
 
 - **Le cardio** : ça paraît évident, mais je conseille surtout de s'entraîner à **monter/descendre des marches**, et ça pendant des heures. C'est vraiment l'effort qu'on retrouve le plus chaque jour.
-- **Un cours d'escalade** : au moins pour apprendre à **descendre en rappel**, il y a quelques passages techniques comme ça qui peuvent vite devenir dangereux si t'as pas la bonne technique.
-- **S'entraîner avec son équipement** : c'est important pour anticiper les éventuels problèmes et imprévus, parce que sur place il y aura **rien** pour acheter un équipement si t'as oublié quelque chose.
+- **Un cours d'escalade** : au moins pour apprendre à **descendre en rappel**, il y a quelques passages techniques qui peuvent vite devenir dangereux si t'as pas la bonne technique.
+- **S'entraîner avec son équipement** : c'est important pour anticiper les éventuels problèmes et imprévus, parce que sur place il n'y aura **rien** pour acheter un équipement si tu as oublié quelque chose.
 
 ![IMG_8513.jpg](/uploads/eea36103-0948-4d66-98ef-6b588ceced5e.jpg)
 
@@ -113,21 +113,21 @@ C’est bête à dire, mais il faut vraiment bien se préparer, notamment **les 
 
 ### L'eau
 
-Dès le premier jour on a été confrontés à un problème : **l'eau**. J'avais une poche d'eau de 2L et une gourde de 1L, et tout ça se vide très vite pendant l'effort. Finir sans eau, ça devient vite un **calvaire**. J'avais prévu des pastilles pour purifier l'eau, mais sur certaines étapes tu croises aucun cours d'eau, et au final je les ai même pas utilisées. L’été sous de fortes chaleurs ça doit être encore plus important.
+Dès le premier jour on a été confrontés à un problème : **l'eau**. J'avais une poche d'eau de 2L et une gourde de 1L, et tout ça se vide très vite pendant l'effort. Finir sans eau, ça devient vite un **calvaire**. J'avais prévu des pastilles pour purifier l'eau, mais sur certaines étapes tu ne croises aucun cours d'eau, et au final je ne les ai même pas utilisées. L’été sous de fortes chaleurs ça doit être encore plus important.
 
 ### Le sac pendant la journée
 
-C'est vraiment important de maîtriser son sac et son contenu. Il faut être capable de ranger ou sortir ses vêtements rapidement et facilement, parce que le **temps change** très vite.
+C'est vraiment important de maîtriser son sac et son contenu. Il faut être capable de ranger ou sortir ses vêtements rapidement et facilement, parce que comme je l’ai dit juste avant, le **temps change** très vite.
 
 ### Les affaires entre deux journées
 
-Les vêtements de la journée sont généralement humides à cause de la sueur, et c'est pas simple de les faire sécher dans les refuges parce qu'il y a pas toujours d'endroit au sec, protégé de l’humidité. Un truc que j'avais pas prévu, c'est de faire des **lessives à la main**. Si t'arrives pas trop tard au refuge, t'as le temps de le faire le soir, et s'il reste du temps de soleil ça sèche assez vite. Avoir des habits propres et secs le matin quand tu te prépares, ça change tout.
+Les vêtements de la journée sont généralement humides à cause de la sueur, et c'est pas simple de les faire sécher dans les refuges parce qu'il n'y a pas toujours d'endroit au sec, protégé de l’humidité. Un truc que je n'avais pas prévu, c'est de faire des **lessives à la main**. Si t'arrives pas trop tard au refuge, t'as le temps de le faire le soir, et s'il reste du temps de soleil ça peut sécher assez vite. Avoir des habits propres et secs le matin quand tu te prépares, ça change tout.
 
 Je conseille aussi de prendre des vêtements en **laine de mérinos**, ça permet de les remettre sans trop craindre les odeurs. J’en avais prévu et je me suis rendu compte sur place de **l’importance** d’en avoir quand t’as pas le temps de faire de lessives.
 
 ### Les descentes
 
-C'est très important de s'économiser dans les descentes, j'entends par là **s'économiser les genoux** en utilisant les bâtons. Dans mon cas j'avais aucune douleur en descente jusqu'au dernier jour, où d'un coup c'est devenu un calvaire de faire un pas, parce que je m'étais pas assez économisé les premiers jours.
+C'est très important de s'économiser dans les descentes, j'entends par là de **s'économiser les genoux** en utilisant les bâtons. Dans mon cas j'avais aucune douleur en descente jusqu'au dernier jour, où d'un coup c'est devenu un calvaire de faire un pas, parce que je m'étais pas assez économisé les premiers jours.
 
 ![IMG_2284.jpg](/uploads/1bd2d5c9-2fac-4349-8b3d-eda502ca4913.jpg)
 
