@@ -48,7 +48,7 @@ Et surtout, il ne faut pas s'engager dans une étape sans **être sûr à 100%**
 
 Niveau budget, voilà ce qu'il faut prévoir, selon notre expérience :
 
-| Poste | Montant |
+| | Montant |
 | --- | --- |
 | Équipement avant le GR (autonomie complète) | environ 700 € |
 | Par jour, nuit en dortoir ou tente louée sur place | environ 70 € |

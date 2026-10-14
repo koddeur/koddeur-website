@@ -45,7 +45,7 @@ Above all, never start a stage unless you're **100% sure** you'll arrive before 
 
 Here's what to budget for, based on our experience:
 
-| Item | Amount |
+| | Amount |
 | --- | --- |
 | Gear before the GR (fully self-sufficient) | about €700 |
 | Per day, night in a dormitory or tent rented on site | about €70 |
