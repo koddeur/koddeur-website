@@ -61,7 +61,7 @@ Un des trucs les plus importants à savoir : les refuges prennent **que du liqui
 
 Certains refuges sont **meilleurs** que d'autres, chacun a ses atouts et ses inconvénients, cela peut être : des douches chaudes, une salle chauffée, une épicerie bien fournie, un grand dortoir, une cuisine en intérieur, des ustensiles de cuisine propres, une salle de bain propre, un bon repas…
 
-J'insiste sur le dernier point, parce que mis à part l'épicerie, souvent dans les refuges du parc il y a qu'**un repas unique** le soir. Il faut d'ailleurs souvent arriver avant 17h pour pouvoir commander sa part, qui est servie vers 18h30. Et les repas sont **pas halal**, il peut aussi y avoir du porc, donc faut bien le prendre en compte
+J'insiste sur le dernier point, parce que mis à part l'épicerie, souvent dans les refuges du parc il y a qu'**un repas unique** le soir. Il faut d'ailleurs souvent arriver avant 17h pour pouvoir commander sa part, qui est servie vers 18h30. Et les repas sont **pas halal**, il peut aussi y avoir du porc, donc faut bien le prendre en compte.
 
 Des fois, sur le parcours, il y a **des bergeries privées** pas loin des refuges classiques du parc. Ça peut être intéressant de se renseigner sur celles qui se trouvent sur le parcours prévu, parce qu'elles sont souvent plus confortables : chambres privées, restaurant avec plusieurs plats à la carte, etc. (mais également potentiellement **plus cher**).
 
@@ -127,7 +127,7 @@ Je conseille aussi de prendre des vêtements en **laine de mérinos**, ça perme
 
 ### Les descentes
 
-C'est trèd important de s'économiser dans les descentes, j'entends par là **s'économiser les genoux** en utilisant les bâtons. Dans mon cas j'avais aucune douleur en descente jusqu'au dernier jour, où d'un coup c'est devenu un calvaire de faire un pas, parce que je m'étais pas assez économisé les premiers jours.
+C'est très important de s'économiser dans les descentes, j'entends par là **s'économiser les genoux** en utilisant les bâtons. Dans mon cas j'avais aucune douleur en descente jusqu'au dernier jour, où d'un coup c'est devenu un calvaire de faire un pas, parce que je m'étais pas assez économisé les premiers jours.
 
 ![IMG_2284.jpg](/uploads/1bd2d5c9-2fac-4349-8b3d-eda502ca4913.jpg)
 
