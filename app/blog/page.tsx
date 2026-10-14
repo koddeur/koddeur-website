@@ -64,7 +64,7 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
 
       <section className="feed" aria-labelledby="latest-title">
         <div className="section-heading">
-          <h2 id="latest-title"><Bi fr="Derniers articles" en="Latest articles" /></h2>
+          <h2 id="latest-title" className="feed-title"><Bi fr="Derniers articles" en="Latest articles" /></h2>
           <div className="section-heading-right">
             <div className="sort-control">
               <span><Bi fr="Trier" en="Sort" /></span>
