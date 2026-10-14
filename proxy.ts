@@ -16,7 +16,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (pathname.startsWith("/api/articles") && !hasSession) {
+  if (/^\/api\/(articles|projects|uploads)(\/|$)/.test(pathname) && !hasSession) {
     return NextResponse.json({ error: "Authentification requise." }, { status: 401 });
   }
 
@@ -24,5 +24,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin", "/admin/:path*", "/api/articles/:path*"],
+  matcher: ["/admin", "/admin/:path*", "/api/articles/:path*", "/api/projects/:path*", "/api/uploads"],
 };

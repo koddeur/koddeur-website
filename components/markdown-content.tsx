@@ -1,11 +1,14 @@
+import { ZoomableImage } from "./zoomable-image";
+
 type ListItem = { text: string; children: List | null };
 type List = { ordered: boolean; start: number; items: ListItem[] };
 type ImageValue = { src: string; alt: string; caption: string };
 type Align = "left" | "center" | "right" | null;
 type TableValue = { header: string[]; align: Align[]; rows: string[][] };
 type Container = { name: string; blocks: Block[] };
+type VideoValue = { src: string; title: string; vertical: boolean };
 type RankingEntry = { rank: number; title: string; score: string; tags: string[]; notes: string[] };
-type Block = { kind: "h2" | "h3" | "p" | "list" | "code" | "img" | "table" | "container" | "ranking"; value: string | List | ImageValue | TableValue | Container | RankingEntry[] };
+type Block = { kind: "h2" | "h3" | "p" | "list" | "code" | "img" | "table" | "container" | "ranking" | "video"; value: string | List | ImageValue | TableValue | Container | RankingEntry[] | VideoValue };
 
 function inline(value: string) {
   const pieces = value.split(/(`[^`]+`|\*\*[^*]+\*\*|<mark>[\s\S]*?<\/mark>)/g);
@@ -87,6 +90,34 @@ function parseRanking(lines: string[]): RankingEntry[] {
   return entries;
 }
 
+// Video embed from a bare YouTube/Vimeo link on its own line, or from a pasted <iframe> tag.
+// Only the video id is kept: the iframe is rebuilt from a whitelist, pasted HTML is never rendered.
+function parseVideo(text: string): VideoValue | null {
+  const trimmed = text.trim();
+  const iframe = trimmed.match(/^<iframe\b[^>]*\ssrc=["']([^"']+)["'][^>]*>\s*(?:<\/iframe>)?$/i);
+  const title = iframe?.[0].match(/\stitle=["']([^"']*)["']/i)?.[1] ?? "";
+  const raw = iframe ? iframe[1] : /^https?:\/\/\S+$/.test(trimmed) ? trimmed : null;
+  if (!raw) return null;
+  let url: URL;
+  try { url = new URL(raw.replace(/&amp;/g, "&")); } catch { return null; }
+  const host = url.hostname.replace(/^(www\.|m\.)/, "");
+  const start = Number.parseInt(url.searchParams.get("t") ?? url.searchParams.get("start") ?? "", 10);
+  const query = start > 0 ? `?start=${start}` : "";
+  let id: string | undefined;
+  let vertical = false;
+  if (host === "youtu.be") id = url.pathname.slice(1);
+  else if (host === "youtube.com" || host === "youtube-nocookie.com") {
+    const path = url.pathname.match(/^\/(embed|shorts|live)\/([^/]+)/);
+    id = path ? path[2] : url.pathname === "/watch" ? url.searchParams.get("v") ?? undefined : undefined;
+    vertical = path?.[1] === "shorts";
+  } else if (host === "vimeo.com" || host === "player.vimeo.com") {
+    const vimeoId = url.pathname.match(/^\/(?:video\/)?(\d+)/)?.[1];
+    return vimeoId ? { src: `https://player.vimeo.com/video/${vimeoId}?dnt=1`, title: title || "Vidéo Vimeo", vertical: false } : null;
+  }
+  if (!id || !/^[\w-]{11}$/.test(id)) return null;
+  return { src: `https://www.youtube-nocookie.com/embed/${id}${query}`, title: title || "Vidéo YouTube", vertical };
+}
+
 function parseMarkdown(markdown: string): Block[] {
   const lines = markdown.replace(/\r/g, "").split("\n");
   const blocks: Block[] = [];
@@ -130,6 +161,18 @@ function parseMarkdown(markdown: string): Block[] {
       i = result.next;
       continue;
     }
+    // A pasted <iframe> may span several lines: join them up to the closing tag.
+    let videoEnd = i;
+    if (/^<iframe\b/i.test(line.trim()) && !/<\/iframe>|\/?>\s*$/i.test(line)) {
+      while (videoEnd + 1 < lines.length && videoEnd - i < 10 && !/>\s*$/.test(lines[videoEnd])) videoEnd++;
+    }
+    const video = parseVideo(lines.slice(i, videoEnd + 1).join(" "));
+    if (video) {
+      blocks.push({ kind: "video", value: video });
+      i = videoEnd + 1;
+      if (i < lines.length && /^\s*<\/iframe>\s*$/i.test(lines[i])) i++;
+      continue;
+    }
     const image = line.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)$/);
     if (image) {
       blocks.push({ kind: "img", value: { alt: image[1], src: image[2], caption: image[3] || "" } });
@@ -137,7 +180,7 @@ function parseMarkdown(markdown: string): Block[] {
       continue;
     }
     const paragraph: string[] = [line]; i++;
-    while (i < lines.length && lines[i].trim() && !/^(#{2,3} |```|:::)/.test(lines[i].trimStart()) && !matchListItem(lines[i]) && !isTableStart(lines, i) && !/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\)$/.test(lines[i].trim())) paragraph.push(lines[i++]);
+    while (i < lines.length && lines[i].trim() && !/^(#{2,3} |```|:::)/.test(lines[i].trimStart()) && !matchListItem(lines[i]) && !isTableStart(lines, i) && !/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\)$/.test(lines[i].trim()) && !/^<iframe\b/i.test(lines[i].trim()) && !parseVideo(lines[i])) paragraph.push(lines[i++]);
     blocks.push({ kind: "p", value: paragraph.join(" ") });
   }
   return blocks;
@@ -182,11 +225,19 @@ function renderBlocks(blocks: Block[]) {
         <tbody>{rows.map((row, rowIndex) => <tr key={rowIndex}>{row.map((cell, column) => <td key={column} style={align[column] ? { textAlign: align[column] } : undefined}>{inline(cell)}</td>)}</tr>)}</tbody>
       </table></div>;
     }
+    if (block.kind === "video") {
+      const { src, title, vertical } = block.value as VideoValue;
+      return <div key={index} className={vertical ? "prose-video vertical" : "prose-video"}>
+        <iframe src={src} title={title} loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+      </div>;
+    }
     if (block.kind === "img") {
-      const { src, alt, caption } = block.value as ImageValue;
+      const { src, alt: rawAlt, caption } = block.value as ImageValue;
+      // A file name ("IMG_1460.jpg") left as alt text describes nothing.
+      const alt = /\.(jpe?g|png|webp|gif|svg|heic)$/i.test(rawAlt.trim()) ? "" : rawAlt;
       return <figure className="prose-figure" key={index}>
-        <img src={src} alt={alt} />
-        {caption ? <figcaption>{caption}</figcaption> : null}
+        <ZoomableImage src={src} alt={alt} caption={caption} />
+        <figcaption>{caption}</figcaption>
       </figure>;
     }
     return <p key={index}>{inline(block.value as string)}</p>;
