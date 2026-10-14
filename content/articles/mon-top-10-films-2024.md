@@ -8,6 +8,7 @@ published: true
 
 :::classement
 1. Kaizen — 9,5 · Documentaire, Aventure
+*Documentaire YouTube d’Inoxtag*
 2. Very Bad Trip — 9 · Comédie
 3. Le comte de Monte Cristo — 9 · Français, Aventure, Historique
 4. Le cercle des neiges — 9 · Drame, Histoire vraie

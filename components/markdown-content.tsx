@@ -11,10 +11,11 @@ type RankingEntry = { rank: number; title: string; score: string; tags: string[]
 type Block = { kind: "h2" | "h3" | "p" | "list" | "code" | "img" | "table" | "container" | "ranking" | "video"; value: string | List | ImageValue | TableValue | Container | RankingEntry[] | VideoValue };
 
 function inline(value: string) {
-  const pieces = value.split(/(`[^`]+`|\*\*[^*]+\*\*|<mark>[\s\S]*?<\/mark>)/g);
+  const pieces = value.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*\s](?:[^*]*[^*\s])?\*|<mark>[\s\S]*?<\/mark>)/g);
   return pieces.map((piece, index) => {
     if (piece.startsWith("`") && piece.endsWith("`")) return <code key={index}>{piece.slice(1, -1)}</code>;
     if (piece.startsWith("**") && piece.endsWith("**")) return <strong key={index}>{piece.slice(2, -2)}</strong>;
+    if (piece.length > 2 && piece.startsWith("*") && piece.endsWith("*")) return <em key={index}>{piece.slice(1, -1)}</em>;
     if (piece.startsWith("<mark>") && piece.endsWith("</mark>")) return <mark key={index}>{piece.slice(6, -7)}</mark>;
     return piece;
   });
