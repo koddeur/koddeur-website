@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
-import { articlesDirectory, parseArticle } from "@/lib/articles";
+import { articlesDirectory, parseArticle, parseArticleTranslation } from "@/lib/articles";
 import { renameViewSlug } from "@/lib/views";
 
 export const runtime = "nodejs";
@@ -69,9 +69,12 @@ export async function PUT(request: Request, context: RouteContext<"/api/articles
     const markdown = `---\ntitle: ${yamlString(title)}\ndescription: ${yamlString(description)}\ncreatedAt: ${yamlString(createdAt.toISOString())}\nkeywords: [${keywords.map(yamlString).join(", ")}]\npublished: ${published}\n${unlisted ? "unlisted: true\n" : ""}---\n\n${content}\n`;
     await fs.writeFile(newFilePath, markdown, "utf8");
 
-    const titleEn = clean(payload.titleEn) || title;
-    const descriptionEn = clean(payload.descriptionEn) || description;
-    const contentEn = clean(payload.contentEn) || content;
+    // An empty English field keeps the existing translation: falling back to the French text would
+    // silently overwrite it (e.g. after a .md import, which clears the English fields).
+    const existingEn = parseArticleTranslation(await fs.readFile(path.join(articlesDirectory, `${slug}.en.md`), "utf8").catch(() => ""));
+    const titleEn = clean(payload.titleEn) || existingEn?.title || title;
+    const descriptionEn = clean(payload.descriptionEn) || existingEn?.description || description;
+    const contentEn = clean(payload.contentEn) || existingEn?.content || content;
     const translationMarkdown = `---\ntitle: ${yamlString(titleEn)}\ndescription: ${yamlString(descriptionEn)}\n---\n\n${contentEn}\n`;
     await fs.writeFile(path.join(articlesDirectory, `${requestedSlug}.en.md`), translationMarkdown, "utf8");
 

@@ -1,12 +1,12 @@
 ---
 title: "Le *GR20*, mon expérience"
-description: "Mon retour sur le GR20 fait fin septembre 2025 : période, durée, budget, refuges, météo, prépa physique… Tous les conseils que j’aurais aimé avoir avant de partir pour bien préparer ton GR"
+description: "Mon retour sur le GR20 : période, durée, budget, refuges, météo, prépa physique… Tous les conseils que j’aurais aimé avoir avant de partir pour bien préparer ton GR"
 createdAt: "2025-10-10T00:00:00.000Z"
 keywords: ["trip"]
 published: true
 ---
 
-Fin septembre, avec 3 amis on est partis faire le **GR20** en Corse. Avant d’y aller j’avais entendu que c’était le GR **le plus dur d'Europe**, et franchement maintenant je comprends pourquoi. Entre le dénivelé, la météo changeante et les refuges qui prennent que du liquide, il y a plein de trucs que j'aurais aimé savoir avant de partir.
+Fin septembre 2025, avec 3 amis on est partis faire le **GR20** en Corse. Avant d’y aller j’avais entendu que c’était le GR **le plus dur d'Europe**, et franchement maintenant je comprends pourquoi. Entre le dénivelé, la météo changeante et les refuges qui prennent que du liquide, il y a plein de trucs que j'aurais aimé savoir avant de partir.
 
 Du coup j'ai voulu faire un petit récap de tout ça : ce qui a marché, ce qui a pas marché, et les conseils que je donnerais à quelqu'un qui veut se lancer.
 

@@ -1,9 +1,9 @@
 ---
 title: "My GR20 experience"
-description: "My review of the GR20 hike, done at the end of September 2025: timing, duration, budget, mountain huts, weather, physical preparation… All the tips I wish I'd had before leaving to properly prepare your GR."
+description: "My review of the GR20 hike: timing, duration, budget, mountain huts, weather, physical preparation… All the tips I wish I'd had before leaving to properly prepare your GR."
 ---
 
-At the end of September, 3 friends and I went to hike the **GR20** in Corsica. Before going I'd heard it was **the toughest trail in Europe**, and honestly, now I understand why. Between the elevation, the changing weather and the huts that only take cash, there are loads of things I wish I'd known before leaving.
+At the end of September 2025, 3 friends and I went to hike the **GR20** in Corsica. Before going I'd heard it was **the toughest trail in Europe**, and honestly, now I understand why. Between the elevation, the changing weather and the huts that only take cash, there are loads of things I wish I'd known before leaving.
 
 So I wanted to put together a little recap of all of it: what worked, what didn't, and the advice I'd give to anyone who wants to give it a go.
 

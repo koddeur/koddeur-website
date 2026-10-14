@@ -13,3 +13,4 @@
 - Vidéos dans les articles : lien YouTube/Vimeo seul sur sa ligne ou <iframe> collée → l'iframe est reconstruite depuis l'ID (youtube-nocookie, whitelist), jamais le HTML collé tel quel (XSS).
 - Vues : le dev local partage le projet Supabase de prod → le POST /api/views n'incrémente qu'en production (NODE_ENV).
 - `.en.md` du GR20 contenait le corps FR : l'import .md vide les champs EN et l'API recopie le FR quand contentEn est vide (`clean(payload.contentEn) || content`). Après un réimport, toujours retraduire avant d'enregistrer.
+- Fix : le PUT /api/articles/[slug] garde le .en.md existant champ par champ quand le champ EN est vide (avant : recopie du FR). Reste un cas : un onglet admin ouvert avant une modif du .en.md sur disque renvoie l'ancienne version → recharger l'admin.
