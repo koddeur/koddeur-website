@@ -1,6 +1,6 @@
 ---
 title: "Le *GR20*, mon expérience"
-description: "Mon retour sur le GR20 : période, durée, budget, refuges, météo, prépa physique… Tous les conseils que j’aurais aimé avoir avant de partir pour bien préparer ton GR"
+description: "Mon retour sur le GR20 : période, durée, budget, refuges, météo, prépa physique… Tous les conseils que j’aurais aimé avoir avant de partir pour bien préparer mon GR"
 createdAt: "2025-10-10T00:00:00.000Z"
 keywords: ["trip"]
 published: true
