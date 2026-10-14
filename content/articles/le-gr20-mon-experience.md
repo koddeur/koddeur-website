@@ -32,15 +32,15 @@ Je pense que la meilleure période c'est **début septembre** : il fait moins ch
 
 Prévoir en dessous de 10 jours c'est **très ambitieux**, même pour un très bon sportif.
 
-En tout il y a **16 étapes** et chaque étape c'est en moyenne 5/6h de marche avec du gros dénivelé positif et négatif, donc évidemment beaucoup plus de fatigue que si c'était que du plat, surtout que sur le parcours les parties plates se font **très rares**. En général les gens le font en **14 jours**, et c'est déjà un exploit de le terminer dans ces temps-là vu la difficulté.
+En tout, il y a **16 étapes** et chaque étape c'est en moyenne 5/6h de marche avec du gros dénivelé positif et négatif, donc évidemment beaucoup plus de fatigue que si c'était que du plat, surtout que sur le parcours les parties plates se font **très rares**. En général les gens le font **entre 12 et** **14 jours**, et c'est déjà un exploit de le terminer dans ces temps-là au vu de la difficulté.
 
-Donc pour le faire en 10 jours ou moins, ça veut dire qu'il faut doubler plusieurs journées, donc être capable de faire **entre 8 et 10h de marche**, en sachant que le soir il faut pas arriver trop tard pour réserver les repas aux refuges.
+Donc pour le faire en 10 jours ou moins, ça veut dire qu'il faut doubler plusieurs journées, donc être capable de faire **entre 8 et 10h de marche**, en sachant que le soir il ne faut pas arriver trop tard pour réserver les repas aux refuges.
 
-Les premières étapes du Nord sont vraiment **compliquées à doubler** si t'as jamais fait le GR et encore moins si t’as jamais fait de randonnée. Il faut être prêt physiquement et partir très tôt le matin, donc selon la période ça veut dire **partir dans le noir**, et quand tu connais pas le parcours tu peux vite passer énormément de temps à chercher certains repères pour pas te perdre.
+Les premières étapes de la partie Nord sont vraiment **compliquées à doubler** si t'as jamais fait le GR et encore moins si t’as jamais fait de randonnée. Il faut être prêt physiquement et partir très tôt le matin, donc selon la période ça veut dire **partir dans le noir**, et quand tu connais pas le parcours tu peux vite passer énormément de temps à chercher certains repères pour ne pas te perdre.
 
-Il ne faut pas non plus se fier au nombre de kilomètres des étapes : par exemple, la 2ème étape ne fait *que* 7 km, mais on a mis environ 8h pour la faire, notamment à cause du temps qui nous a énormément ralenti. Avec la pluie, les rochers deviennent très glissants. 
+Il ne faut pas non plus se fier au nombre de kilomètres des étapes. Par exemple, la 2ème étape ne fait *que* 7 km, mais on a mis environ 8h pour la faire, notamment à cause du temps qui nous a énormément ralenti. Avec la pluie, les rochers deviennent très glissants et la moindre erreur peut se transformer en chute mortelle. 
 
-Et surtout, il faut pas s'engager dans une étape sans **être sûr à 100%** d'arriver avant la nuit. Se perdre et devoir dormir dehors sans tente peut être mortel car la nuit la température chute énormément.
+Et surtout, il ne faut pas s'engager dans une étape sans **être sûr à 100%** d'arriver avant la nuit. Se perdre et devoir dormir dehors sans tente peut être mortel car la nuit la température chute énormément.
 
 ![IMG_2004 2.jpg](/uploads/b6370215-6f0f-4ef0-bb55-d78912717f9a.jpg)
 
@@ -55,13 +55,13 @@ Niveau budget, voilà ce qu'il faut prévoir, selon notre expérience :
 | Par jour, nuit en bivouac | environ 40 € |
 | Total en liquide sur place | environ 600 € |
 
-Un des trucs les plus importants à savoir : les refuges prennent **que du liquide**, donc prévoir beaucoup d'argent en liquide avant de partir. Je dirais de prévoir entre 50€ et 100€ en liquide par jour. 
+Un des trucs les plus importants à savoir : les refuges ne prennent **que du liquide**, donc prévoir beaucoup d'argent en liquide avant de partir. Je dirais de prévoir entre 50€ et 100€ en liquide par jour. 
 
 ## Les <mark>refuges</mark>
 
 Certains refuges sont **meilleurs** que d'autres, chacun a ses atouts et ses inconvénients, cela peut être : des douches chaudes, une salle chauffée, une épicerie bien fournie, un grand dortoir, une cuisine en intérieur, des ustensiles de cuisine propres, une salle de bain propre, un bon repas…
 
-J'insiste sur le dernier point, parce que mis à part l'épicerie, souvent dans les refuges du parc il y a qu'**un repas unique** le soir. Il faut d'ailleurs souvent arriver avant 17h pour pouvoir commander sa part, qui est servie vers 18h30. Et les repas sont **pas halal**, il peut aussi y avoir du porc, donc faut bien le prendre en compte.
+J'insiste sur le dernier point, parce que mis à part l'épicerie, souvent dans les refuges du parc il n'y a qu'**un repas unique** le soir. Il faut d'ailleurs souvent arriver avant 17h pour pouvoir commander sa part, qui est servie vers 18h30 (à la période où on l’a fait, je ne sais pas si les horaires sont différents à d’autres moments de l’année). Et les repas ne sont **pas halal**, il peut aussi y avoir du porc, donc faut bien le prendre en compte dans sa préparation.
 
 Des fois, sur le parcours, il y a **des bergeries privées** pas loin des refuges classiques du parc. Ça peut être intéressant de se renseigner sur celles qui se trouvent sur le parcours prévu, parce qu'elles sont souvent plus confortables : chambres privées, restaurant avec plusieurs plats à la carte, etc. (mais également potentiellement **plus cher**).
 
@@ -81,7 +81,7 @@ Même si les lyophilisés c'est léger, plus t'en prends, plus ça pèse et plus
 
 De notre côté on avait pris deux réchauds avec des petites bouteilles de gaz. Sauf qu'à l'aéroport, une des 2 bouteilles a été détectée par la sécurité et on a dû la **jeter**. Sur place, on a essayé de faire chauffer notre eau dans un refuge où la cuisine était déjà occupée, c'était vraiment **très long** de faire chauffer l'eau pour tout le monde, donc pas forcément la meilleure idée, mais ça peut dépanner.
 
-Donc si je peux donner un **conseil** : ne pas prendre de réchaud. C'est mieux de faire chauffer l’eau avec les équipements des refuges (ils sont tous censés avoir une mini cuisine pour au moins chauffer de l'eau), et tu peux les utiliser même si tu **dors pas** dans le refuge, le midi par exemple.
+Donc si je peux donner un **conseil** : si l’objectif n’est pas de le faire en full autonomie, ne pas prendre de réchaud. C'est mieux de faire chauffer l’eau avec les équipements des refuges (ils sont tous censés avoir une mini cuisine pour au moins chauffer de l'eau), et tu peux les utiliser même si tu **ne dors pas** dans le refuge, le midi par exemple.
 
 ## La <mark>météo</mark>
 

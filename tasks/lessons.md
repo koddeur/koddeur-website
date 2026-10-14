@@ -14,3 +14,4 @@
 - Vues : le dev local partage le projet Supabase de prod → le POST /api/views n'incrémente qu'en production (NODE_ENV).
 - `.en.md` du GR20 contenait le corps FR : l'import .md vide les champs EN et l'API recopie le FR quand contentEn est vide (`clean(payload.contentEn) || content`). Après un réimport, toujours retraduire avant d'enregistrer.
 - Fix : le PUT /api/articles/[slug] garde le .en.md existant champ par champ quand le champ EN est vide (avant : recopie du FR). Reste un cas : un onglet admin ouvert avant une modif du .en.md sur disque renvoie l'ancienne version → recharger l'admin.
+- Scroll parasite sur iOS Safari : 100vh = hauteur barre masquée → page plus haute que l'écran. Fix : min-height: 100vh; min-height: 100svh (body, .shell).

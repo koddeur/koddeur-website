@@ -53,7 +53,7 @@
 * { box-sizing: border-box; }
 html { min-height: 100%; background: var(--canvas); color-scheme: dark; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 html[data-theme="light"] { color-scheme: light; }
-body { margin: 0; min-height: 100vh; color: var(--ink); background: var(--canvas); font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: 15px; line-height: 1.65; transition: background .2s ease, color .2s ease; }
+body { margin: 0; min-height: 100vh; min-height: 100svh; color: var(--ink); background: var(--canvas); font-family: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace; font-size: 15px; line-height: 1.65; transition: background .2s ease, color .2s ease; }
 a { color: inherit; text-decoration: none; }
 button, input, textarea { font: inherit; }
 ::selection { background: var(--electric); color: var(--canvas); }
@@ -85,7 +85,7 @@ mark { padding: .05em .2em; border-radius: 2px; color: var(--canvas); background
 }
 html:has(.landing-shell), body:has(.landing-shell) { background: #000000; color-scheme: dark; }
 
-.shell { width: min(100% - 48px, 960px); margin: 0 auto; min-height: 100vh; padding: 42px 0 28px; position: relative; }
+.shell { width: min(100% - 48px, 960px); margin: 0 auto; min-height: 100vh; min-height: 100svh; padding: 42px 0 28px; position: relative; }
 .shell::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .5; background-image: linear-gradient(var(--scanline) 1px, transparent 1px); background-size: 100% 8px; mask-image: linear-gradient(to bottom, black, transparent 85%); }
 .home-header { padding: 0 0 70px; text-align: center; }
 .logo, .logo-link .logo { display: inline-flex; flex-direction: column; align-items: center; gap: 17px; color: var(--ink); line-height: 1; }

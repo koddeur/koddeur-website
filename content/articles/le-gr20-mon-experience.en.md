@@ -29,13 +29,13 @@ I think the best time is **early September**: it's less hot than in July/August,
 
 Planning for under 10 days is **very ambitious**, even for a very fit athlete.
 
-There are **16 stages** in total, and each one averages 5 to 6 hours of walking with big climbs and descents, so obviously much more tiring than if it were flat, especially since flat sections are **very rare** on the trail. Most people do it in **14 days**, and finishing in that time is already an achievement given how hard it is.
+There are **16 stages** in total, and each one averages 5 to 6 hours of walking with big climbs and descents, so obviously much more tiring than if it were flat, especially since flat sections are **very rare** on the trail. Most people do it in **12 to 14 days**, and finishing in that time is already an achievement given how hard it is.
 
 So doing it in 10 days or less means doubling up several days, which means being able to walk **8 to 10 hours**, knowing that you mustn't arrive too late in the evening to book your meals at the huts.
 
-The first northern stages are really **hard to double up** if you've never done the GR, let alone if you've never hiked before. You need to be physically ready and set off very early in the morning, which depending on the season means **leaving in the dark**, and when you don't know the trail you can quickly waste a lot of time looking for markers so you don't get lost.
+The first stages of the northern section are really **hard to double up** if you've never done the GR, let alone if you've never hiked before. You need to be physically ready and set off very early in the morning, which depending on the season means **leaving in the dark**, and when you don't know the trail you can quickly waste a lot of time looking for markers so you don't get lost.
 
-Don't trust the distance of the stages either: for example, the 2nd stage is *only* 7 km, but it took us about 8 hours, mostly because of the weather, which slowed us down massively. When it rains, the rocks get very slippery.
+Don't trust the distance of the stages either: for example, the 2nd stage is *only* 7 km, but it took us about 8 hours, mostly because of the weather, which slowed us down massively. When it rains, the rocks get very slippery and the slightest mistake can turn into a fatal fall.
 
 Above all, never start a stage unless you're **100% sure** you'll arrive before nightfall. Getting lost and having to sleep outside without a tent can be deadly, because the temperature drops sharply at night.
 
@@ -58,7 +58,7 @@ One of the most important things to know: the huts **only take cash**, so bring 
 
 Some huts are **better** than others, and each has its pros and cons: hot showers, a heated room, a well-stocked shop, a large dormitory, an indoor kitchen, clean cooking utensils, a clean bathroom, a good meal…
 
-I'm insisting on that last point because, apart from the shop, the park huts often only offer **a single set meal** in the evening. You usually have to arrive before 5 pm to order your portion, which is served around 6:30 pm. The meals are **not halal** and may include pork, so keep that in mind.
+I'm insisting on that last point because, apart from the shop, the park huts often only offer **a single set meal** in the evening. You usually have to arrive before 5 pm to order your portion, which is served around 6:30 pm (at the time we went; I don't know if the times are different at other times of the year). The meals are **not halal** and may include pork, so keep that in mind.
 
 Sometimes there are **private sheepfolds** (bergeries) along the trail, not far from the regular park huts. It can be worth looking up the ones on your planned route, because they're often more comfortable: private rooms, a restaurant with several dishes on the menu, etc. (but also potentially **more expensive**).
 
@@ -78,7 +78,7 @@ Even though freeze-dried meals are light, the more you take, the heavier they ge
 
 We'd taken two stoves with small gas canisters. Except that at the airport, security spotted one of the 2 canisters and we had to **throw it away**. On the trail, we tried to boil our water at a hut where the kitchen was already busy, and boiling water for everyone took **ages**, so not necessarily the best idea, but it can help out.
 
-So if I can give one piece of **advice**: don't bring a stove. It's better to heat your water with the huts' equipment (they're all supposed to have a small kitchen, at least for boiling water), and you can use it even if you're **not staying** at the hut, at lunchtime for example.
+So if I can give one piece of **advice**: unless your goal is to be fully self-sufficient, don't bring a stove. It's better to heat your water with the huts' equipment (they're all supposed to have a small kitchen, at least for boiling water), and you can use it even if you're **not staying** at the hut, at lunchtime for example.
 
 ## The <mark>weather</mark>
 
