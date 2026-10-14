@@ -14,7 +14,7 @@ Du coup j'ai voulu faire un petit récap de tout ça : ce qui a marché, ce qui 
 
 ## Le <mark>groupe</mark>
 
-Selon moi une des choses les plus importantes c’est de partir avec des gens qui ont plus ou moins le même **niveau de préparation**. Dans tous les cas le groupe ira au rythme du **plus lent**, et si un ou plusieurs n'ont pas le même niveau de prépa, ça créera très probablement de la frustration et de l'énervement. Dans notre cas, c’était notre première randonnée à tous les 4.
+Selon moi une des choses les plus importantes c’est de partir avec des gens qui ont plus ou moins le même **niveau de préparation** que toi. Dans tous les cas le groupe ira au rythme du **plus lent**, et si un ou plusieurs n'ont pas le même niveau de prépa, ça créera très probablement de la frustration et de l'énervement. Dans notre cas, c’était notre première randonnée à tous les 4, donc on a pas eu ce problème mais on a entendu beaucoup d’histoires de randonneurs qu’on croisait.
 
 ![IMG_2351 2.jpg](/uploads/700a2ba5-e32d-48e9-8512-c7495afa9c06.jpg)
 

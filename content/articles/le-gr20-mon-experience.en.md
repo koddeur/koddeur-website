@@ -11,7 +11,7 @@ So I wanted to put together a little recap of all of it: what worked, what didn'
 
 ## The <mark>group</mark>
 
-In my opinion, one of the most important things is to go with people who have more or less the same **level of preparation**. Either way, the group will move at the pace of the **slowest** person, and if one or more people aren't as well prepared, it will very likely lead to frustration and irritation. In our case, it was the first hike for all 4 of us.
+In my opinion, one of the most important things is to go with people who have more or less the same **level of preparation** as you. Either way, the group will move at the pace of the **slowest** person, and if one or more people aren't as well prepared, it will very likely lead to frustration and irritation. In our case, it was the first hike for all 4 of us, so we didn't have that problem, but we heard plenty of stories from the hikers we met along the way.
 
 ![IMG_2351 2.jpg](/uploads/700a2ba5-e32d-48e9-8512-c7495afa9c06.jpg)
 
