@@ -2,7 +2,7 @@
 title: "Mon Top 10 *films* 2025"
 description: "Mon top 10 des films que j’ai vus en 2025, classés selon mes notes."
 createdAt: "2025-12-12T00:00:00.000Z"
-keywords: ["general", "movie"]
+keywords: ["general", "movie", "ranking"]
 published: true
 ---
 
