@@ -11,3 +11,4 @@
 - `tsc` casse sur des doublons `.next/types/* 2.ts` : le dossier Documents est synchronisé par iCloud, qui crée des copies en conflit. Fix : `find .next -name '* [0-9]*' -prune -exec rm -rf {} +` (ou exclure le projet d'iCloud).
 - Photos re-délavées après un nouvel import : la conversion sRGB dépendait du type MIME envoyé par le navigateur (pas `image/jpeg` → fichier écrit brut). Fix : format détecté depuis le contenu via `sharp().metadata()`, plus le MIME.
 - Vidéos dans les articles : lien YouTube/Vimeo seul sur sa ligne ou <iframe> collée → l'iframe est reconstruite depuis l'ID (youtube-nocookie, whitelist), jamais le HTML collé tel quel (XSS).
+- Vues : le dev local partage le projet Supabase de prod → le POST /api/views n'incrémente qu'en production (NODE_ENV).

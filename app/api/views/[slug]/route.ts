@@ -21,5 +21,7 @@ export async function POST(request: Request, context: RouteContext<"/api/views/[
   const article = await getArticle(slug);
   if (!article || !article.published) return NextResponse.json({ error: "Article introuvable." }, { status: 404 });
 
+  // Local dev shares the production Supabase project: only production visits are counted.
+  if (process.env.NODE_ENV !== "production") return NextResponse.json({ views: await getViewCount(slug) });
   return NextResponse.json({ views: await incrementViewCount(slug) });
 }
