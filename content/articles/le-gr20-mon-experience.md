@@ -4,6 +4,7 @@ description: "Mon retour sur le GR20 fait fin septembre : période, durée, budg
 createdAt: "2025-10-13T00:00:00.000Z"
 keywords: ["trip"]
 published: true
+unlisted: true
 ---
 
 Fin septembre, on est partis faire le GR20 en Corse. On dit souvent que c'est le GR le plus dur d'Europe, et franchement maintenant je comprends pourquoi. Entre le dénivelé, la météo qui change toutes les 5 minutes et les refuges qui prennent que du liquide, il y a plein de trucs que j'aurais aimé savoir avant de partir.
