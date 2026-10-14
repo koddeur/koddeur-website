@@ -13,9 +13,9 @@ Histoire de Samuel Paty
 Documentaire de ClemQuiCourt
 5. Toy Story 1 — 8,5 · Animation
 6. Le bus : les bleus en grève — 8,5 · Documentaire, Français
-Affaire Knysna
+Affaire Knysna, coupe du monde 2010
 7. L’Odyssée — 8 · Action, Aventure, Fantastique, Historique
-Histoire un peu fantastique, et le combat final avec les prétendants est un peu abusé, mais sinon très bien
+Le combat final est un peu abusé, mais sinon très bien
 8. Spiderman : Brand New Day — 7,5 · Action, Marvel
 9. Vaiana — 7,5 · Animation
 10. Juste une illusion — 6 · Comédie, Romance, Français
