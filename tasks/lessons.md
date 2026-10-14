@@ -12,3 +12,4 @@
 - Photos re-délavées après un nouvel import : la conversion sRGB dépendait du type MIME envoyé par le navigateur (pas `image/jpeg` → fichier écrit brut). Fix : format détecté depuis le contenu via `sharp().metadata()`, plus le MIME.
 - Vidéos dans les articles : lien YouTube/Vimeo seul sur sa ligne ou <iframe> collée → l'iframe est reconstruite depuis l'ID (youtube-nocookie, whitelist), jamais le HTML collé tel quel (XSS).
 - Vues : le dev local partage le projet Supabase de prod → le POST /api/views n'incrémente qu'en production (NODE_ENV).
+- `.en.md` du GR20 contenait le corps FR : l'import .md vide les champs EN et l'API recopie le FR quand contentEn est vide (`clean(payload.contentEn) || content`). Après un réimport, toujours retraduire avant d'enregistrer.

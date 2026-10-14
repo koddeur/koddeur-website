@@ -3,143 +3,143 @@ title: "My GR20 experience"
 description: "My review of the GR20 hike, done at the end of September 2025: timing, duration, budget, mountain huts, weather, physical preparation… All the tips I wish I'd had before leaving to properly prepare your GR."
 ---
 
-Fin septembre, avec 3 amis on est partis faire le **GR20** en Corse. Avant d’y aller j’avais entendu que c’était le GR **le plus dur d'Europe**, et franchement maintenant je comprends pourquoi. Entre le dénivelé, la météo changeante et les refuges qui prennent que du liquide, il y a plein de trucs que j'aurais aimé savoir avant de partir.
+At the end of September, 3 friends and I went to hike the **GR20** in Corsica. Before going I'd heard it was **the toughest trail in Europe**, and honestly, now I understand why. Between the elevation, the changing weather and the huts that only take cash, there are loads of things I wish I'd known before leaving.
 
-Du coup j'ai voulu faire un petit récap de tout ça : ce qui a marché, ce qui a pas marché, et les conseils que je donnerais à quelqu'un qui veut se lancer.
+So I wanted to put together a little recap of all of it: what worked, what didn't, and the advice I'd give to anyone who wants to give it a go.
 
 ![IMG_1460.jpg](/uploads/8298ac08-15fe-4262-8223-ce4168fd01d1.jpg)
 
-## Le <mark>groupe</mark>
+## The <mark>group</mark>
 
-Selon moi la chose une des choses les plus importantes c’est de partir avec des gens qui ont plus ou moins le même **niveau de préparation**. Dans tous les cas le groupe ira au rythme du **plus lent**, et si un ou plusieurs n'ont pas le même niveau de prépa, ça créera très probablement de la frustration et de l'énervement. Dans notre cas, c’était notre première randonnée à tous les 4.
+In my opinion, one of the most important things is to go with people who have more or less the same **level of preparation**. Either way, the group will move at the pace of the **slowest** person, and if one or more people aren't as well prepared, it will very likely lead to frustration and irritation. In our case, it was the first hike for all 4 of us.
 
 ![IMG_2351 2.jpg](/uploads/700a2ba5-e32d-48e9-8512-c7495afa9c06.jpg)
 
-## La <mark>période</mark>
+## The <mark>timing</mark>
 
-De notre côté on a fait le GR **fin septembre**, et malheureusement c'est tombé pile sur la semaine **la plus froide de la saison**, les températures ont chuté quelques jours avant qu'on commence. Le point positif de ça c’est que la journée c'était pas étouffant, mais dès qu'il n’y avait plus de soleil on sentait direct le froid et on était obligés de se couvrir immédiatement.
+We did the GR at the **end of September**, and unfortunately it landed right on **the coldest week of the season**: temperatures dropped a few days before we started. The upside was that it wasn't stifling during the day, but as soon as the sun was gone you could feel the cold straight away and had to cover up immediately.
 
-Par contre c'était pas du tout surchargé sur le parcours, certaines journées on croisait quasiment **personne**. Pourtant, les dortoirs des refuges étaient quasiment toujours pleins.
+On the other hand the trail wasn't crowded at all, and some days we barely met **anyone**. Even so, the hut dormitories were almost always full.
 
-Je connais quelques personnes qui ont fait le GR en juin et ils m'ont dit que tu pouvais encore avoir **de la neige** à certains endroits. 
+I know a few people who did the GR in June, and they told me you can still find **snow** in some places.
 
-Je pense que la meilleure période c'est **début septembre** : il fait moins chaud qu'en juillet/août, les journées sont encore assez longues et il y a moins de monde que pendant les vacances.
+I think the best time is **early September**: it's less hot than in July/August, the days are still fairly long and there are fewer people than during the holidays.
 
-## La <mark>durée</mark>
+## The <mark>duration</mark>
 
-Prévoir en dessous de 10 jours c'est **très ambitieux**, même pour un très bon sportif.
+Planning for under 10 days is **very ambitious**, even for a very fit athlete.
 
-En tout il y a **16 étapes** et chaque étape c'est en moyenne 5/6h de marche avec du gros dénivelé positif et négatif, donc évidemment beaucoup plus de fatigue que si c'était que du plat, surtout que sur le parcours les parties plates se font **très rares**. En général les gens le font en **14 jours**, et c'est déjà un exploit de le terminer dans ces temps-là vu la difficulté.
+There are **16 stages** in total, and each one averages 5 to 6 hours of walking with big climbs and descents, so obviously much more tiring than if it were flat, especially since flat sections are **very rare** on the trail. Most people do it in **14 days**, and finishing in that time is already an achievement given how hard it is.
 
-Donc pour le faire en 10 jours ou moins, ça veut dire qu'il faut doubler plusieurs journées, donc être capable de faire **entre 8 et 10h de marche**, en sachant que le soir il faut pas arriver trop tard pour réserver les repas aux refuges.
+So doing it in 10 days or less means doubling up several days, which means being able to walk **8 to 10 hours**, knowing that you mustn't arrive too late in the evening to book your meals at the huts.
 
-Les premières étapes du Nord sont vraiment **compliquées à doubler** si t'as jamais fait le GR et encore moins si t’as jamais fait de randonnée. Il faut être prêt physiquement et partir très tôt le matin, donc selon la période ça veut dire **partir dans le noir**, et quand tu connais pas le parcours tu peux vite passer énormément de temps à chercher certains repères pour pas te perdre.
+The first northern stages are really **hard to double up** if you've never done the GR, let alone if you've never hiked before. You need to be physically ready and set off very early in the morning, which depending on the season means **leaving in the dark**, and when you don't know the trail you can quickly waste a lot of time looking for markers so you don't get lost.
 
-Il ne faut pas non plus se fier au nombre de kilomètres des étapes : par exemple, la 2ème étape ne fait *que* 7 km, mais on a mis environ 8h pour la faire, notamment à cause du temps qui nous a énormément ralenti. Avec la pluie, les rochers deviennent très glissants. 
+Don't trust the distance of the stages either: for example, the 2nd stage is *only* 7 km, but it took us about 8 hours, mostly because of the weather, which slowed us down massively. When it rains, the rocks get very slippery.
 
-Et surtout, il faut pas s'engager dans une étape sans **être sûr à 100%** d'arriver avant la nuit. Se perdre et devoir dormir dehors sans tente peut être mortel car la nuit la température chute énormément.
+Above all, never start a stage unless you're **100% sure** you'll arrive before nightfall. Getting lost and having to sleep outside without a tent can be deadly, because the temperature drops sharply at night.
 
 ![IMG_2004 2.jpg](/uploads/b6370215-6f0f-4ef0-bb55-d78912717f9a.jpg)
 
-## Le <mark>budget</mark>
+## The <mark>budget</mark>
 
-Niveau budget, voilà ce qu'il faut prévoir, selon notre expérience :
+Here's what to budget for, based on our experience:
 
-| Poste | Montant |
+| Item | Amount |
 | --- | --- |
-| Équipement avant le GR (autonomie complète) | environ 700 € |
-| Par jour, nuit en dortoir ou tente louée sur place | environ 70 € |
-| Par jour, nuit en bivouac | environ 40 € |
-| Total en liquide sur place | environ 600 € |
+| Gear before the GR (fully self-sufficient) | about €700 |
+| Per day, night in a dormitory or tent rented on site | about €70 |
+| Per day, night bivouacking | about €40 |
+| Total cash on site | about €600 |
 
-Un des trucs les plus importants à savoir : les refuges prennent **que du liquide**, donc prévoir beaucoup d'argent en liquide avant de partir. Je dirais de prévoir entre 50€ et 100€ en liquide par jour. 
+One of the most important things to know: the huts **only take cash**, so bring plenty of cash before you leave. I'd plan for €50 to €100 in cash per day.
 
-## Les <mark>refuges</mark>
+## The <mark>huts</mark>
 
-Certains refuges sont **meilleurs** que d'autres, chacun a ses atouts et ses inconvénients, cela peut être : des douches chaudes, une salle chauffée, une épicerie bien fournie, un grand dortoir, une cuisine en intérieur, des ustensiles de cuisine propres, une salle de bain propre, un bon repas…
+Some huts are **better** than others, and each has its pros and cons: hot showers, a heated room, a well-stocked shop, a large dormitory, an indoor kitchen, clean cooking utensils, a clean bathroom, a good meal…
 
-J'insiste sur le dernier point, parce que mis à part l'épicerie, souvent dans les refuges du parc il y a qu'**un repas unique** le soir. Il faut d'ailleurs souvent arriver avant 17h pour pouvoir commander sa part, qui est servie vers 18h30. Et les repas sont **pas halal**, il peut aussi y avoir du porc, donc faut bien le prendre en compte
+I'm insisting on that last point because, apart from the shop, the park huts often only offer **a single set meal** in the evening. You usually have to arrive before 5 pm to order your portion, which is served around 6:30 pm. The meals are **not halal** and may include pork, so keep that in mind.
 
-Des fois, sur le parcours, il y a **des bergeries privées** pas loin des refuges classiques du parc. Ça peut être intéressant de se renseigner sur celles qui se trouvent sur le parcours prévu, parce qu'elles sont souvent plus confortables : chambres privées, restaurant avec plusieurs plats à la carte, etc. (mais également potentiellement **plus cher**).
+Sometimes there are **private sheepfolds** (bergeries) along the trail, not far from the regular park huts. It can be worth looking up the ones on your planned route, because they're often more comfortable: private rooms, a restaurant with several dishes on the menu, etc. (but also potentially **more expensive**).
 
 ![IMG_1521.jpg](/uploads/4c4e5061-7973-4641-a9e7-f3e8d0bcf906.jpg)
 
-## La <mark>nourriture</mark>
+## The <mark>food</mark>
 
-De notre coté, on avait prévu environ 7/8 lyophilisés pour les 7 jours sur place, donc à peu près **un par jour**. Ça nous a permis d'être sereins quand on arrivait tard au refuge et qu'on avait pas le temps de réserver le repas du soir.
+We'd brought about 7 or 8 freeze-dried meals for our 7 days on the trail, so roughly **one per day**. That let us relax when we arrived late at a hut and didn't have time to book dinner.
 
-Par contre dès qu'on pouvait manger au refuge on le faisait, pour **économiser** nos lyophilisés, vu qu'on en mangeait des fois le midi quand on partait très tôt. Le repas c'est le seul moment réconfortant de la journée, ça te redonne vraiment de l'**énergie** pour le lendemain.
+But whenever we could eat at the hut we did, to **save** our freeze-dried meals, since we sometimes ate them at lunch when we left very early. Dinner is the only comforting moment of the day, and it really gives you back the **energy** for the next day.
 
-Même si les lyophilisés c'est léger, plus t'en prends, plus ça pèse et plus ça prend de la place dans le sac, c’est également à prendre en compte.
+Even though freeze-dried meals are light, the more you take, the heavier they get and the more space they take up in your bag, so factor that in too.
 
 ![IMG_1392.jpg](/uploads/fcb8e7f1-139b-47f3-a38e-9764d9746051.jpg)
 
-### Le réchaud, pas forcément utile
+### The stove, not necessarily useful
 
-De notre côté on avait pris deux réchauds avec des petites bouteilles de gaz. Sauf qu'à l'aéroport, une des 2 bouteilles a été détectée par la sécurité et on a dû la **jeter**. Sur place, on a essayé de faire chauffer notre eau dans un refuge où la cuisine était déjà occupée, c'était vraiment **très long** de faire chauffer l'eau pour tout le monde, donc pas forcément la meilleure idée, mais ça peut dépanner.
+We'd taken two stoves with small gas canisters. Except that at the airport, security spotted one of the 2 canisters and we had to **throw it away**. On the trail, we tried to boil our water at a hut where the kitchen was already busy, and boiling water for everyone took **ages**, so not necessarily the best idea, but it can help out.
 
-Donc si je peux donner un **conseil** : ne pas prendre de réchaud. C'est mieux de faire chauffer l’eau avec les équipements des refuges (ils sont tous censés avoir une mini cuisine pour au moins chauffer de l'eau), et tu peux les utiliser même si tu **dors pas** dans le refuge, le midi par exemple.
+So if I can give one piece of **advice**: don't bring a stove. It's better to heat your water with the huts' equipment (they're all supposed to have a small kitchen, at least for boiling water), and you can use it even if you're **not staying** at the hut, at lunchtime for example.
 
-## La <mark>météo</mark>
+## The <mark>weather</mark>
 
-À la période où on l'a fait (fin septembre), la météo était très **changeante**. En quelques minutes tu pouvais avoir chaud, puis très froid, puis à nouveau très chaud. Faut s'y préparer en prévoyant de quoi se couvrir et être capable de **réagir** en fonction du temps.
+At the time we went (end of September), the weather was very **changeable**. Within a few minutes you could go from hot to very cold and back to very hot. You need to be ready for it, with layers to cover up, and be able to **adapt** to the conditions.
 
-Le GR devient complètement **différent** selon la météo. Selon moi, la difficulté peut être **multipliée par 3 ou 4** s'il pleut, c'est beaucoup plus dangereux, et comme il faut être plus vigilant, ça rallonge aussi forcément les étapes. Ça peut vraiment chambouler le planning de base.
+The GR becomes a completely **different** hike depending on the weather. In my opinion, the difficulty can be **multiplied by 3 or 4** when it rains: it's much more dangerous, and since you have to be more careful, the stages inevitably take longer. It can really upend your original plan.
 
-Le soir on avait très froid, et c'était compliqué pour se doucher car les douches étaient rarement chaudes, mais ça complique aussi le fait de ranger ses affaires, installer la tente, etc quand tout se fait dans le froid. Les refuges ont **rarement** des salles chauffées, dans certains tout se passe **dehors**. À prendre en compte aussi quand il s’agit de faire sécher tes affaires.
+In the evenings we were very cold, and showering was tricky because the showers were rarely hot, but the cold also makes packing your things, pitching the tent and so on harder. Huts **rarely** have heated rooms, and in some of them everything happens **outside**. Keep that in mind when it comes to drying your things, too.
 
 ![IMG_1536.jpg](/uploads/47c6a5c1-552b-4285-800e-e386b78e5a08.jpg)
 
-## Le <mark>réseau</mark> et la <mark>batterie</mark>
+## <mark>Signal</mark> and <mark>battery</mark>
 
-Très peu de refuges ont du réseau. Certains en ont si tu t'éloignes de quelques centaines de mètres, mais c'est **rare**. Pour avoir du réseau, c'est souvent en **haut des cols** pendant la journée.
+Very few huts have phone signal. Some do if you walk a few hundred metres away, but it's **rare**. To get signal, it's usually at **the top of the passes** during the day.
 
-Pour la batterie, certains refuges ont des prises pour charger, d'autres non. Je conseille de prendre **1 ou 2 grosses batteries externes** pour être tranquille, il y aura forcément un ou deux refuges sur la route pour les recharger.
+As for battery, some huts have sockets for charging and others don't. I'd recommend bringing **1 or 2 large power banks** to be safe; there will always be one or two huts along the way where you can recharge them.
 
-## La <mark>prépa physique</mark>
+## <mark>Physical preparation</mark>
 
-C’est bête à dire, mais il faut vraiment bien se préparer, notamment **les genoux et les chevilles** qui sont malmenés violemment tous les jours, à chaque pas.
+It sounds obvious, but you really need to prepare well, especially **your knees and ankles**, which take a beating every day, with every step.
 
-- **Le cardio** : ça paraît évident, mais je conseille surtout de s'entraîner à **monter/descendre des marches**, et ça pendant des heures. C'est vraiment l'effort qu'on retrouve le plus chaque jour.
-- **Un cours d'escalade** : au moins pour apprendre à **descendre en rappel**, il y a quelques passages techniques comme ça qui peuvent vite devenir dangereux si t'as pas la bonne technique.
-- **S'entraîner avec son équipement** : c'est important pour anticiper les éventuels problèmes et imprévus, parce que sur place il y aura **rien** pour acheter un équipement si t'as oublié quelque chose.
+- **Cardio**: it seems obvious, but above all I'd recommend training by **walking up and down stairs**, for hours on end. That's really the effort you'll be making most every day.
+- **A climbing lesson**: at least to learn how to **abseil**; there are a few technical sections like that which can quickly become dangerous without the right technique.
+- **Train with your gear**: it's important for anticipating possible problems and surprises, because on the trail there'll be **nowhere** to buy gear if you've forgotten something.
 
 ![IMG_8513.jpg](/uploads/eea36103-0948-4d66-98ef-6b588ceced5e.jpg)
 
-## La <mark>gestion</mark> pendant le GR
+## <mark>Managing</mark> things during the GR
 
-### L'eau
+### Water
 
-Dès le premier jour on a été confrontés à un problème : **l'eau**. J'avais une poche d'eau de 2L et une gourde de 1L, et tout ça se vide très vite pendant l'effort. Finir sans eau, ça devient vite un **calvaire**. J'avais prévu des pastilles pour purifier l'eau, mais sur certaines étapes tu croises aucun cours d'eau, et au final je les ai même pas utilisées. L’été sous de fortes chaleurs ça doit être encore plus important.
+From day one we ran into a problem: **water**. I had a 2 L water bladder and a 1 L bottle, and all of it empties very quickly while you're exerting yourself. Running out of water quickly turns into an **ordeal**. I'd brought purification tablets, but on some stages you don't come across a single stream, and in the end I didn't even use them. In summer, in the heat, it must matter even more.
 
-### Le sac pendant la journée
+### Your bag during the day
 
-C'est vraiment important de maîtriser son sac et son contenu. Il faut être capable de ranger ou sortir ses vêtements rapidement et facilement, parce que le **temps change** très vite.
+It's really important to master your bag and what's in it. You need to be able to put away or take out your clothes quickly and easily, because **the weather changes** very fast.
 
-### Les affaires entre deux journées
+### Your things between days
 
-Les vêtements de la journée sont généralement humides à cause de la sueur, et c'est pas simple de les faire sécher dans les refuges parce qu'il y a pas toujours d'endroit au sec, protégé de l’humidité. Un truc que j'avais pas prévu, c'est de faire des **lessives à la main**. Si t'arrives pas trop tard au refuge, t'as le temps de le faire le soir, et s'il reste du temps de soleil ça sèche assez vite. Avoir des habits propres et secs le matin quand tu te prépares, ça change tout.
+The clothes you wore during the day are usually damp with sweat, and drying them at the huts isn't easy because there isn't always a dry spot sheltered from the moisture. Something I hadn't planned for was **washing clothes by hand**. If you don't arrive too late at the hut, you have time to do it in the evening, and if there's still some sun left it dries quite quickly. Having clean, dry clothes in the morning when you get ready changes everything.
 
-Je conseille aussi de prendre des vêtements en **laine de mérinos**, ça permet de les remettre sans trop craindre les odeurs. J’en avais prévu et je me suis rendu compte sur place de **l’importance** d’en avoir quand t’as pas le temps de faire de lessives.
+I'd also recommend **merino wool** clothing, which you can wear again without worrying too much about smells. I'd brought some, and on the trail I realised **how important** it is when you don't have time to do laundry.
 
-### Les descentes
+### Descents
 
-C'est trèd important de s'économiser dans les descentes, j'entends par là **s'économiser les genoux** en utilisant les bâtons. Dans mon cas j'avais aucune douleur en descente jusqu'au dernier jour, où d'un coup c'est devenu un calvaire de faire un pas, parce que je m'étais pas assez économisé les premiers jours.
+It's very important to go easy on the descents, by which I mean **saving your knees** by using your poles. In my case I had no pain going downhill until the last day, when suddenly every step became an ordeal, because I hadn't taken it easy enough in the first days.
 
 ![IMG_2284.jpg](/uploads/1bd2d5c9-2fac-4349-8b3d-eda502ca4913.jpg)
 
-## Notre <mark>itinéraire</mark> et la <mark>logistique</mark>
+## Our <mark>route</mark> and <mark>logistics</mark>
 
-### Avant le GR
+### Before the GR
 
-- Arrivée en avion à Bastia (possibilité aussi d’atterrir directement à Calvi)
-- Location de voiture de l'Aéroport de Bastia jusqu'à celui de Calvi : ~150 €
-- Taxi faire le trajet Aéroport de Calvi → Calenzana : 50€
-- Une nuit en Airbnb à Calenzana : 120 € pour 4
+- Flight to Bastia (you can also fly straight to Calvi)
+- Car rental from Bastia airport to Calvi airport: ~€150
+- Taxi from Calvi airport → Calenzana: €50
+- One night in an Airbnb in Calenzana: €120 for 4
 
-### Nos étapes
+### Our stages
 
-| Jour | Départ | Arrivée |
+| Day | Start | Finish |
 | --- | --- | --- |
 | 1 | Calenzana | Ortu di u Piobbu |
 | 2 | Ortu di u Piobbu | Carrozzu |
@@ -148,21 +148,21 @@ C'est trèd important de s'économiser dans les descentes, j'entends par là **s
 | 5 | Usciolu | Asinau |
 | 6 | Asinau | Conca |
 
-Comme tu peux le voir, entre Carrozzu et Vizzavona on a dû **sauter des étapes** : la météo nous a pas mal ralentis les premiers jours, donc on a pas pu tenir le planning de base. C'est exactement ce que je disais plus haut, la météo peut vraiment tout chambouler.
+As you can see, we had to **skip some stages** between Carrozzu and Vizzavona: the weather slowed us down quite a bit in the first days, so we couldn't stick to the original plan. That's exactly what I was saying above: the weather can really upend everything.
 
-### Après le GR
+### After the GR
 
-- Co-voiturage pour faire Conca → Figari : 0€
-- Vol retour depuis l'aéroport de Figari
+- Carpool from Conca → Figari: €0
+- Return flight from Figari airport
 
-## En <mark>conclusion</mark>
+## In <mark>conclusion</mark>
 
-Voilà pour mon expérience. Le GR20 c'est vraiment pas un truc qui s'improvise : pars avec un groupe du même niveau, prépare-toi bien physiquement, prends beaucoup de liquide et garde toujours de la marge sur tes étapes. Pour le reste, c'est la montagne qui décide, mais c'est aussi ce qui en fait une expérience incroyable.
+The GR20 really isn't something you can improvise: go with a group at the same level, prepare yourself well physically, bring plenty of cash and always keep some margin on your stages. For the rest, the mountain decides, but that's also what makes it such an incredible experience.
 
 ![IMG_2422.jpeg](/uploads/f9cfc700-0a3f-49c7-9192-dd19a7825662.jpg)
 
 ## <mark>Bonus</mark>
 
-J’ai fait une petite **vidéo** qui retrace notre parcours, à voir juste ici : 
+I made a short **video** retracing our trek, which you can watch right here:
 
 https://www.youtube.com/watch?v=LCivde7K3iw

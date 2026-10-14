@@ -1,7 +1,7 @@
 ---
 title: "Le *GR20*, mon expérience"
 description: "Mon retour sur le GR20 fait fin septembre 2025 : période, durée, budget, refuges, météo, prépa physique… Tous les conseils que j’aurais aimé avoir avant de partir pour bien préparer ton GR"
-createdAt: "2026-10-13T00:00:00.000Z"
+createdAt: "2025-10-10T00:00:00.000Z"
 keywords: ["trip"]
 published: true
 ---
@@ -160,7 +160,7 @@ Comme tu peux le voir, entre Carrozzu et Vizzavona on a dû **sauter des étapes
 
 ## En <mark>conclusion</mark>
 
-Voilà pour mon expérience. Le GR20 c'est vraiment pas un truc qui s'improvise : pars avec un groupe du même niveau, prépare-toi bien physiquement, prends beaucoup de liquide et garde toujours de la marge sur tes étapes. Pour le reste, c'est la montagne qui décide, mais c'est aussi ce qui en fait une expérience incroyable.
+Le GR20 c'est vraiment pas un truc qui s'improvise : pars avec un groupe du même niveau, prépare-toi bien physiquement, prends beaucoup de liquide et garde toujours de la marge sur tes étapes. Pour le reste, c'est la montagne qui décide, mais c'est aussi ce qui en fait une expérience incroyable.
 
 ![IMG_2422.jpeg](/uploads/f9cfc700-0a3f-49c7-9192-dd19a7825662.jpg)
 
