@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const content = clean(payload.content);
     const keywords: string[] = Array.isArray(payload.keywords) ? (payload.keywords as unknown[]).map(clean).filter(Boolean) : [];
     if (!title || !description || !content) return NextResponse.json({ error: "Titre, description et contenu sont requis." }, { status: 400 });
-    if (title.length > 50 || description.length > 300 || content.length > 10000 || keywords.some((keyword) => keyword.length > 30)) {
+    if (title.length > 50 || description.length > 300 || content.length > 50000 || keywords.some((keyword) => keyword.length > 30)) {
       return NextResponse.json({ error: "Un des champs dépasse la limite autorisée." }, { status: 400 });
     }
     const createdAtInput = clean(payload.createdAt);

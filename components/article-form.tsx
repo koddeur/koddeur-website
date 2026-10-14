@@ -1,10 +1,11 @@
 "use client";
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { ShareButtons } from "@/components/share-buttons";
 import { useRouter } from "next/navigation";
 import type { Article } from "@/lib/articles";
 
-const limits = { title: 50, description: 300, content: 10000, keywords: 30 };
+const limits = { title: 50, description: 300, content: 50000, keywords: 30 };
 
 type EditableArticle = Pick<Article, "slug" | "title" | "description" | "content" | "keywords" | "createdAt" | "published" | "unlisted" | "en">;
 
@@ -103,6 +104,7 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
   const [loading, setLoading] = useState(false);
   const [importing, setImporting] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [translating, setTranslating] = useState<"title" | "description" | "content" | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const folderInputRef = useRef<HTMLInputElement>(null);
 
@@ -195,22 +197,21 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
         uploadedCount += 1;
       }
 
-      setEditingSlug(null);
-      setSlug("");
-      setTitle((parsed.title || markdownFile.name.replace(/\.md$/i, "")).slice(0, limits.title));
-      setDescription(parsed.description.slice(0, limits.description));
-      setKeywords(parsed.keywords);
+      // Import fills the selected article (or the new-article form): fields missing from the file keep their current value.
+      const isEditing = Boolean(editingSlug);
+      setTitle((parsed.title || (isEditing ? title : markdownFile.name.replace(/\.md$/i, ""))).slice(0, limits.title));
+      setDescription((parsed.description || (isEditing ? description : "")).slice(0, limits.description));
+      setKeywords(parsed.keywords || (isEditing ? keywords : ""));
       setContent(content);
       setTitleEn(""); setDescriptionEn(""); setContentEn("");
-      const parsedDate = parsed.createdAt && !Number.isNaN(new Date(parsed.createdAt).getTime()) ? parsed.createdAt.slice(0, 10) : today();
-      setCreatedAt(parsedDate);
-      setPublished(parsed.published);
-      setUnlisted(parsed.unlisted);
+      const parsedDate = parsed.createdAt && !Number.isNaN(new Date(parsed.createdAt).getTime()) ? parsed.createdAt.slice(0, 10) : null;
+      setCreatedAt(parsedDate ?? (isEditing ? createdAt : today()));
+      if (!isEditing) { setPublished(parsed.published); setUnlisted(parsed.unlisted); }
 
       const messageParts = [`Fichier « ${markdownFile.name} » importé.`];
       if (uploadedCount) messageParts.push(`${uploadedCount} image${uploadedCount > 1 ? "s" : ""} importée${uploadedCount > 1 ? "s" : ""}.`);
       if (unmatched.length) messageParts.push(`Image${unmatched.length > 1 ? "s" : ""} introuvable${unmatched.length > 1 ? "s" : ""} parmi les fichiers sélectionnés : ${unmatched.join(", ")}.`);
-      messageParts.push("Vérifiez les champs puis publiez.");
+      messageParts.push(editingSlug ? `Vérifiez les champs puis enregistrez pour remplacer « ${editingSlug} ».` : "Vérifiez les champs puis publiez.");
       setStatus({ type: unmatched.length ? "error" : "success", message: messageParts.join(" ") });
     } catch (error) {
       setStatus({ type: "error", message: error instanceof Error ? error.message : "Impossible d'importer le fichier." });
@@ -247,6 +248,24 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     finally { setLoading(false); }
   }
 
+  async function translate(field: "title" | "description" | "content") {
+    const sources = { title: [title, setTitleEn], description: [description, setDescriptionEn], content: [content, setContentEn] } as const;
+    const [text, setTranslation] = sources[field];
+    if (!text.trim()) { setStatus({ type: "error", message: "Remplissez d'abord le champ français." }); return; }
+    setTranslating(field); setStatus(null);
+    try {
+      const response = await fetch("/api/articles/translate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ field, text }) });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error);
+      setTranslation(result.translation);
+    } catch (error) { setStatus({ type: "error", message: error instanceof Error ? error.message : "Impossible de traduire le texte." }); }
+    finally { setTranslating(null); }
+  }
+
+  function translateButton(field: "title" | "description" | "content") {
+    return <button type="button" className="reset-button" onClick={() => translate(field)} disabled={translating !== null}>{translating === field ? "traduction..." : "↻ traduire depuis FR"}</button>;
+  }
+
   async function handleDelete() {
     if (!editingArticle) return;
     if (!window.confirm(`Supprimer définitivement « ${editingArticle.title} » ? Cette action est irréversible.`)) return;
@@ -266,10 +285,9 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     <aside className="article-index" aria-label="Articles disponibles">
       <button type="button" className={!editingSlug ? "article-index-new active" : "article-index-new"} onClick={resetEditor}>+ Nouvel article</button>
       <div className="article-index-heading"><span>fichiers détectés</span><strong>{String(articles.length).padStart(2, "0")}</strong></div>
-      <p>Ajoutez directement un <code>.md</code> dans <code>content/articles</code> : il apparaîtra ici après rechargement.</p>
       <div className="article-index-list">
         {articles.map((article) => <button type="button" key={article.slug} className={editingSlug === article.slug ? "article-choice active" : "article-choice"} onClick={() => startEditing(article)}>
-          <span>{article.title}{!article.published ? <em className="disabled-tag">désactivé</em> : article.unlisted ? <em className="disabled-tag unlisted-tag">non répertorié</em> : null}</span><small>{article.createdAt.slice(0, 10).replaceAll("-", "/")}</small>
+          <span>{article.title}</span><small>{article.createdAt.slice(0, 10).replaceAll("-", "/")}{!article.published ? <em className="disabled-tag">désactivé</em> : article.unlisted ? <em className="disabled-tag unlisted-tag">non répertorié</em> : <em className="disabled-tag published-tag">publié</em>}</small>
         </button>)}
       </div>
     </aside>
@@ -277,11 +295,10 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
       <div className="editor-heading">
         <span className="eyebrow">{editingArticle ? `édition / ${editingArticle.slug}.md` : "nouveau fichier"}</span>
         <div className="editor-actions">
-          {editingArticle ? <a href={`/articles/${editingArticle.slug}`} target="_blank" rel="noreferrer" className="preview-link">Prévisualiser ↗</a> : null}
-          {editingArticle ? <a href={`/api/articles/${editingArticle.slug}`} download={`${editingArticle.slug}.md`} className="reset-button">Exporter ↓</a> : null}
-          <button type="button" className="reset-button" onClick={() => fileInputRef.current?.click()} disabled={importing}>{importing ? "import..." : "↑ importer .md + images"}</button>
+          {editingArticle ? <a href={`/api/articles/${editingArticle.slug}`} download={`${editingArticle.slug}.md`} className="editor-action">Exporter ↓</a> : null}
+          <button type="button" className="editor-action" onClick={() => fileInputRef.current?.click()} disabled={importing}>{importing ? "import..." : "↑ importer .md + images"}</button>
           <input ref={fileInputRef} type="file" accept=".md,text/markdown,image/*" multiple onChange={handleFileUpload} style={{ display: "none" }} />
-          <button type="button" className="reset-button" onClick={() => folderInputRef.current?.click()} disabled={importing}>{importing ? "import..." : "↑ importer un dossier"}</button>
+          <button type="button" className="editor-action" onClick={() => folderInputRef.current?.click()} disabled={importing}>{importing ? "import..." : "↑ importer un dossier"}</button>
           <input
             ref={folderInputRef}
             type="file"
@@ -293,7 +310,6 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
           />
         </div>
       </div>
-      {editingArticle ? <p className="preview-note">La preview ouvre la dernière version enregistrée.</p> : null}
     {editingArticle ? (
       <div className="field">
         <label htmlFor="slug">URL de l’article <span>/articles/{slug || "…"}</span></label>
@@ -319,9 +335,14 @@ export function ArticleForm({ articles }: { articles: EditableArticle[] }) {
     <div className="field field-content"><label htmlFor="content">Contenu Markdown <span>{content.length}/{limits.content}</span></label><textarea id="content" value={content} maxLength={limits.content} onChange={(event) => setContent(event.target.value)} placeholder={"## Une idée claire\n\nÉcrivez votre article ici. **Markdown** et `code` sont pris en charge."} required /></div>
 
     <p className="preview-note">Traduction anglaise — laissez vide pour reprendre le texte français tel quel.</p>
-    <div className="field"><label htmlFor="titleEn">Titre (EN) <span>{titleEn.length}/{limits.title}</span></label><input id="titleEn" value={titleEn} maxLength={limits.title} onChange={(event) => setTitleEn(event.target.value)} placeholder={title || "English title"} /></div>
-    <div className="field"><label htmlFor="descriptionEn">Description (EN) <span>{descriptionEn.length}/{limits.description}</span></label><textarea id="descriptionEn" value={descriptionEn} maxLength={limits.description} onChange={(event) => setDescriptionEn(event.target.value)} placeholder={description || "English description"} rows={3} /></div>
-    <div className="field field-content"><label htmlFor="contentEn">Contenu Markdown (EN) <span>{contentEn.length}/{limits.content}</span></label><textarea id="contentEn" value={contentEn} maxLength={limits.content} onChange={(event) => setContentEn(event.target.value)} placeholder={content || "English content"} /></div>
+    <div className="field"><label htmlFor="titleEn">Titre (EN) <span>{translateButton("title")} · {titleEn.length}/{limits.title}</span></label><input id="titleEn" value={titleEn} maxLength={limits.title} onChange={(event) => setTitleEn(event.target.value)} placeholder={title || "English title"} /></div>
+    <div className="field"><label htmlFor="descriptionEn">Description (EN) <span>{translateButton("description")} · {descriptionEn.length}/{limits.description}</span></label><textarea id="descriptionEn" value={descriptionEn} maxLength={limits.description} onChange={(event) => setDescriptionEn(event.target.value)} placeholder={description || "English description"} rows={3} /></div>
+    <div className="field field-content"><label htmlFor="contentEn">Contenu Markdown (EN) <span>{translateButton("content")} · {contentEn.length}/{limits.content}</span></label><textarea id="contentEn" value={contentEn} maxLength={limits.content} onChange={(event) => setContentEn(event.target.value)} placeholder={content || "English content"} /></div>
+    {editingArticle ? <div className="editor-actions">
+      <a href={`/articles/${editingArticle.slug}`} target="_blank" rel="noreferrer" className="editor-action primary">Prévisualiser ↗</a>
+      {editingArticle.published ? <ShareButtons slug={editingArticle.slug} title={editingArticle.title} /> : null}
+    </div> : null}
+    {editingArticle ? <p className="preview-note">La preview ouvre la dernière version enregistrée.</p> : null}
     {status && <p className={`form-status ${status.type}`} role="status">{status.message}</p>}
       <div className="article-form-actions">
         <button type="submit" disabled={loading}>{loading ? "enregistrement..." : editingArticle ? "Enregistrer les modifications →" : "Publier l’article →"}</button>

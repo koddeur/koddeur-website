@@ -1,6 +1,8 @@
 type ListItem = { text: string; children: ListItem[] };
 type ImageValue = { src: string; alt: string; caption: string };
-type Block = { kind: "h2" | "h3" | "p" | "ul" | "code" | "img"; value: string | ListItem[] | ImageValue };
+type Align = "left" | "center" | "right" | null;
+type TableValue = { header: string[]; align: Align[]; rows: string[][] };
+type Block = { kind: "h2" | "h3" | "p" | "ul" | "code" | "img" | "table"; value: string | ListItem[] | ImageValue | TableValue };
 
 function inline(value: string) {
   const pieces = value.split(/(`[^`]+`|\*\*[^*]+\*\*|<mark>[\s\S]*?<\/mark>)/g);
@@ -36,6 +38,26 @@ function parseListItems(lines: string[], start: number, indent: number): { items
   return { items, next: i };
 }
 
+// Splits a "| a | b |" row on unescaped pipes outside inline code.
+function splitRow(line: string) {
+  const cells: string[] = [];
+  let cell = "";
+  let inCode = false;
+  const row = line.trim().replace(/^\|/, "").replace(/\|$/, "");
+  for (let i = 0; i < row.length; i++) {
+    const char = row[i];
+    if (char === "\\" && row[i + 1] === "|") { cell += "|"; i++; continue; }
+    if (char === "`") inCode = !inCode;
+    if (char === "|" && !inCode) { cells.push(cell.trim()); cell = ""; continue; }
+    cell += char;
+  }
+  cells.push(cell.trim());
+  return cells;
+}
+
+const isTableSeparator = (line: string | undefined) => !!line && line.includes("-") && /^\s*\|?\s*:?-+:?\s*(\|\s*:?-+:?\s*)*\|?\s*$/.test(line);
+const isTableStart = (lines: string[], i: number) => lines[i].includes("|") && isTableSeparator(lines[i + 1]);
+
 function parseMarkdown(markdown: string): Block[] {
   const lines = markdown.replace(/\r/g, "").split("\n");
   const blocks: Block[] = [];
@@ -50,6 +72,18 @@ function parseMarkdown(markdown: string): Block[] {
     }
     if (line.startsWith("### ")) { blocks.push({ kind: "h3", value: line.slice(4) }); i++; continue; }
     if (line.startsWith("## ")) { blocks.push({ kind: "h2", value: line.slice(3) }); i++; continue; }
+    if (isTableStart(lines, i)) {
+      const header = splitRow(line);
+      const align = splitRow(lines[i + 1]).map((cell): Align => cell.startsWith(":") && cell.endsWith(":") ? "center" : cell.endsWith(":") ? "right" : cell.startsWith(":") ? "left" : null);
+      const rows: string[][] = [];
+      i += 2;
+      while (i < lines.length && lines[i].trim() && lines[i].includes("|")) {
+        const cells = splitRow(lines[i++]);
+        rows.push(header.map((_, column) => cells[column] ?? ""));
+      }
+      blocks.push({ kind: "table", value: { header, align, rows } });
+      continue;
+    }
     const list = matchListItem(line);
     if (list) {
       const result = parseListItems(lines, i, list.indent);
@@ -64,7 +98,7 @@ function parseMarkdown(markdown: string): Block[] {
       continue;
     }
     const paragraph: string[] = [line]; i++;
-    while (i < lines.length && lines[i].trim() && !/^(#{2,3} |```)/.test(lines[i]) && !matchListItem(lines[i]) && !/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\)$/.test(lines[i].trim())) paragraph.push(lines[i++]);
+    while (i < lines.length && lines[i].trim() && !/^(#{2,3} |```)/.test(lines[i]) && !matchListItem(lines[i]) && !isTableStart(lines, i) && !/^!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\)$/.test(lines[i].trim())) paragraph.push(lines[i++]);
     blocks.push({ kind: "p", value: paragraph.join(" ") });
   }
   return blocks;
@@ -82,6 +116,13 @@ export function MarkdownContent({ content }: { content: string }) {
     if (block.kind === "h3") return <h3 key={index}>{inline(block.value as string)}</h3>;
     if (block.kind === "code") return <pre key={index}><code>{block.value as string}</code></pre>;
     if (block.kind === "ul") return renderList(block.value as ListItem[], index);
+    if (block.kind === "table") {
+      const { header, align, rows } = block.value as TableValue;
+      return <div className="prose-table" key={index}><table>
+        <thead><tr>{header.map((cell, column) => <th key={column} style={align[column] ? { textAlign: align[column] } : undefined}>{inline(cell)}</th>)}</tr></thead>
+        <tbody>{rows.map((row, rowIndex) => <tr key={rowIndex}>{row.map((cell, column) => <td key={column} style={align[column] ? { textAlign: align[column] } : undefined}>{inline(cell)}</td>)}</tr>)}</tbody>
+      </table></div>;
+    }
     if (block.kind === "img") {
       const { src, alt, caption } = block.value as ImageValue;
       return <figure className="prose-figure" key={index}>

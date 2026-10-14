@@ -1,2 +1,7 @@
 - Image remplacée dans public/ mais ancienne version affichée : next/image garde en cache l'image optimisée pour la même URL → changer le nom du fichier lors d'un remplacement.
 - Build qui échoue sur 'Duplicate identifier' dans .next/types/* 2.ts : copies créées par la synchro iCloud de Documents → supprimer les fichiers '* 2.*' dans .next puis relancer.
+- Étiquette de statut invisible dans la sidebar admin : le titre en ellipsis (nowrap) la coupait → étiquette placée sur la ligne de la date.
+- Traduction FR→EN admin : route /api/articles/translate qui lance le CLI `claude -p` (abonnement, sans clé API), local uniquement ; isolé via --setting-sources "" et --tools "" sinon le CLAUDE.md global (canari « Mael ») polluerait la traduction.
+- Partage d'articles : les liens utilisent siteUrl (lib/site.ts, NEXT_PUBLIC_SITE_URL ou https://koddeur.com) et non window.location, car l'admin tourne en local (sinon liens localhost) ; retirer les * du titre (marquage de surlignage) dans les textes partagés.
+- Import .md admin : remplit l'article sélectionné (PUT au save) au lieu de créer un nouvel article ; « + Nouvel article » pour créer. Champs absents du fichier et visibilité conservés, champs EN vidés (traduction devenue obsolète).
+- Tableaux Markdown : le rendu est maison (components/markdown-content.tsx), donc toute syntaxe Markdown non gérée (tableaux…) doit y être ajoutée à la main ; test rapide possible via typescript.transpileModule + renderToStaticMarkup.

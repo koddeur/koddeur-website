@@ -121,7 +121,7 @@ export function ProjectForm({ projects }: { projects: Project[] }) {
       <div className="editor-heading">
         <span className="eyebrow">{editingProject ? `édition / ${editingProject.slug}.md` : "nouveau projet"}</span>
         <div className="editor-actions">
-          {editingProject?.githubUrl ? <a href={editingProject.githubUrl} target="_blank" rel="noreferrer" className="preview-link">Voir sur GitHub ↗</a> : null}
+          {editingProject?.githubUrl ? <a href={editingProject.githubUrl} target="_blank" rel="noreferrer" className="editor-action primary">Voir sur GitHub ↗</a> : null}
         </div>
       </div>
       <div className="field"><label htmlFor="name">Nom <span>{name.length}/{limits.name}</span></label><input id="name" value={name} maxLength={limits.name} onChange={(event) => setName(event.target.value)} placeholder="Nom du projet" required /></div>

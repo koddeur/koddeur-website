@@ -3,6 +3,7 @@ import { AboutPhoto } from "@/components/about-photo";
 import { highlightTitle } from "@/components/highlighted-title";
 import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
+import { AdminLink } from "@/components/admin-link";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -61,7 +62,7 @@ export default function AboutPage() {
   return (
     <main className="shell">
       <header className="home-header">
-        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><LanguageToggle /><ThemeToggle /></div></div>
+        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title">About</h1>
       </header>
 

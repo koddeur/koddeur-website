@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
+import { AdminLink } from "@/components/admin-link";
 import { Logo } from "@/components/logo";
 import { ProjectCard } from "@/components/project-card";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -13,7 +14,7 @@ export default async function ProjectsPage() {
   return (
     <main className="shell">
       <header className="home-header">
-        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><LanguageToggle /><ThemeToggle /></div></div>
+        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title"><Bi fr="Projets" en="Projects" /></h1>
       </header>
       <section className="feed" aria-labelledby="projects-title">

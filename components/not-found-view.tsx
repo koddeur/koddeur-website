@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { highlightTitle } from "@/components/highlighted-title";
 import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
+import { AdminLink } from "@/components/admin-link";
 import { Logo } from "@/components/logo";
 import { ProjectCard } from "@/components/project-card";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -33,7 +34,7 @@ export function NotFoundView() {
   return (
     <main className="shell">
       <header className="home-header">
-        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><LanguageToggle /><ThemeToggle /></div></div>
+        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title not-found-title">404 <span className="not-found-subtitle"><Bi fr="page introuvable" en="page not found" /></span></h1>
       </header>
 

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArticleCard } from "@/components/article-card";
 import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
+import { AdminLink } from "@/components/admin-link";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getListedArticles } from "@/lib/articles";
@@ -40,7 +41,7 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
   return (
     <main className="shell">
       <header className="home-header">
-        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><LanguageToggle /><ThemeToggle /></div></div>
+        <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title">Blog</h1>
       </header>
 
