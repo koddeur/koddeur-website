@@ -4,8 +4,8 @@ description: "My top 10 films I watched in 2025, ranked by my ratings."
 ---
 
 :::classement
-1. F1 : The Movie — 9 · Action, Cars
-2. 5 septembre — 9 · True story, Thriller, Terrorist, Kidnapping
+1. F1 : The Movie — 9 · Action, Car
+2. September 5 — 9 · True story, Thriller, Terrorist, Kidnapping
 *Munich 1972 attack*
 3. Numéro 24 — 9 · True story, Drama, World War II, Nazism
 *Story following a young Norwegian during World War II*
@@ -15,8 +15,10 @@ description: "My top 10 films I watched in 2025, ranked by my ratings."
 *Traces the history of the atomic bomb*
 6. Batman Begins — 8 · Action
 7. 13 jours, 13 nuits — 8 · War, True story, French
+*True story depicting the evacuation of French embassy staff from Kabul, Afghanistan, in 2021*
 8. Lilo et Stitch — 8 · Animation
 *New version*
 9. Le prénom — 7.5 · French comedy
 10. Le jeu — 7.5 · French comedy
+*Comedy where everyone has to put their phone in the middle of the table, and everything they receive is read out loud*
 :::

@@ -18,8 +18,10 @@ published: true
 *Retrace l’histoire de la bombe atomique*
 6. Batman Begins — 8 · Action
 7. 13 jours, 13 nuits — 8 · Guerre, Histoire vraie, Français
+*Histoire vraie retraçant l'exfiltration des membres de l'ambassade de France en Afghanistan à Kaboul en 2021*
 8. Lilo et Stitch — 8 · Animation
 *Nouvelle version*
 9. Le prénom — 7,5 · Comédie française
 10. Le jeu — 7,5 · Comédie française
+*Comédie où le principe est que chacun doit poser son téléphone portable au milieu de la table et tout ce qui sera reçu sera lu à voix haute*
 :::

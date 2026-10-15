@@ -10,9 +10,9 @@ description: "My top 10 films I watched in 2024, ranked by my ratings"
 3. The Count of Monte Cristo — 9 · French, Adventure, Historical
 4. Society of the Snow — 9 · Drama, True story
 5. Kirikou — 9 · Cartoon, Animation
-6. Juror #2 — 8.5 · Trial
-7. Django Unchained — 8.5 · Thriller, Slavery
-8. Joker — 8.5 · Thriller, Drama
-9. Golo & Ritchie — 8.5 · Documentary
-10. A Life — 8.5 · History, War, True story
+6. A Life — 8.5 · History, War, True story
+7. Juror #2 — 8.5 · Trial
+8. Django Unchained — 8.5 · Thriller, Slavery
+9. Joker — 8.5 · Thriller, Drama
+10. Golo & Ritchie — 8.5 · Documentary
 :::

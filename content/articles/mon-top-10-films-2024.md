@@ -13,9 +13,9 @@ published: true
 3. Le comte de Monte Cristo — 9 · Français, Aventure, Historique
 4. Le cercle des neiges — 9 · Drame, Histoire vraie
 5. Kirikou — 9 · Dessin animé, Animation
-6. Juré n°2 — 8,5 · Procès
-7. Django Unchained — 8,5 · Thriller, Esclavage
-8. Joker — 8,5 · Thriller, Drame
-9. Golo & Ritchie — 8,5 · Documentaire
-10. Une vie — 8,5 · Histoire, Guerre, Histoire vraie
+6. Une vie — 8,5 · Histoire, Guerre, Histoire vraie
+7. Juré n°2 — 8,5 · Procès
+8. Django Unchained — 8,5 · Thriller, Esclavage
+9. Joker — 8,5 · Thriller, Drame
+10. Golo & Ritchie — 8,5 · Documentaire
 :::
