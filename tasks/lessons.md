@@ -15,3 +15,7 @@
 - `.en.md` du GR20 contenait le corps FR : l'import .md vide les champs EN et l'API recopie le FR quand contentEn est vide (`clean(payload.contentEn) || content`). Après un réimport, toujours retraduire avant d'enregistrer.
 - Fix : le PUT /api/articles/[slug] garde le .en.md existant champ par champ quand le champ EN est vide (avant : recopie du FR). Reste un cas : un onglet admin ouvert avant une modif du .en.md sur disque renvoie l'ancienne version → recharger l'admin.
 - Scroll parasite sur iOS Safari : 100vh = hauteur barre masquée → page plus haute que l'écran. Fix : min-height: 100vh; min-height: 100svh (body, .shell).
+- Avatar pixel /home : downscale 64x64 par couleur dominante au centre de chaque case (sinon bords flous de l'IA) ; reflets des yeux retirés du PNG et rendus en <span> déplacés par pixels entiers (±2) vers le pointeur.
+- Avatar pixel : le downscale d'une image IA décale les formes d'1 px (écran cols 23-40, base 22-39) → redessiner à la main les objets géométriques (portable) après la conversion, et vérifier par coordonnées que chaque élément est symétrique.
+- Musique /home : les navigateurs bloquent l'audio avant toute interaction → la boucle Web Audio démarre au 1er pointerdown/keydown (sauf sur F4), et l'icône F4 reflète l'état réellement audible, pas la préférence.
+- Sprite CSS qui « saute » : des keyframes rapprochés (8% → 8.01%) interpolent quand même background-position pendant ~0,2 ms → une frame à moitié décalée. Fix : animation-timing-function step-end, un seul keyframe par changement.

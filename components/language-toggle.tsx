@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 
-type Lang = "fr" | "en";
+export type Lang = "fr" | "en";
 
-function applyLang(lang: Lang) {
+export function applyLang(lang: Lang) {
   document.documentElement.setAttribute("data-lang", lang);
   document.documentElement.setAttribute("lang", lang);
   window.localStorage.setItem("lang", lang);
 }
 
-export function LanguageToggle() {
+export function LanguageToggle({ className = "theme-toggle lang-toggle" }: { className?: string }) {
   const [lang, setLang] = useState<Lang | null>(null);
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function LanguageToggle() {
   return (
     <button
       type="button"
-      className="theme-toggle lang-toggle"
+      className={className}
       onClick={toggle}
       aria-label={lang === "en" ? "Passer en français" : "Switch to English"}
     >

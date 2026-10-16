@@ -10,7 +10,7 @@ function applyTheme(theme: Theme) {
   window.localStorage.setItem("theme", theme);
 }
 
-export function ThemeToggle() {
+export function ThemeToggle({ className = "theme-toggle" }: { className?: string }) {
   const [theme, setTheme] = useState<Theme | null>(null);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function ThemeToggle() {
   }
 
   return (
-    <button type="button" className="theme-toggle" onClick={toggle}>
+    <button type="button" className={className} onClick={toggle}>
       <span className="theme-icon">{theme === "light" ? "☀" : "☾"}</span>
       <span className="sr-only">
         {theme === "light" ? <Bi fr="Activer le mode sombre" en="Enable dark mode" /> : <Bi fr="Activer le mode clair" en="Enable light mode" />}

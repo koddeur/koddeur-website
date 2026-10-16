@@ -1,19 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { socials } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
-
-const socials = [
-  { id: "instagram", href: "https://instagram.com/koddeur" },
-  { id: "github", href: "https://github.com/koddeur" },
-  { id: "daily-dev", href: "https://app.daily.dev/koddeur" },
-  { id: "linkedin", href: "https://www.linkedin.com/in/mael-avennec/" },
-  { id: "gmail", href: "mailto:koddeur@gmail.com" },
-  { id: "codingame", href: "https://www.codingame.com/profile/9c87f98642ce1c438c2e010e79c7198e9241736" },
-  { id: "bluesky", href: "https://bsky.app/profile/koddeur.bsky.social" },
-  { id: "cal", href: "https://cal.com/mael-avennec" },
-  { id: "x", href: "https://x.com/koddeur" },
-];
 
 export default function Landing() {
   return (

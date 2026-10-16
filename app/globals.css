@@ -200,6 +200,79 @@ footer { display: flex; justify-content: space-between; margin-top: 38px; color:
 .home-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }.home-nav .logo { flex-direction: row; align-items: center; gap: 10px; }.home-nav .logo-mark { width: 38px; height: 38px; border: 0; border-radius: 50%; box-shadow: none; }.home-nav .logo-mark img { height: 100%; object-fit: cover; }.home-nav .logo-wordmark { font-size: 1.5rem; text-shadow: .5px 0 0 var(--logo-shadow-1), 1px 0 0 var(--logo-shadow-2); }
 .home-title { margin: 0; font-family: "Space Mono", monospace; font-size: clamp(2.4rem, 7vw, 4.2rem); font-weight: 700; letter-spacing: -.05em; line-height: 1.1; color: var(--ink); }
 .landing-shell { display: flex; flex-direction: column; text-align: center; }.landing-shell footer { justify-content: center; margin-top: auto; }.landing-content { display: contents; }
+.home-test { display: flex; flex-direction: column; align-items: center; gap: 40px; padding-bottom: 0; overflow: hidden; text-align: center; }
+.keyboard-area { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
+/* esc pulls the keyboard up by its cable; the inline transform comes from KeyboardRig. */
+.keyboard-rig { position: relative; z-index: 1; transition: transform .7s cubic-bezier(.65, 0, .25, 1); }
+.keyboard-recall { position: absolute; top: 100%; left: 50%; display: flex; align-items: center; justify-content: center; width: 44px; height: 22px; margin: 0 0 0 -22px; padding: 0; border: 1px solid #1f1f22; border-top: 0; border-radius: 0 0 8px 8px; color: #1c1c1e; background: var(--case-mid); font-size: .75rem; cursor: pointer; opacity: 0; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease, color .15s ease; }
+.keyboard-rig[data-stowed] .keyboard-recall { opacity: 1; transform: none; transition-delay: .6s; }
+.keyboard-recall:hover { color: var(--electric); }
+.easter-egg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.egg-terminal { max-width: min(100%, 300px); padding: 16px 20px; border: 1px solid #2a2a2a; border-radius: 8px; color: #d6d6d8; background: #0c0c0c; font-size: .8rem; text-align: left; }
+.egg-terminal p { margin: 0 0 6px; }
+.egg-prompt { color: var(--electric); }
+.egg-hint { margin-bottom: 0; color: #8a8a8e; }
+.egg-cursor { display: inline-block; width: 7px; height: 1em; margin-left: 4px; vertical-align: text-bottom; background: var(--electric); animation: egg-blink 1s steps(1) infinite; }
+@keyframes egg-blink { 50% { opacity: 0; } }
+.key-esc { color: #b0b0b4; }
+.keyboard { position: relative; display: grid; gap: 10px; padding: 14px 20px 20px; border: 1px solid #1f1f22; border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(0, 0, 0, .35), 0 8px 18px rgba(0, 0, 0, .45);
+  /* Space-grey aluminium, like a Magic Keyboard: faint horizontal brushing over a soft vertical sheen. */
+  background:
+    repeating-linear-gradient(to bottom, rgba(255, 255, 255, .03) 0 1px, transparent 1px 2px),
+    linear-gradient(var(--case-top), var(--case-mid) 60%, var(--case-bottom)); }
+/* Aluminium shade per theme: lighter on the black canvas, darker on the cream one. */
+.home-test { --case-top: #77777c; --case-mid: #646469; --case-bottom: #5a5a5f; --case-ink: #1a1a1c; --case-engrave: rgba(255, 255, 255, .28); }
+:root[data-theme="light"] .home-test { --case-top: #3c3c40; --case-mid: #303034; --case-bottom: #28282b; --case-ink: #b4b4b9; --case-engrave: rgba(0, 0, 0, .55); }
+:root[data-theme="light"] .keyboard-recall { color: #6e6e72; }
+:root[data-theme="light"] .keyboard-recall:hover { color: var(--electric); }
+.keyboard-top { display: flex; align-items: center; justify-content: space-between; padding: 0 4px 8px; border-bottom: 1px solid rgba(0, 0, 0, .18); }
+.keyboard-brand { color: var(--case-ink); font-weight: 600; text-shadow: 0 1px 0 var(--case-engrave); font-family: "Pixelify Sans", "Space Mono", monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; -webkit-font-smoothing: none; }
+.keyboard-leds { display: flex; gap: 6px; }
+.keyboard-leds i { width: 6px; height: 6px; border-radius: 1px; background: #343437; }
+.keyboard-leds i:first-child { background: var(--electric); box-shadow: 0 0 6px var(--electric); animation: keyboard-led 3s steps(1) infinite; }
+@keyframes keyboard-led { 0%, 70% { opacity: 1; } 72%, 76% { opacity: .35; } 78% { opacity: 1; } }
+.keyboard-row { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.key { position: relative; display: flex; align-items: center; justify-content: center; height: 40px; padding: 0; border: 0; border-radius: 5px; color: #d6d6d8; background: #1c1c1e; font: 400 .66rem/1 -apple-system, "Helvetica Neue", Arial, sans-serif; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 0 #000000; transition: transform .08s ease, box-shadow .08s ease, filter .15s ease; }
+a.key:hover, button.key:hover { filter: brightness(1.15); }
+a.key:active, button.key:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 0 #000000; }
+.keyboard-fn, .keyboard-letters { display: grid; grid-template-columns: repeat(5, minmax(64px, 1fr)); }
+.key-fn { width: 100%; height: 26px; font-size: .55rem; }
+/* F-key legends sit in the corner, the key's own icon stays centred. */
+.key-f1::before, .key-f2::before, .key-f3::before, .key-f4::before { position: absolute; right: 5px; bottom: 3px; color: #8a8a8e; font-size: .42rem; }
+.key-f1::before { content: "F1"; }
+.key-f2::before { content: "F2"; }
+.key-f3::before { content: "F3"; }
+.key-f4::before { content: "F4"; }
+.key-f1 .theme-icon { font-size: .8rem; line-height: 1; }
+.key-lang-fr, .key-lang-en { font-size: .58rem; letter-spacing: .04em; }
+/* Caps-lock style LED on the active language key. */
+.key-lang-fr::after, .key-lang-en::after { content: ""; position: absolute; top: 4px; left: 5px; width: 4px; height: 4px; border-radius: 50%; background: #3a3a3e; transition: background .15s ease, box-shadow .15s ease; }
+:root:not([data-lang="en"]) .key-lang-fr::after, :root[data-lang="en"] .key-lang-en::after { background: var(--electric); box-shadow: 0 0 4px var(--electric); }
+.key-letter { width: 100%; height: 56px; }
+.key-letter img { width: 22px; height: 22px; object-fit: contain; }
+.keyboard-bottom { align-items: stretch; }
+.key-mod { flex-direction: column; align-items: flex-start; justify-content: space-between; width: 84px; height: 52px; padding: 7px 8px; }
+.key-symbol { align-self: flex-end; font-size: .8rem; }
+.key-space-slot { flex: 1; min-width: 140px; }
+.key-space { width: 100%; height: 52px; }
+.key-arrows { display: grid; grid-template-columns: repeat(3, 26px); grid-template-rows: 24px 24px; gap: 4px 3px; align-content: end; }
+.key-arrow { height: 24px; font-size: .7rem; color: #9a9a9e; cursor: default; }
+.key-arrow-up { grid-column: 2; grid-row: 1; height: 21px; align-self: end; }
+.key-arrow:not(.key-arrow-up) { grid-row: 2; }
+/* Cable leaving the keyboard and running off the top of the screen, with its plug. */
+.keyboard::before { content: ""; position: absolute; bottom: calc(100% + 6px); left: 50%; width: 8px; height: 100vh; margin-left: -4px; background: linear-gradient(to right, #1c1c1c, #3a3a3a 40%, #1c1c1c); }
+.keyboard::after { content: ""; position: absolute; bottom: 100%; left: 50%; width: 20px; height: 8px; margin-left: -10px; border-radius: 2px 2px 0 0; background: var(--case-mid); }
+.pixel-avatar { position: relative; container-type: inline-size; max-width: calc(100vw - 32px); max-height: calc(100vw - 32px); }
+.pixel-avatar-sprite { width: 100%; height: 100%; background: url("/avatar/heureux-64-typing.png") 0 0 / 300% 100% no-repeat; image-rendering: pixelated; animation: avatar-typing 2.4s step-end infinite; }
+/* step-end holds each frame until the next keyframe: no interpolated (half-shifted) sprite position. */
+@keyframes avatar-typing {
+  0% { background-position: 50% 0; } 8% { background-position: 0 0; } 14% { background-position: 100% 0; } 22% { background-position: 0 0; }
+  27% { background-position: 50% 0; } 33% { background-position: 100% 0; } 40% { background-position: 0 0; } 58% { background-position: 100% 0; }
+  64% { background-position: 0 0; } 70% { background-position: 50% 0; } 77% { background-position: 100% 0; } 82%, 100% { background-position: 0 0; }
+}
+/* Dark theme: one avatar-pixel white outline (100cqw / 64), traced around the silhouette by stacked drop-shadows. */
+:root:not([data-theme="light"]) .pixel-avatar-sprite { --outline: calc(100cqw / 64); filter: drop-shadow(var(--outline) 0 0 #ffffff) drop-shadow(calc(-1 * var(--outline)) 0 0 #ffffff) drop-shadow(0 var(--outline) 0 #ffffff) drop-shadow(0 calc(-1 * var(--outline)) 0 #ffffff); }
+.pixel-avatar-pupil { position: absolute; width: calc(100% * 2 / 64); height: calc(100% * 3 / 64); background: #ffffff; pointer-events: none; }
 .landing-title { margin: 60px 0 50px; font-family: "Pixelify Sans", "Space Mono", monospace; font-weight: 600; font-size: clamp(2.6rem, 8vw, 4.6rem); line-height: 1.2; color: var(--logo-ink); text-shadow: 1.5px 0 0 var(--logo-shadow-1), 2.5px 0 0 var(--logo-shadow-2); -webkit-font-smoothing: none; }
 .social-grid { display: grid; grid-template-columns: repeat(3, 100px); justify-content: center; gap: 12px; margin: 0 auto 46px; padding: 0; list-style: none; }
 .social-tile { display: flex; align-items: center; justify-content: center; width: 100px; height: 100px; border-radius: 4px; transition: opacity .2s ease, transform .15s ease; }
@@ -214,6 +287,7 @@ footer { display: flex; justify-content: space-between; margin-top: 38px; color:
 .social-bluesky { background: rgb(0, 133, 255); }
 .social-cal { background: linear-gradient(to left, rgb(35, 35, 35), rgb(54, 54, 54)); }
 .social-x { background: linear-gradient(to right, rgb(21, 47, 64), rgb(12, 41, 50)); }
+.social-promethee { background: rgb(189 85 51); }
 .landing-links { display: flex; align-items: center; justify-content: center; gap: 26px; margin-bottom: 44px; }
 .landing-link { color: var(--ink); font-size: .85rem; letter-spacing: .02em; text-decoration: underline; text-underline-offset: 3px; }
 .landing-link:hover { color: var(--electric); }
@@ -231,5 +305,5 @@ footer { display: flex; justify-content: space-between; margin-top: 38px; color:
 .compact-list time { flex: none; color: var(--muted); font-size: .64rem; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
 .tag-row a { transition: color .15s; }.tag-row a:hover { color: var(--electric); text-decoration: underline; }
 .filter-note { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 10px 14px; border: 1px solid var(--electric-dim); color: var(--body-soft); font-size: .74rem; }.filter-note strong { color: var(--electric); font-weight: 600; }.filter-note a { color: var(--electric-dim); text-decoration: underline; }.filter-note a:hover { color: var(--electric); }
-@media (max-width: 760px) { .prose .ranking-item { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; padding: 12px 12px; }.shell { width: min(100% - 30px, 960px); padding-top: 25px; }.home-header { padding: 0 0 54px; }.article-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.read-link { grid-column: 1; justify-self: start; }.project-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.project-thumb { width: 100%; height: 210px; }.article-nav { padding-bottom: 40px; }.article-page h1, .admin-heading h1 { letter-spacing: -.07em; }.article-kicker { display: grid; gap: 4px; }.admin-editor { grid-template-columns: 1fr; }.article-index { position: static; }.article-index-list { max-height: 190px; }.article-form { padding: 20px; }.admin-shell { width: min(100% - 30px, 760px); }.landing-title { margin: 40px 0 34px; }.social-grid { grid-template-columns: repeat(3, 84px); gap: 8px; margin-bottom: 36px; }.social-tile { width: 84px; height: 84px; }.landing-links { gap: 18px; }.landing-content { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; }.tag-cloud-list a:nth-child(n+5) { display: none; }.section-heading:has(.feed-title) { grid-template-columns: 1fr; }.feed-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@media (max-width: 760px) { .prose .ranking-item { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; padding: 12px 12px; }.shell { width: min(100% - 30px, 960px); padding-top: 25px; }.home-header { padding: 0 0 54px; }.article-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.read-link { grid-column: 1; justify-self: start; }.project-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.project-thumb { width: 100%; height: 210px; }.article-nav { padding-bottom: 40px; }.article-page h1, .admin-heading h1 { letter-spacing: -.07em; }.article-kicker { display: grid; gap: 4px; }.admin-editor { grid-template-columns: 1fr; }.article-index { position: static; }.article-index-list { max-height: 190px; }.article-form { padding: 20px; }.admin-shell { width: min(100% - 30px, 760px); }.landing-title { margin: 40px 0 34px; }.social-grid { grid-template-columns: repeat(3, 84px); gap: 8px; margin-bottom: 36px; }.social-tile { width: 84px; height: 84px; }.landing-links { gap: 18px; }.landing-content { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; }.tag-cloud-list a:nth-child(n+5) { display: none; }.section-heading:has(.feed-title) { grid-template-columns: 1fr; }.feed-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .keyboard-row { display: grid; grid-template-columns: repeat(3, 64px); }.keyboard-fn, .keyboard-letters { grid-template-columns: repeat(5, 52px); }.key-letter { height: 52px; }.keyboard-bottom { grid-template-columns: 1fr 1.3fr 1fr; }.key-space-slot { min-width: 0; }.key-mod { width: 100%; height: 44px; padding: 6px 7px; }.key-space { height: 44px; }.key-arrows { display: none; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }.pixel-avatar-sprite, .keyboard-leds i, .egg-cursor { animation: none; } }
