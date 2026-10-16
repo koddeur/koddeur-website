@@ -200,14 +200,39 @@ footer { display: flex; justify-content: space-between; margin-top: 38px; color:
 .home-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }.home-nav .logo { flex-direction: row; align-items: center; gap: 10px; }.home-nav .logo-mark { width: 38px; height: 38px; border: 0; border-radius: 50%; box-shadow: none; }.home-nav .logo-mark img { height: 100%; object-fit: cover; }.home-nav .logo-wordmark { font-size: 1.5rem; text-shadow: .5px 0 0 var(--logo-shadow-1), 1px 0 0 var(--logo-shadow-2); }
 .home-title { margin: 0; font-family: "Space Mono", monospace; font-size: clamp(2.4rem, 7vw, 4.2rem); font-weight: 700; letter-spacing: -.05em; line-height: 1.1; color: var(--ink); }
 .landing-shell { display: flex; flex-direction: column; text-align: center; }.landing-shell footer { justify-content: center; margin-top: auto; }.landing-content { display: contents; }
-.home-test { display: flex; flex-direction: column; align-items: center; gap: 40px; padding-bottom: 0; overflow: hidden; text-align: center; }
+.home-test { display: flex; flex-direction: column; align-items: center; gap: 40px; overflow-x: clip; text-align: center; }
 .keyboard-area { position: relative; flex: 1; display: flex; align-items: center; justify-content: center; width: 100%; }
-/* esc pulls the keyboard up by its cable; the inline transform comes from KeyboardRig. */
-.keyboard-rig { position: relative; z-index: 1; transition: transform .7s cubic-bezier(.65, 0, .25, 1); }
+/* esc slides the laptop up; the inline transform comes from KeyboardRig. */
+.keyboard-rig { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: stretch; transition: transform .7s cubic-bezier(.65, 0, .25, 1); }
+/* Soft contact shadow so the laptop looks set on a table. */
+.keyboard-rig::after { content: ""; position: absolute; z-index: -1; left: 2%; right: 2%; bottom: -26px; height: 34px; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(0, 0, 0, .5), transparent 70%); filter: blur(8px); pointer-events: none; }
+/* Laptop lid: as wide as the keyboard base, joined to it by the hinge. */
+.monitor { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; transition: margin-top .6s cubic-bezier(.5, 0, .2, 1); }
+/* Closed, the lid only keeps the height of its folded strip (16:9 lid = 56.25% of the width), so the
+   centred rig re-centres on the keyboard; opening animates it back to the full laptop height. */
+.monitor[data-closed] { margin-top: -40%; }
+.monitor-screen { position: relative; width: 100%; aspect-ratio: 16 / 9; transform-origin: 50% 100%; transition: transform .6s cubic-bezier(.5, 0, .2, 1); overflow: hidden; border: 10px solid #111113; border-bottom-width: 15px; border-radius: 14px 14px 0 0; background: #000000; box-shadow: 0 0 0 2px var(--case-mid), 0 -6px 20px rgba(0, 0, 0, .35); }
+/* Closed lid: folded down onto the hinge, screen black; the thin aluminium rim keeps it visible on both canvases. */
+.monitor-screen > * { transition: opacity .25s ease .35s; }
+.monitor[data-closed] .monitor-screen { transform: perspective(900px) rotateX(-78deg); }
+.monitor[data-closed] .monitor-screen > * { opacity: 0; transition-delay: 0s; }
+.monitor-hinge { width: 88%; height: 7px; border-radius: 0 0 4px 4px; background: linear-gradient(#1a1a1c, #3a3a3e); }
+.monitor-page { position: absolute; inset: 0; overflow: hidden; background: var(--canvas); }
+.monitor-shot { object-fit: cover; object-position: top; }
+.monitor-page iframe { display: block; border: 0; transform-origin: 0 0; pointer-events: none; }
+.monitor-idle { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; padding: 0 9%; color: #d6d6d8; font-size: .85rem; text-align: left; }
+.monitor-idle p { margin: 0 0 6px; }
+.monitor-social { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; color: #ffffff; }
+.monitor-social img { width: 56px; height: 56px; margin-bottom: 8px; object-fit: contain; }
+.monitor-social p { margin: 0; }
+.monitor-social-name { font-family: "Pixelify Sans", "Space Mono", monospace; font-size: 1.3rem; }
+.monitor-social-url { font-size: .78rem; opacity: .85; }
 .keyboard-recall { position: absolute; top: 100%; left: 50%; display: flex; align-items: center; justify-content: center; width: 44px; height: 22px; margin: 0 0 0 -22px; padding: 0; border: 1px solid #1f1f22; border-top: 0; border-radius: 0 0 8px 8px; color: #1c1c1e; background: var(--case-mid); font-size: .75rem; cursor: pointer; opacity: 0; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease, color .15s ease; }
 .keyboard-rig[data-stowed] .keyboard-recall { opacity: 1; transform: none; transition-delay: .6s; }
 .keyboard-recall:hover { color: var(--electric); }
-.easter-egg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; }
+.easter-egg { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; visibility: hidden; opacity: 0; transition: opacity .3s ease, visibility 0s .3s; }
+/* Only shown once the rig is stowed, otherwise it would peek through the gap under the monitor. */
+.keyboard-area:has(.keyboard-rig[data-stowed]) .easter-egg { visibility: visible; opacity: 1; transition: opacity .3s ease .4s, visibility 0s .4s; }
 .egg-terminal { max-width: min(100%, 300px); padding: 16px 20px; border: 1px solid #2a2a2a; border-radius: 8px; color: #d6d6d8; background: #0c0c0c; font-size: .8rem; text-align: left; }
 .egg-terminal p { margin: 0 0 6px; }
 .egg-prompt { color: var(--electric); }
@@ -215,53 +240,54 @@ footer { display: flex; justify-content: space-between; margin-top: 38px; color:
 .egg-cursor { display: inline-block; width: 7px; height: 1em; margin-left: 4px; vertical-align: text-bottom; background: var(--electric); animation: egg-blink 1s steps(1) infinite; }
 @keyframes egg-blink { 50% { opacity: 0; } }
 .key-esc { color: #b0b0b4; }
-.keyboard { position: relative; display: grid; gap: 10px; padding: 14px 20px 20px; border: 1px solid #1f1f22; border-radius: 14px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(0, 0, 0, .35), 0 8px 18px rgba(0, 0, 0, .45);
+.keyboard { position: relative; display: grid; gap: 10px; padding: 14px 20px 20px; border: 1px solid #1f1f22; border-radius: 4px 4px 18px 18px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(0, 0, 0, .35), 0 8px 0 var(--case-edge), 0 16px 24px rgba(0, 0, 0, .45);
   /* Space-grey aluminium, like a Magic Keyboard: faint horizontal brushing over a soft vertical sheen. */
   background:
     repeating-linear-gradient(to bottom, rgba(255, 255, 255, .03) 0 1px, transparent 1px 2px),
     linear-gradient(var(--case-top), var(--case-mid) 60%, var(--case-bottom)); }
 /* Aluminium shade per theme: lighter on the black canvas, darker on the cream one. */
-.home-test { --case-top: #77777c; --case-mid: #646469; --case-bottom: #5a5a5f; --case-ink: #1a1a1c; --case-engrave: rgba(255, 255, 255, .28); }
-:root[data-theme="light"] .home-test { --case-top: #3c3c40; --case-mid: #303034; --case-bottom: #28282b; --case-ink: #b4b4b9; --case-engrave: rgba(0, 0, 0, .55); }
+.home-test { --case-top: #77777c; --case-mid: #646469; --case-bottom: #5a5a5f; --case-ink: #1a1a1c; --case-engrave: rgba(255, 255, 255, .28); --case-edge: #3e3e42; }
+:root[data-theme="light"] .home-test { --case-top: #3c3c40; --case-mid: #303034; --case-bottom: #28282b; --case-ink: #b4b4b9; --case-engrave: rgba(0, 0, 0, .55); --case-edge: #18181a; }
 :root[data-theme="light"] .keyboard-recall { color: #6e6e72; }
 :root[data-theme="light"] .keyboard-recall:hover { color: var(--electric); }
 .keyboard-top { display: flex; align-items: center; justify-content: space-between; padding: 0 4px 8px; border-bottom: 1px solid rgba(0, 0, 0, .18); }
-.keyboard-brand { color: var(--case-ink); font-weight: 600; text-shadow: 0 1px 0 var(--case-engrave); font-family: "Pixelify Sans", "Space Mono", monospace; font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; -webkit-font-smoothing: none; }
+.keyboard-brand { color: var(--case-ink); font-weight: 600; text-shadow: 0 1px 0 var(--case-engrave); font-family: "Pixelify Sans", "Space Mono", monospace; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; -webkit-font-smoothing: none; }
 .keyboard-leds { display: flex; gap: 6px; }
-.keyboard-leds i { width: 6px; height: 6px; border-radius: 1px; background: #343437; }
+.keyboard-leds i { width: 7px; height: 7px; border-radius: 1px; background: #343437; }
 .keyboard-leds i:first-child { background: var(--electric); box-shadow: 0 0 6px var(--electric); animation: keyboard-led 3s steps(1) infinite; }
 @keyframes keyboard-led { 0%, 70% { opacity: 1; } 72%, 76% { opacity: .35; } 78% { opacity: 1; } }
-.keyboard-row { display: flex; gap: 6px; margin: 0; padding: 0; list-style: none; }
-.key { position: relative; display: flex; align-items: center; justify-content: center; height: 40px; padding: 0; border: 0; border-radius: 5px; color: #d6d6d8; background: #1c1c1e; font: 400 .66rem/1 -apple-system, "Helvetica Neue", Arial, sans-serif; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 2px 0 #000000; transition: transform .08s ease, box-shadow .08s ease, filter .15s ease; }
+.keyboard-row { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.key { position: relative; display: flex; align-items: center; justify-content: center; height: 40px; padding: 0; border: 0; border-radius: 6px; color: #d6d6d8; background: #1c1c1e; font: 400 .74rem/1 -apple-system, "Helvetica Neue", Arial, sans-serif; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), inset 0 -2px 0 rgba(0, 0, 0, .4), 0 3px 0 #000000, 0 4px 6px rgba(0, 0, 0, .35); transition: transform .08s ease, box-shadow .08s ease, filter .15s ease; }
 a.key:hover, button.key:hover { filter: brightness(1.15); }
-a.key:active, button.key:active { transform: translateY(2px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 0 #000000; }
-.keyboard-fn, .keyboard-letters { display: grid; grid-template-columns: repeat(5, minmax(64px, 1fr)); }
-.key-fn { width: 100%; height: 26px; font-size: .55rem; }
+a.key:active, button.key:active { transform: translateY(3px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), inset 0 -1px 0 rgba(0, 0, 0, .4), 0 0 0 #000000, 0 1px 2px rgba(0, 0, 0, .35); }
+.keyboard-fn { display: grid; grid-template-columns: repeat(5, 1fr); }
+.keyboard-letters { display: grid; grid-template-columns: repeat(6, minmax(60px, 1fr)); }
+/* Mac-style return key spanning both social rows; placed explicitly so the socials fill columns 1-5. */
+.key-return-slot { grid-column: 6; grid-row: 1 / span 2; }
+.key-return { flex-direction: column; align-items: flex-end; justify-content: space-between; width: 100%; height: 100%; padding: 8px 9px; }
+.key-fn { width: 100%; height: 26px; font-size: .62rem; }
 /* F-key legends sit in the corner, the key's own icon stays centred. */
-.key-f1::before, .key-f2::before, .key-f3::before, .key-f4::before { position: absolute; right: 5px; bottom: 3px; color: #8a8a8e; font-size: .42rem; }
+.key-f1::before, .key-f2::before, .key-f3::before, .key-f4::before { position: absolute; right: 6px; bottom: 3px; color: #8a8a8e; font-size: .48rem; }
 .key-f1::before { content: "F1"; }
 .key-f2::before { content: "F2"; }
 .key-f3::before { content: "F3"; }
 .key-f4::before { content: "F4"; }
-.key-f1 .theme-icon { font-size: .8rem; line-height: 1; }
-.key-lang-fr, .key-lang-en { font-size: .58rem; letter-spacing: .04em; }
+.key-f1 .theme-icon { font-size: .9rem; line-height: 1; }
+.key-lang-fr, .key-lang-en { font-size: .64rem; letter-spacing: .04em; }
 /* Caps-lock style LED on the active language key. */
-.key-lang-fr::after, .key-lang-en::after { content: ""; position: absolute; top: 4px; left: 5px; width: 4px; height: 4px; border-radius: 50%; background: #3a3a3e; transition: background .15s ease, box-shadow .15s ease; }
+.key-lang-fr::after, .key-lang-en::after { content: ""; position: absolute; top: 5px; left: 6px; width: 4px; height: 4px; border-radius: 50%; background: #3a3a3e; transition: background .15s ease, box-shadow .15s ease; }
 :root:not([data-lang="en"]) .key-lang-fr::after, :root[data-lang="en"] .key-lang-en::after { background: var(--electric); box-shadow: 0 0 4px var(--electric); }
-.key-letter { width: 100%; height: 56px; }
+.key-letter { width: 100%; height: 50px; }
 .key-letter img { width: 22px; height: 22px; object-fit: contain; }
 .keyboard-bottom { align-items: stretch; }
-.key-mod { flex-direction: column; align-items: flex-start; justify-content: space-between; width: 84px; height: 52px; padding: 7px 8px; }
-.key-symbol { align-self: flex-end; font-size: .8rem; }
-.key-space-slot { flex: 1; min-width: 140px; }
-.key-space { width: 100%; height: 52px; }
-.key-arrows { display: grid; grid-template-columns: repeat(3, 26px); grid-template-rows: 24px 24px; gap: 4px 3px; align-content: end; }
-.key-arrow { height: 24px; font-size: .7rem; color: #9a9a9e; cursor: default; }
-.key-arrow-up { grid-column: 2; grid-row: 1; height: 21px; align-self: end; }
+.key-mod { flex-direction: column; align-items: flex-start; justify-content: space-between; width: 66px; height: 48px; padding: 7px 8px; }
+.key-symbol { align-self: flex-end; font-size: .9rem; }
+.key-space-slot { flex: 1; min-width: 150px; }
+.key-space { width: 100%; height: 48px; }
+.key-arrows { display: grid; grid-template-columns: repeat(3, 24px); grid-template-rows: 21px 21px; gap: 6px 4px; align-content: end; }
+.key-arrow { height: 21px; font-size: .7rem; color: #9a9a9e; cursor: default; }
+.key-arrow-up { grid-column: 2; grid-row: 1; height: 19px; align-self: end; }
 .key-arrow:not(.key-arrow-up) { grid-row: 2; }
-/* Cable leaving the keyboard and running off the top of the screen, with its plug. */
-.keyboard::before { content: ""; position: absolute; bottom: calc(100% + 6px); left: 50%; width: 8px; height: 100vh; margin-left: -4px; background: linear-gradient(to right, #1c1c1c, #3a3a3a 40%, #1c1c1c); }
-.keyboard::after { content: ""; position: absolute; bottom: 100%; left: 50%; width: 20px; height: 8px; margin-left: -10px; border-radius: 2px 2px 0 0; background: var(--case-mid); }
 .pixel-avatar { position: relative; container-type: inline-size; max-width: calc(100vw - 32px); max-height: calc(100vw - 32px); }
 .pixel-avatar-sprite { width: 100%; height: 100%; background: url("/avatar/heureux-64-typing.png") 0 0 / 300% 100% no-repeat; image-rendering: pixelated; animation: avatar-typing 2.4s step-end infinite; }
 /* step-end holds each frame until the next keyframe: no interpolated (half-shifted) sprite position. */
@@ -305,5 +331,5 @@ a.key:active, button.key:active { transform: translateY(2px); box-shadow: inset 
 .compact-list time { flex: none; color: var(--muted); font-size: .64rem; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
 .tag-row a { transition: color .15s; }.tag-row a:hover { color: var(--electric); text-decoration: underline; }
 .filter-note { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 16px 0 0; padding: 10px 14px; border: 1px solid var(--electric-dim); color: var(--body-soft); font-size: .74rem; }.filter-note strong { color: var(--electric); font-weight: 600; }.filter-note a { color: var(--electric-dim); text-decoration: underline; }.filter-note a:hover { color: var(--electric); }
-@media (max-width: 760px) { .prose .ranking-item { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; padding: 12px 12px; }.shell { width: min(100% - 30px, 960px); padding-top: 25px; }.home-header { padding: 0 0 54px; }.article-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.read-link { grid-column: 1; justify-self: start; }.project-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.project-thumb { width: 100%; height: 210px; }.article-nav { padding-bottom: 40px; }.article-page h1, .admin-heading h1 { letter-spacing: -.07em; }.article-kicker { display: grid; gap: 4px; }.admin-editor { grid-template-columns: 1fr; }.article-index { position: static; }.article-index-list { max-height: 190px; }.article-form { padding: 20px; }.admin-shell { width: min(100% - 30px, 760px); }.landing-title { margin: 40px 0 34px; }.social-grid { grid-template-columns: repeat(3, 84px); gap: 8px; margin-bottom: 36px; }.social-tile { width: 84px; height: 84px; }.landing-links { gap: 18px; }.landing-content { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; }.tag-cloud-list a:nth-child(n+5) { display: none; }.section-heading:has(.feed-title) { grid-template-columns: 1fr; }.feed-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .keyboard-row { display: grid; grid-template-columns: repeat(3, 64px); }.keyboard-fn, .keyboard-letters { grid-template-columns: repeat(5, 52px); }.key-letter { height: 52px; }.keyboard-bottom { grid-template-columns: 1fr 1.3fr 1fr; }.key-space-slot { min-width: 0; }.key-mod { width: 100%; height: 44px; padding: 6px 7px; }.key-space { height: 44px; }.key-arrows { display: none; } }
+@media (max-width: 760px) { .prose .ranking-item { grid-template-columns: 42px minmax(0, 1fr) auto; gap: 10px; padding: 12px 12px; }.shell { width: min(100% - 30px, 960px); padding-top: 25px; }.home-header { padding: 0 0 54px; }.article-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.read-link { grid-column: 1; justify-self: start; }.project-card { grid-template-columns: 1fr; gap: 12px; padding-right: 0; }.project-thumb { width: 100%; height: 210px; }.article-nav { padding-bottom: 40px; }.article-page h1, .admin-heading h1 { letter-spacing: -.07em; }.article-kicker { display: grid; gap: 4px; }.admin-editor { grid-template-columns: 1fr; }.article-index { position: static; }.article-index-list { max-height: 190px; }.article-form { padding: 20px; }.admin-shell { width: min(100% - 30px, 760px); }.landing-title { margin: 40px 0 34px; }.social-grid { grid-template-columns: repeat(3, 84px); gap: 8px; margin-bottom: 36px; }.social-tile { width: 84px; height: 84px; }.landing-links { gap: 18px; }.landing-content { display: flex; flex-direction: column; align-items: center; flex: 1; justify-content: center; }.tag-cloud-list a:nth-child(n+5) { display: none; }.section-heading:has(.feed-title) { grid-template-columns: 1fr; }.feed-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; } .keyboard-row { display: grid; grid-template-columns: repeat(3, 64px); gap: 6px; }.keyboard-fn { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }.keyboard-letters { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; }.key-return { padding: 7px 6px; font-size: .62rem; }.monitor { width: 100%; }.monitor-screen { border-width: 7px; }.monitor-idle { font-size: .72rem; }.keyboard-rig, .keyboard { width: 100%; }.keyboard { padding: 14px 14px 20px; }.key-letter { height: 56px; }.key-letter img { width: 24px; height: 24px; }.key-fn { height: 30px; font-size: .62rem; }.keyboard-bottom { grid-template-columns: 1fr 1.8fr 1fr; }.key-space-slot { min-width: 0; }.key-mod { width: 100%; height: 50px; padding: 7px 8px; font-size: .72rem; }.key-space { height: 50px; }.key-arrows { display: none; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }.pixel-avatar-sprite, .keyboard-leds i, .egg-cursor { animation: none; } }
