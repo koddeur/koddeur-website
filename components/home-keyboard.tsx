@@ -4,15 +4,19 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Bi } from "@/components/i18n";
-import { EscKey, KeyboardRig } from "@/components/keyboard-rig";
+import { ArrowKey, EscKey, KeyboardRig, useRig } from "@/components/keyboard-rig";
+import { PixelAvatar } from "@/components/pixel-avatar";
 import { LanguageKey } from "@/components/language-key";
 import { MusicKey } from "@/components/music-key";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 // Laptop of the /home test page. The lid starts closed; a first click on a key opens it and
-// previews the destination, a second click on the same key opens the link. The return key (or the
-// physical Enter key) opens the selection, or toggles the lid when nothing is selected. esc closes
-// the lid (clearing the selection); with the lid already closed it slides the laptop away.
+// previews the destination, a second click on the same key opens the link (⌘ projets / ⌘ à propos
+// instead half-close the screen and slide the laptop to their panel). The return key (or the
+// physical Enter key) opens the selection, or re-opens a shut laptop. esc closes the lid (clearing the
+// selection); with nothing selected it shuts the laptop completely (a click on it opens it again).
+// The ◂ / ▾ / ▸ arrow keys slide the laptop away to reveal projects / the contact form / about; ▴ on
+// the half-open laptop opens the screen on the pixel avatar, and ▾ closes it again.
 
 type Social = { id: string; href: string };
 type Target = { id: string; href: string; internal: boolean };
@@ -48,7 +52,7 @@ const SOCIAL_PREVIEWS: Record<string, string> = {
   gmail: "gm",
   codingame: "cg",
   bluesky: "bs",
-  cal: "cal",
+  cal: "cm", // renamed when the capture changed, so cached copies of the old one are not reused
   x: "x",
   promethee: "pm",
 };
@@ -95,15 +99,15 @@ function PagePreview({ href }: { href: string }) {
   );
 }
 
-function Screen({ target }: { target: Target | null }) {
-  if (!target) {
+function Screen({ target, avatar }: { target: Target | null; avatar: boolean }) {
+  if (avatar) {
     return (
-      <div className="monitor-idle">
-        <p className="egg-prompt">&gt; koddeur</p>
-        <p><Bi fr="Choisis une touche, puis appuie sur entrée." en="Pick a key, then press return." /><span className="egg-cursor" aria-hidden="true" /></p>
+      <div className="monitor-avatar">
+        <PixelAvatar />
       </div>
     );
   }
+  if (!target) return null;
   if (target.internal) return <PagePreview href={target.href} />;
   const preview = SOCIAL_PREVIEWS[target.id];
   if (preview) {
@@ -119,11 +123,57 @@ function Screen({ target }: { target: Target | null }) {
   );
 }
 
-export function HomeKeyboard({ socials, egg }: { socials: Social[]; egg: ReactNode }) {
+// One triangle for the four arrow keys, rotated per direction (0 = up), so they all match.
+function ArrowGlyph({ turn }: { turn: 0 | 90 | 180 | 270 }) {
+  return (
+    <svg className="key-arrow-glyph" viewBox="0 0 10 10" width="1em" height="1em" aria-hidden="true" style={{ transform: `rotate(${turn}deg)` }}>
+      <path d="M5 2.5L8.5 7.5H1.5z" fill="currentColor" />
+    </svg>
+  );
+}
+
+// ⌘ projets / ⌘ à propos: half-close the screen, then slide the laptop to reveal that panel
+// (same as the ◂ / ▸ arrows).
+function PanelKey({ panel, settle, className, label }: { panel: "ArrowLeft" | "ArrowRight"; settle: () => void; className: string; label: ReactNode }) {
+  const { arrow } = useRig();
+  return (
+    <button type="button" className={className} onClick={() => { settle(); arrow(panel); }}>
+      <span className="key-symbol" aria-hidden="true">⌘</span>
+      {label}
+    </button>
+  );
+}
+
+export function HomeKeyboard({ socials, contact, projects, about }: { socials: Social[]; contact: ReactNode; projects: ReactNode; about: ReactNode }) {
   const router = useRouter();
   const [target, setTarget] = useState<Target | null>(null);
   const [closed, setClosed] = useState(true);
+  // Fully shut: the lid lies over the keyboard; a click on it (or Enter) opens the laptop again.
+  const [shut, setShut] = useState(false);
+  // Briefly true while re-opening, so the folded lid waits for the cover to fold back up.
+  const [unshutting, setUnshutting] = useState(false);
+  const unshutTimer = useRef(0);
+  const unshut = useCallback(() => {
+    setShut(false);
+    setUnshutting(true);
+    window.clearTimeout(unshutTimer.current);
+    unshutTimer.current = window.setTimeout(() => setUnshutting(false), 650);
+  }, []);
+  useEffect(() => () => window.clearTimeout(unshutTimer.current), []);
+  // ▴ on the half-open laptop opens the screen on the pixel avatar; ▾ closes it again.
+  const [avatar, setAvatar] = useState(false);
+  // What the screen shows. Only replaced when new content opens, so a closing lid keeps its last
+  // content while it folds and fades instead of flashing an empty state.
+  const [screen, setScreen] = useState<{ target: Target | null; avatar: boolean }>({ target: null, avatar: false });
+  const avatarRef = useRef(false);
+  useEffect(() => {
+    avatarRef.current = avatar;
+  }, [avatar]);
   const targetRef = useRef<Target | null>(null);
+  const shutRef = useRef(false);
+  useEffect(() => {
+    shutRef.current = shut;
+  }, [shut]);
   const closedRef = useRef(true);
   useEffect(() => {
     targetRef.current = target;
@@ -131,9 +181,9 @@ export function HomeKeyboard({ socials, egg }: { socials: Social[]; egg: ReactNo
   }, [target, closed]);
 
   const enter = useCallback(() => {
-    if (targetRef.current) open(targetRef.current, router);
-    else setClosed((current) => !current);
-  }, [router]);
+    if (shutRef.current) unshut();
+    else if (targetRef.current) open(targetRef.current, router);
+  }, [router, unshut]);
 
   // Physical Enter behaves like the return key. A focused on-screen key (left focused by a click)
   // must not swallow it; other focused controls keep their native Enter.
@@ -150,17 +200,41 @@ export function HomeKeyboard({ socials, egg }: { socials: Social[]; egg: ReactNo
     return () => window.removeEventListener("keydown", onKey);
   }, [enter]);
 
-  // esc closes an open lid; with the lid already closed, KeyboardRig slides the laptop away.
+  // esc closes an open lid (clearing the selection); with nothing selected it shuts the laptop.
   const onEscape = useCallback(() => {
-    if (closedRef.current) return false;
-    setClosed(true);
-    setTarget(null);
-    return true;
+    if (!closedRef.current) {
+      setClosed(true);
+      setTarget(null);
+      setAvatar(false);
+    } else if (!shutRef.current) setShut(true);
   }, []);
+
+  // Arrows the laptop handles itself before KeyboardRig's slides.
+  const onArrow = useCallback((key: string) => {
+    // ▴ on the shut laptop opens it back to half-open (like a click on it or Enter).
+    if (key === "ArrowUp" && shutRef.current) {
+      unshut();
+      return true;
+    }
+    if (key === "ArrowUp" && closedRef.current && !shutRef.current && !targetRef.current) {
+      setAvatar(true);
+      setScreen({ target: null, avatar: true });
+      setClosed(false);
+      return true;
+    }
+    if (key === "ArrowDown" && avatarRef.current && !closedRef.current) {
+      setClosed(true);
+      setAvatar(false);
+      return true;
+    }
+    return false;
+  }, [unshut]);
 
   const select = (next: Target) => {
     if (!closedRef.current && targetRef.current?.id === next.id) return open(next, router);
     setTarget(next);
+    setAvatar(false);
+    setScreen({ target: next, avatar: false });
     setClosed(false);
   };
 
@@ -171,57 +245,76 @@ export function HomeKeyboard({ socials, egg }: { socials: Social[]; egg: ReactNo
     </button>
   );
 
+  // Back to the half-open laptop, without selection or avatar (used before sliding to a panel).
+  const settle = useCallback(() => {
+    setClosed(true);
+    setTarget(null);
+    setAvatar(false);
+  }, []);
+
   return (
-    <KeyboardRig egg={egg} onEscape={onEscape}>
-      <div className="monitor" data-closed={closed || undefined} aria-live="polite">
-        <div className="monitor-screen">
-          <Screen target={target} />
+    <KeyboardRig contact={contact} projects={projects} about={about} onEscape={onEscape} onArrow={onArrow}>
+      <div className="monitor" data-closed={closed || undefined} data-shut={shut || undefined} data-unshutting={unshutting || undefined} aria-live="polite">
+        <div className="monitor-screen" aria-hidden={closed || undefined}>
+          <Screen target={screen.target} avatar={screen.avatar} />
         </div>
         <div className="monitor-hinge" aria-hidden="true" />
       </div>
-      <nav className="keyboard" aria-labelledby="keyboard-label">
-        <span id="keyboard-label" className="sr-only"><Bi fr="Liens" en="Links" /></span>
-        <div className="keyboard-top" aria-hidden="true">
-          <span className="keyboard-brand">koddeur</span>
-          <span className="keyboard-leds"><i /><i /><i /></span>
-        </div>
-        {/* Function row: esc closes the lid / puts the laptop away, F1 theme, F2 French, F3 English, F4 music. */}
-        <ul className="keyboard-row keyboard-fn">
-          <li><EscKey className="key key-fn key-esc" /></li>
-          <li><ThemeToggle className="key key-fn key-f1" /></li>
-          <li><LanguageKey lang="fr" className="key key-fn key-f2 key-lang-fr" /></li>
-          <li><LanguageKey lang="en" className="key key-fn key-f3 key-lang-en" /></li>
-          <li><MusicKey className="key key-fn key-f4" /></li>
-        </ul>
-        {/* Social keys, two rows of five, with a two-row return key on the right. */}
-        <ul className="keyboard-row keyboard-letters">
-          <li className="key-return-slot">
-            <button type="button" className="key key-return" onClick={enter}>
-              <span className="key-symbol" aria-hidden="true">↩</span>
-              <Bi fr="entrée" en="return" />
-            </button>
-          </li>
-          {socials.map((social) => (
-            <li key={social.id}>
-              <button type="button" className={`key key-letter social-${social.id}`} aria-pressed={target?.id === social.id} aria-label={SOCIAL_NAMES[social.id] ?? social.id} onClick={() => select({ ...social, internal: false })}>
-                <Image src={`/social/${social.id}.png`} alt="" width={22} height={22} />
+      <div className="laptop-base" data-shut={shut || undefined}>
+        <nav className="keyboard" aria-labelledby="keyboard-label" inert={shut}>
+          <span id="keyboard-label" className="sr-only"><Bi fr="Liens" en="Links" /></span>
+          <div className="keyboard-top" aria-hidden="true">
+            <span className="keyboard-brand">koddeur</span>
+            <span className="keyboard-leds"><i /><i /><i /></span>
+          </div>
+          {/* Function row: esc closes the lid / shuts the laptop, F1 theme, F2 French, F3 English, F4 music. */}
+          <ul className="keyboard-row keyboard-fn">
+            <li><EscKey className="key key-fn key-esc" /></li>
+            <li><ThemeToggle className="key key-fn key-f1" /></li>
+            <li><LanguageKey lang="fr" className="key key-fn key-f2 key-lang-fr" /></li>
+            <li><LanguageKey lang="en" className="key key-fn key-f3 key-lang-en" /></li>
+            <li><MusicKey className="key key-fn key-f4" /></li>
+          </ul>
+          {/* Social keys, two rows of five, with a two-row return key on the right. */}
+          <ul className="keyboard-row keyboard-letters">
+            <li className="key-return-slot">
+              <button type="button" className="key key-return" onClick={enter}>
+                {/* SVG rather than ↩, which iOS renders as an emoji. */}
+                <svg className="key-symbol" viewBox="0 0 16 16" width="1em" height="1em" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M13 3.5v4a2 2 0 0 1-2 2H3.5M6 6.5l-3 3 3 3" />
+                </svg>
+                <Bi fr="entrée" en="return" />
               </button>
             </li>
-          ))}
-        </ul>
-        {/* Bottom row: ⌘ keys and space bar, with a decorative inverted-T arrow cluster. */}
-        <ul className="keyboard-row keyboard-bottom">
-          <li>{pageKey("projects", "key key-mod", true)}</li>
-          <li className="key-space-slot">{pageKey("blog", "key key-space", false)}</li>
-          <li>{pageKey("about", "key key-mod", true)}</li>
-          <li className="key-arrows" aria-hidden="true">
-            <span className="key key-arrow key-arrow-up">▴</span>
-            <span className="key key-arrow">◂</span>
-            <span className="key key-arrow">▾</span>
-            <span className="key key-arrow">▸</span>
-          </li>
-        </ul>
-      </nav>
+            {socials.map((social) => (
+              <li key={social.id}>
+                <button type="button" className={`key key-letter social-${social.id}`} aria-pressed={target?.id === social.id} aria-label={SOCIAL_NAMES[social.id] ?? social.id} onClick={() => select({ ...social, internal: false })}>
+                  <Image src={`/social/${social.id}.png`} alt="" width={22} height={22} />
+                </button>
+              </li>
+            ))}
+          </ul>
+          {/* Bottom row: ⌘ keys and space bar, then the inverted-T arrow cluster. */}
+          <ul className="keyboard-row keyboard-bottom">
+            <li><PanelKey panel="ArrowLeft" settle={settle} className="key key-mod" label={PAGES.projects.label} /></li>
+            <li className="key-space-slot">{pageKey("blog", "key key-space", false)}</li>
+            <li><PanelKey panel="ArrowRight" settle={settle} className="key key-mod" label={PAGES.about.label} /></li>
+            {/* Arrow cluster, same as the physical arrows: ▴ shows the avatar on the half-open laptop,
+                ◂ / ▸ slide the laptop to reveal projects / about, ▾ closes the avatar or reveals the contact form. */}
+            <li className="key-arrows">
+              <ArrowKey className="key key-arrow key-arrow-up" arrowKey="ArrowUp" label={<Bi fr="Afficher l'avatar" en="Show the avatar" />}><ArrowGlyph turn={0} /></ArrowKey>
+              <ArrowKey className="key key-arrow" arrowKey="ArrowLeft" label={<Bi fr="Voir les projets" en="Show projects" />}><ArrowGlyph turn={270} /></ArrowKey>
+              <ArrowKey className="key key-arrow" arrowKey="ArrowDown" label={<Bi fr="Me contacter" en="Contact me" />}><ArrowGlyph turn={180} /></ArrowKey>
+              <ArrowKey className="key key-arrow" arrowKey="ArrowRight" label={<Bi fr="Voir à propos" en="Show about" />}><ArrowGlyph turn={90} /></ArrowKey>
+            </li>
+          </ul>
+        </nav>
+      {/* Back of the lid, folded over the keyboard when the laptop is shut. */}
+      <button type="button" className="laptop-cover" onClick={unshut} inert={!shut}>
+        <span className="laptop-cover-brand" aria-hidden="true">koddeur</span>
+        <span className="sr-only"><Bi fr="Ouvrir le portable" en="Open the laptop" /></span>
+      </button>
+      </div>
     </KeyboardRig>
   );
 }

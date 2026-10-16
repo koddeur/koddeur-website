@@ -1,62 +1,10 @@
 import Link from "next/link";
-import { AboutPhoto } from "@/components/about-photo";
-import { highlightTitle } from "@/components/highlighted-title";
+import { AboutContent } from "@/components/about-content";
 import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
 import { AdminLink } from "@/components/admin-link";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
-
-const experiences = [
-  {
-    role: "Ingénieur logiciel",
-    roleEn: "Software Engineer",
-    company: "Freelance",
-    range: "Janvier 2026 → présent",
-    rangeEn: "January 2026 → present",
-    location: "Lille, France",
-    locationEn: "Lille, France",
-  },
-  {
-    role: "Ingénieur logiciel",
-    roleEn: "Software Engineer",
-    company: "Decathlon France",
-    range: "Sept 2020 → Décembre 2025",
-    rangeEn: "Sept 2020 → December 2025",
-    location: "Croix, France",
-    locationEn: "Croix, France",
-  },
-  {
-    role: "Ingénieur logiciel junior",
-    roleEn: "Junior Software Engineer",
-    company: "Decathlon USA LLC",
-    range: "Avril 2019 → Septembre 2019",
-    rangeEn: "April 2019 → September 2019",
-    location: "San Francisco, USA",
-    locationEn: "San Francisco, USA",
-  },
-];
-
-const education = [
-  {
-    degree: "Master Informatique (E-services)",
-    degreeEn: "Master's in Computer Science (E-services)",
-    school: "Université de Lille, Villeneuve-d'Ascq",
-    range: "2019 → 2021",
-  },
-  {
-    degree: "Licence en Ingénierie Informatique",
-    degreeEn: "Bachelor's in Computer Engineering",
-    school: "Université de Lille, Villeneuve-d'Ascq",
-    range: "2016 → 2019",
-  },
-  {
-    degree: "Baccalauréat Scientifique",
-    degreeEn: "Science Baccalaureate (French high-school diploma)",
-    school: "Lycée Raymond Queneau, Villeneuve-d'Ascq",
-    range: "2012 → 2015",
-  },
-];
 
 export default function AboutPage() {
   return (
@@ -66,47 +14,7 @@ export default function AboutPage() {
         <h1 className="home-title">About</h1>
       </header>
 
-      <section className="about-profile">
-        <AboutPhoto />
-        <div className="about-identity">
-          <h2>Mael Avennec</h2>
-          <p><Bi fr="29 ans · Développeur Full-stack · Lille, France" en="29 y/o · Full-stack Developer · Lille, France" /></p>
-        </div>
-      </section>
-
-      <p className="about-bio">
-        <Bi
-          fr={<>Développeur full-stack, ex-Decathlon. Ayant toujours aimé créer, notamment des projets en partant de 0, je le fais aujourd&rsquo;hui pleinement à travers différentes idées et concepts.<br /><br /><em>« Il n&rsquo;y a pas de problème, il n&rsquo;y a que des solutions. »</em> — André Gide<br /><br />Fan de football ⚽️, de football américain 🏈 et de formule 1 🏎️</>}
-          en={<>Full-stack developer, ex-Decathlon. I&rsquo;ve always loved building things, especially projects from scratch, and today I do it fully through different ideas and concepts.<br /><br /><em>&ldquo;There are no problems, only solutions.&rdquo;</em> — André Gide<br /><br />Fan of football ⚽️, American football 🏈 and Formula 1 🏎️</>}
-        />
-      </p>
-
-      <section className="about-section">
-        <h2><Bi fr={highlightTitle("Expériences *professionnelles*")} en={highlightTitle("Professional *experience*")} /></h2>
-        {experiences.map((experience) => (
-          <div className="about-item" key={experience.company}>
-            <h3><Bi fr={`${experience.role} — ${experience.company}`} en={`${experience.roleEn} — ${experience.company}`} /></h3>
-            <span className="about-meta"><Bi fr={experience.range} en={experience.rangeEn} /></span>
-            <p><Bi fr={experience.location} en={experience.locationEn} /></p>
-          </div>
-        ))}
-      </section>
-
-      <section className="about-section">
-        <h2><Bi fr={highlightTitle("Parcours *scolaire*")} en={highlightTitle("*Academic* background")} /></h2>
-        {education.map((entry) => (
-          <div className="about-item" key={entry.degree}>
-            <h3><Bi fr={entry.degree} en={entry.degreeEn} /></h3>
-            <span className="about-meta">{entry.range}</span>
-            <p>{entry.school}</p>
-          </div>
-        ))}
-      </section>
-
-      <div className="about-resume">
-        <a href="/files/avennec_mael_resume_fr.pdf" target="_blank" rel="noreferrer" className="read-link"><Bi fr="Télécharger mon CV" en="Download my resume" /> - FR <span className="arrow">↓</span></a>
-        <a href="/files/avennec_mael_resume_en.pdf" target="_blank" rel="noreferrer" className="read-link"><Bi fr="Télécharger mon CV" en="Download my resume" /> - EN <span className="arrow">↓</span></a>
-      </div>
+      <AboutContent />
 
       <footer>
         <span>© {new Date().getFullYear()} koddeur</span>

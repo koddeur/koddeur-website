@@ -27,3 +27,22 @@ $$;
 -- (server-side only), which bypasses RLS. Enabling it here just means no anonymous
 -- client-side key could read/write this table even if one were ever introduced.
 alter table public.article_views enable row level security;
+
+-- Contact messages sent from the /home laptop (shown in /admin/messages).
+create table if not exists public.contact_messages (
+  id uuid primary key default gen_random_uuid(),
+  created_at timestamptz not null default now(),
+  email text not null check (char_length(email) <= 200),
+  message text not null check (char_length(message) between 10 and 2000),
+  read boolean not null default false,
+  -- SHA-256 of the sender IP + AUTH_SECRET: lets the API rate-limit without storing raw IPs.
+  ip_hash text not null
+);
+
+create index if not exists contact_messages_ip_recent on public.contact_messages (ip_hash, created_at desc);
+
+-- Same rule as article_views: only the server-side service role key touches this table.
+alter table public.contact_messages enable row level security;
+
+-- Subject of a contact message (preset choice or free text when "Autre" is picked).
+alter table public.contact_messages add column if not exists subject text not null default '' check (char_length(subject) <= 120);
