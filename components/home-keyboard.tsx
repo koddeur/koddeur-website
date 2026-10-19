@@ -1,20 +1,21 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Bi } from "@/components/i18n";
 import { ArrowKey, EscKey, KeyboardRig, useRig } from "@/components/keyboard-rig";
 import { PixelAvatar } from "@/components/pixel-avatar";
 import { LanguageKey } from "@/components/language-key";
-import { MusicKey } from "@/components/music-key";
+import { KeySoundKey } from "@/components/key-sound";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 // Laptop of the /home test page. The lid starts closed; a first click on a key opens it and
 // previews the destination, a second click on the same key opens the link (⌘ projets / ⌘ à propos
-// instead half-close the screen and slide the laptop to their panel). The return key (or the
-// physical Enter key) opens the selection, or re-opens a shut laptop. esc closes the lid (clearing the
-// selection); with nothing selected it shuts the laptop completely (a click on it opens it again).
+// instead half-close the screen and slide the laptop to their panel, and the blog space bar opens
+// /blog in a new tab). The return key (or the physical Enter key) opens the selection, or re-opens a
+// shut laptop. esc closes the lid (clearing the selection); with nothing selected it shuts the laptop completely (a click on it opens it again).
 // The ◂ / ▾ / ▸ arrow keys slide the laptop away to reveal projects / the contact form / about; ▴ on
 // the half-open laptop opens the screen on the pixel avatar, and ▾ closes it again.
 
@@ -28,7 +29,6 @@ const SOCIAL_NAMES: Record<string, string> = {
   linkedin: "LinkedIn",
   gmail: "Email",
   codingame: "CodinGame",
-  bluesky: "Bluesky",
   cal: "Cal.com",
   x: "X",
   promethee: "Promethee",
@@ -51,11 +51,13 @@ const SOCIAL_PREVIEWS: Record<string, string> = {
   linkedin: "li",
   gmail: "gm",
   codingame: "cg",
-  bluesky: "bs",
   cal: "cm", // renamed when the capture changed, so cached copies of the old one are not reused
   x: "x",
   promethee: "pm",
 };
+
+// Duration of the lid's open / close transition (.monitor-screen in globals.css).
+const LID_MS = 600;
 
 // Width the internal pages are rendered at before being scaled down to the monitor.
 const PREVIEW_WIDTH = 1280;
@@ -132,13 +134,13 @@ function ArrowGlyph({ turn }: { turn: 0 | 90 | 180 | 270 }) {
   );
 }
 
-// ⌘ projets / ⌘ à propos: half-close the screen, then slide the laptop to reveal that panel
-// (same as the ◂ / ▸ arrows).
-function PanelKey({ panel, settle, className, label }: { panel: "ArrowLeft" | "ArrowRight"; settle: () => void; className: string; label: ReactNode }) {
+// ⌘ projets / ⌘ à propos / contact: half-close the screen, then slide the laptop to reveal that panel
+// (same as the ◂ / ▸ / ▾ arrows). With the screen open, the slide waits for the lid to close.
+function PanelKey({ panel, settle, className, label, symbol = "⌘" }: { panel: "ArrowLeft" | "ArrowRight" | "ArrowDown"; settle: () => number; className: string; label: ReactNode; symbol?: ReactNode }) {
   const { arrow } = useRig();
   return (
-    <button type="button" className={className} onClick={() => { settle(); arrow(panel); }}>
-      <span className="key-symbol" aria-hidden="true">⌘</span>
+    <button type="button" className={className} onClick={() => { const delay = settle(); window.setTimeout(() => arrow(panel), delay); }}>
+      {symbol ? <span className="key-symbol" aria-hidden="true">{symbol}</span> : null}
       {label}
     </button>
   );
@@ -209,6 +211,16 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
     } else if (!shutRef.current) setShut(true);
   }, []);
 
+  // Back to the half-open laptop, without selection or avatar (used before sliding to a panel).
+  // Returns how long to wait before sliding: the lid's closing time if the screen was open.
+  const settle = useCallback(() => {
+    const wasOpen = !closedRef.current;
+    setClosed(true);
+    setTarget(null);
+    setAvatar(false);
+    return wasOpen ? LID_MS : 0;
+  }, []);
+
   // Arrows the laptop handles itself before KeyboardRig's slides.
   const onArrow = useCallback((key: string) => {
     // ▴ on the shut laptop opens it back to half-open (like a click on it or Enter).
@@ -227,8 +239,10 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
       setAvatar(false);
       return true;
     }
+    // A slide with the screen open first closes the lid, then slides once it is half-open.
+    if ((key === "ArrowLeft" || key === "ArrowRight" || key === "ArrowDown") && !closedRef.current) return settle();
     return false;
-  }, [unshut]);
+  }, [unshut, settle]);
 
   const select = (next: Target) => {
     if (!closedRef.current && targetRef.current?.id === next.id) return open(next, router);
@@ -238,19 +252,14 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
     setClosed(false);
   };
 
-  const pageKey = (id: keyof typeof PAGES, className: string, symbol: boolean) => (
-    <button type="button" className={className} aria-pressed={target?.id === id} onClick={() => select({ id, href: PAGES[id].href, internal: true })}>
-      {symbol ? <span className="key-symbol" aria-hidden="true">⌘</span> : null}
-      {PAGES[id].label}
-    </button>
+  const socialKey = (social: Social) => (
+    <li key={social.id}>
+      <button type="button" className={`key key-letter social-${social.id}`} aria-pressed={target?.id === social.id} aria-label={SOCIAL_NAMES[social.id] ?? social.id} onClick={() => select({ ...social, internal: false })}>
+        <Image src={`/social/${social.id}.png`} alt="" width={22} height={22} />
+      </button>
+    </li>
   );
 
-  // Back to the half-open laptop, without selection or avatar (used before sliding to a panel).
-  const settle = useCallback(() => {
-    setClosed(true);
-    setTarget(null);
-    setAvatar(false);
-  }, []);
 
   return (
     <KeyboardRig contact={contact} projects={projects} about={about} onEscape={onEscape} onArrow={onArrow}>
@@ -267,18 +276,21 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
             <span className="keyboard-brand">koddeur</span>
             <span className="keyboard-leds"><i /><i /><i /></span>
           </div>
-          {/* Function row: esc closes the lid / shuts the laptop, F1 theme, F2 French, F3 English, F4 music. */}
+          {/* Function row: esc closes the lid / shuts the laptop, F1 theme, F2 French, F3 English, F4 key sounds. */}
           <ul className="keyboard-row keyboard-fn">
             <li><EscKey className="key key-fn key-esc" /></li>
             <li><ThemeToggle className="key key-fn key-f1" /></li>
             <li><LanguageKey lang="fr" className="key key-fn key-f2 key-lang-fr" /></li>
             <li><LanguageKey lang="en" className="key key-fn key-f3 key-lang-en" /></li>
-            <li><MusicKey className="key key-fn key-f4" /></li>
+            <li><KeySoundKey className="key key-fn key-f4" /></li>
           </ul>
-          {/* Social keys, two rows of five, with a two-row return key on the right. */}
+          {/* Social keys, five on the first row and four on the second after a wide contact key (like caps lock), with an ISO return key on the right. */}
           <ul className="keyboard-row keyboard-letters">
             <li className="key-return-slot">
               <button type="button" className="key key-return" onClick={enter}>
+                {/* ISO-style inverted L: a wide top half over a narrower full-height stem. */}
+                <span className="key-return-top" aria-hidden="true" />
+                <span className="key-return-stem" aria-hidden="true" />
                 {/* SVG rather than ↩, which iOS renders as an emoji. */}
                 <svg className="key-symbol" viewBox="0 0 16 16" width="1em" height="1em" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M13 3.5v4a2 2 0 0 1-2 2H3.5M6 6.5l-3 3 3 3" />
@@ -286,18 +298,26 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
                 <Bi fr="entrée" en="return" />
               </button>
             </li>
-            {socials.map((social) => (
-              <li key={social.id}>
-                <button type="button" className={`key key-letter social-${social.id}`} aria-pressed={target?.id === social.id} aria-label={SOCIAL_NAMES[social.id] ?? social.id} onClick={() => select({ ...social, internal: false })}>
-                  <Image src={`/social/${social.id}.png`} alt="" width={22} height={22} />
-                </button>
-              </li>
-            ))}
+            {socials.slice(0, 5).map(socialKey)}
+            {/* Wide caps-lock-style key opening the second row: slides the laptop up to the contact form (like ▾). */}
+            <li>
+              <PanelKey
+                panel="ArrowDown"
+                settle={settle}
+                className="key key-mod key-contact"
+                label="contact"
+                symbol={null}
+              />
+            </li>
+            {socials.slice(5).map(socialKey)}
           </ul>
           {/* Bottom row: ⌘ keys and space bar, then the inverted-T arrow cluster. */}
           <ul className="keyboard-row keyboard-bottom">
             <li><PanelKey panel="ArrowLeft" settle={settle} className="key key-mod" label={PAGES.projects.label} /></li>
-            <li className="key-space-slot">{pageKey("blog", "key key-space", false)}</li>
+            <li className="key-space-slot">
+              {/* The space bar opens the blog straight away in a new tab, without the screen preview. */}
+              <Link href={PAGES.blog.href} className="key key-space" target="_blank" rel="noopener noreferrer">{PAGES.blog.label}</Link>
+            </li>
             <li><PanelKey panel="ArrowRight" settle={settle} className="key key-mod" label={PAGES.about.label} /></li>
             {/* Arrow cluster, same as the physical arrows: ▴ shows the avatar on the half-open laptop,
                 ◂ / ▸ slide the laptop to reveal projects / about, ▾ closes the avatar or reveals the contact form. */}

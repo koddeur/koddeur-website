@@ -7,18 +7,19 @@ import { Bi } from "@/components/i18n";
 // visible at the edge: ▾ / ArrowDown slides it up (contact form), ◂ / ArrowLeft slides it right
 // (projects), ▸ / ArrowRight slides it left (about). The recall tab, Escape or the opposite arrow
 // brings it back. Otherwise esc (on screen or physical) is handed to `onEscape`, and every arrow press
-// (on screen or physical) goes to `onArrow` first, which returns true when it handled it.
+// (on screen or physical) goes to `onArrow` first, which returns true when it handled it, or a delay in
+// ms to wait before sliding (e.g. while the laptop's lid closes).
 const PEEK = 16;
 
 export type Stow = "up" | "right" | "left";
 
-const RigContext = createContext<{ escape: () => void; arrow: (key: string) => void }>({ escape: () => {}, arrow: () => {} });
+const RigContext = createContext<{ escape: () => void; arrow: (key: string) => void; recall: () => void }>({ escape: () => {}, arrow: () => {}, recall: () => {} });
 
 // Arrow that undoes each slide, and the slide each arrow triggers.
 const RECALL_KEY: Record<Stow, string> = { up: "ArrowUp", right: "ArrowRight", left: "ArrowLeft" };
 const STOW_KEY: Record<string, Stow> = { ArrowDown: "up", ArrowLeft: "right", ArrowRight: "left" };
 
-type Props = { children: ReactNode; contact: ReactNode; projects: ReactNode; about: ReactNode; onEscape?: () => void; onArrow?: (key: string) => boolean };
+type Props = { children: ReactNode; contact: ReactNode; projects: ReactNode; about: ReactNode; onEscape?: () => void; onArrow?: (key: string) => boolean | number };
 
 export function KeyboardRig({ children, contact, projects, about, onEscape, onArrow }: Props) {
   const rig = useRef<HTMLDivElement>(null);
@@ -62,9 +63,11 @@ export function KeyboardRig({ children, contact, projects, about, onEscape, onAr
       recall();
       return true;
     }
-    if (onArrowRef.current?.(key)) return true;
+    const handled = onArrowRef.current?.(key);
+    if (handled === true) return true;
     if (!STOW_KEY[key]) return false;
-    stow(STOW_KEY[key]);
+    if (typeof handled === "number") window.setTimeout(() => stow(STOW_KEY[key]), handled);
+    else stow(STOW_KEY[key]);
     return true;
   }, [recall, stow]);
 
@@ -100,24 +103,24 @@ export function KeyboardRig({ children, contact, projects, about, onEscape, onAr
   );
 
   return (
+    <RigContext.Provider value={{ escape, arrow, recall }}>
     <div className="keyboard-area">
       {panel("up", "rig-panel rig-panel-contact", contact)}
       {panel("right", "rig-panel rig-panel-projects", projects)}
       {panel("left", "rig-panel rig-panel-about", about)}
       <div ref={rig} className="keyboard-rig" data-stowed={stowed?.direction} style={stowed ? { transform: `translate(${stowed.x}px, ${stowed.y}px)` } : undefined}>
-        <RigContext.Provider value={{ escape, arrow }}>
-          <div inert={!!stowed}>{children}</div>
-        </RigContext.Provider>
+        <div inert={!!stowed}>{children}</div>
         <button type="button" className="keyboard-recall" onClick={recall} inert={!stowed}>
           <span aria-hidden="true">{stowed?.direction === "right" ? "◂" : stowed?.direction === "left" ? "▸" : "▾"}</span>
           <span className="sr-only"><Bi fr="Ressortir le portable" en="Bring the laptop back" /></span>
         </button>
       </div>
     </div>
+    </RigContext.Provider>
   );
 }
 
-// For keys rendered inside the rig that need to slide it (e.g. ⌘ projets / ⌘ à propos).
+// For keys rendered inside the rig that need to slide it (e.g. ⌘ projets / ⌘ à propos), and the panels' close buttons.
 export const useRig = () => useContext(RigContext);
 
 export function EscKey({ className }: { className: string }) {
@@ -125,6 +128,19 @@ export function EscKey({ className }: { className: string }) {
   return (
     <button type="button" className={className} onClick={escape}>
       esc
+    </button>
+  );
+}
+
+// Red traffic light of the side panels' macOS windows: brings the laptop back, like the recall tab.
+export function MacCloseButton() {
+  const { recall } = useContext(RigContext);
+  return (
+    <button type="button" className="mac-close" onClick={recall}>
+      <svg viewBox="0 0 12 12" width="12" height="12" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round">
+        <path d="M4 4l4 4M8 4l-4 4" />
+      </svg>
+      <span className="sr-only"><Bi fr="Fermer et revenir au portable" en="Close and go back to the laptop" /></span>
     </button>
   );
 }

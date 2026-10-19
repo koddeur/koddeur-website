@@ -15,7 +15,10 @@ export const metadata: Metadata = {
 };
 
 // Promethee only lives on the keyboard for now: the current home page grid is a 3x3 of `socials`.
-const socialKeys = [...socials, { id: "promethee", href: "https://www.promethee.io/koddeur" }];
+// On the keyboard, CodinGame's spot goes to the contact key and CodinGame takes Bluesky's place.
+const keyboardSocials = socials.filter((social) => social.id !== "codingame" && social.id !== "bluesky");
+const codingame = socials.find((social) => social.id === "codingame")!;
+const socialKeys = [...keyboardSocials.slice(0, 5), codingame, ...keyboardSocials.slice(5), { id: "promethee", href: "https://www.promethee.io/koddeur" }];
 
 // Projects are read from content/projects at request time, like /projects.
 export const dynamic = "force-dynamic";
