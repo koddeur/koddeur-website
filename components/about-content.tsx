@@ -53,7 +53,7 @@ const education = [
   },
 ];
 
-// About content (profile, bio, experience, education, resume), shared by /about and the /home
+// About content (profile, bio, experience, education), shared by /about and the /home
 // laptop's right panel.
 export function AboutContent() {
   return (
@@ -94,11 +94,6 @@ export function AboutContent() {
           </div>
         ))}
       </section>
-
-      <div className="about-resume">
-        <a href="/files/avennec_mael_resume_fr.pdf" target="_blank" rel="noreferrer" className="read-link"><Bi fr="Télécharger mon CV" en="Download my resume" /> - FR <span className="arrow">↓</span></a>
-        <a href="/files/avennec_mael_resume_en.pdf" target="_blank" rel="noreferrer" className="read-link"><Bi fr="Télécharger mon CV" en="Download my resume" /> - EN <span className="arrow">↓</span></a>
-      </div>
     </>
   );
 }
