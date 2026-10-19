@@ -11,8 +11,8 @@ import { LanguageKey } from "@/components/language-key";
 import { KeySoundKey } from "@/components/key-sound";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-// Laptop of the /home test page. The lid starts closed; a first click on a key opens it and
-// previews the destination, a second click on the same key opens the link (⌘ projets / ⌘ à propos
+// Laptop of the /home test page. It arrives shut and opens itself to half-open (lid closed). A first
+// click on a key opens the lid and previews the destination, a second click on the same key opens the link (⌘ projets / ⌘ à propos
 // instead half-close the screen and slide the laptop to their panel, and the blog space bar opens
 // /blog in a new tab). The return key (or the physical Enter key) opens the selection, or re-opens a
 // shut laptop. esc closes the lid (clearing the selection); with nothing selected it shuts the laptop completely (a click on it opens it again).
@@ -55,6 +55,9 @@ const SOCIAL_PREVIEWS: Record<string, string> = {
   x: "x",
   promethee: "pm",
 };
+
+// Pause on the shut laptop before it opens by itself on arrival.
+const INTRO_DELAY_MS = 500;
 
 // Duration of the lid's open / close transition (.monitor-screen in globals.css).
 const LID_MS = 600;
@@ -151,7 +154,8 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
   const [target, setTarget] = useState<Target | null>(null);
   const [closed, setClosed] = useState(true);
   // Fully shut: the lid lies over the keyboard; a click on it (or Enter) opens the laptop again.
-  const [shut, setShut] = useState(false);
+  // The page loads shut, then opens to half-open on its own (intro animation).
+  const [shut, setShut] = useState(true);
   // Briefly true while re-opening, so the folded lid waits for the cover to fold back up.
   const [unshutting, setUnshutting] = useState(false);
   const unshutTimer = useRef(0);
@@ -162,6 +166,10 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
     unshutTimer.current = window.setTimeout(() => setUnshutting(false), 650);
   }, []);
   useEffect(() => () => window.clearTimeout(unshutTimer.current), []);
+  useEffect(() => {
+    const intro = window.setTimeout(unshut, INTRO_DELAY_MS);
+    return () => window.clearTimeout(intro);
+  }, [unshut]);
   // ▴ on the half-open laptop opens the screen on the pixel avatar; ▾ closes it again.
   const [avatar, setAvatar] = useState(false);
   // What the screen shows. Only replaced when new content opens, so a closing lid keeps its last
@@ -172,7 +180,7 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
     avatarRef.current = avatar;
   }, [avatar]);
   const targetRef = useRef<Target | null>(null);
-  const shutRef = useRef(false);
+  const shutRef = useRef(true);
   useEffect(() => {
     shutRef.current = shut;
   }, [shut]);
