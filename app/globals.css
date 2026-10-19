@@ -16,6 +16,7 @@
   --electric: #fff200;
   --electric-dim: #c4b900;
   --electric-hover: #fff766;
+  --led: #7df0c7; /* laptop LEDs on /home stay green whatever the accent */
   --rose: #f29a9a;
   --logo-ink: #f8fafc;
   --logo-shadow-1: rgba(255, 255, 255, .45);
@@ -366,7 +367,7 @@ html:has(.home-test), body:has(.home-test) { overflow-x: clip; }
 .keyboard-brand { color: var(--case-ink); font-weight: 400; text-shadow: 0 1px 0 var(--case-engrave); font-family: "Pixelify Sans", "Space Mono", monospace; font-size: 11px; letter-spacing: 1px; -webkit-font-smoothing: none; }
 .keyboard-leds { display: flex; gap: 6px; }
 .keyboard-leds i { width: 7px; height: 7px; border-radius: 1px; background: #343437; }
-.keyboard-leds i:first-child { background: var(--electric); box-shadow: 0 0 6px var(--electric); animation: keyboard-led 3s steps(1) infinite; }
+.keyboard-leds i:first-child { background: var(--led); box-shadow: 0 0 6px var(--led); animation: keyboard-led 3s steps(1) infinite; }
 @keyframes keyboard-led { 0%, 70% { opacity: 1; } 72%, 76% { opacity: .35; } 78% { opacity: 1; } }
 .keyboard-row { display: flex; gap: 10px; margin: 0; padding: 0; list-style: none; }
 .key { position: relative; display: flex; align-items: center; justify-content: center; height: 40px; padding: 0; border: 0; border-radius: 6px; color: #d6d6d8; background: #1c1c1e; font: 400 .74rem/1 -apple-system, "Helvetica Neue", Arial, sans-serif; text-decoration: none; cursor: pointer; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), inset 0 -1px 0 rgba(0, 0, 0, .35), 0 2px 0 #000000, 0 3px 4px rgba(0, 0, 0, .28); transition: transform .08s ease, box-shadow .08s ease, filter .15s ease; }
@@ -413,7 +414,7 @@ button.key.key-return:active { filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .28))
 .key-lang-fr, .key-lang-en { font-size: .64rem; letter-spacing: .04em; }
 /* Caps-lock style LED on the active language key. */
 .key-lang-fr::after, .key-lang-en::after { content: ""; position: absolute; top: 5px; left: 6px; width: 4px; height: 4px; border-radius: 50%; background: #3a3a3e; transition: background .15s ease, box-shadow .15s ease; }
-:root:not([data-lang="en"]) .key-lang-fr::after, :root[data-lang="en"] .key-lang-en::after { background: var(--electric); box-shadow: 0 0 4px var(--electric); }
+:root:not([data-lang="en"]) .key-lang-fr::after, :root[data-lang="en"] .key-lang-en::after { background: var(--led); box-shadow: 0 0 4px var(--led); }
 /* Square, like Mac letter keys. */
 .key-letter { width: 100%; height: auto; aspect-ratio: 1; }
 .key-letter img { width: 22px; height: 22px; object-fit: contain; }
