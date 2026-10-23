@@ -88,8 +88,6 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
         <nav className="footer-links">
           <Link href="/"><Bi fr="Accueil" en="Home" /></Link>
           <Link href="/blog">Blog</Link>
-          <Link href="/projects"><Bi fr="Projets" en="Projects" /></Link>
-          <Link href="/about">About</Link>
         </nav>
       </footer>
     </main>
