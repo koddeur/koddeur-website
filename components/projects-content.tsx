@@ -2,7 +2,7 @@ import { Bi } from "@/components/i18n";
 import { ProjectCard } from "@/components/project-card";
 import type { Project } from "@/lib/projects";
 
-// Projects list, shared by /projects and the /home laptop's left panel.
+// Projects list, shared by /projects and the home page laptop's left panel.
 export function ProjectsContent({ projects }: { projects: Project[] }) {
   return (
     <section className="feed" aria-labelledby="projects-title">

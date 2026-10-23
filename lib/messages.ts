@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { getSupabaseClient } from "@/lib/supabase";
 
-// Contact messages sent from the /home laptop, stored in Supabase (table contact_messages).
+// Contact messages sent from the home page laptop, stored in Supabase (table contact_messages).
 
 export type ContactMessage = { id: string; created_at: string; email: string; subject: string; message: string; read: boolean };
 

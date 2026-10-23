@@ -11,7 +11,7 @@ import { LanguageKey } from "@/components/language-key";
 import { KeySoundKey } from "@/components/key-sound";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-// Laptop of the /home test page. It arrives shut and opens itself to half-open (lid closed). A first
+// Laptop of the home page. It arrives shut and opens itself to half-open (lid closed). A first
 // click on a key opens the lid and previews the destination, a second click on the same key opens the link (⌘ projets / ⌘ à propos
 // instead half-close the screen and slide the laptop to their panel, and the blog space bar opens
 // /blog in a new tab). The return key (or the physical Enter key) opens the selection, or re-opens a

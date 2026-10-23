@@ -53,7 +53,7 @@ const education = [
   },
 ];
 
-// About content (profile, bio, experience, education), shared by /about and the /home
+// About content (profile, bio, experience, education), shared by /about and the home page
 // laptop's right panel.
 export function AboutContent() {
   return (

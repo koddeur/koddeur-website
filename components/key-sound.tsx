@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Bi } from "@/components/i18n";
 
-// Keyboard click sounds for the /home laptop, synthesised with the Web Audio API (no audio file):
+// Keyboard click sounds for the home page laptop, synthesised with the Web Audio API (no audio file):
 // a soft, muted tap in the spirit of a Mac keyboard (low-travel scissor keys): a very short low-passed
 // noise burst for the keycap plus a faint low body, slightly randomised so repeated presses don't sound
 // mechanical, and a bit deeper for the wide keys. The F4 key mutes / unmutes them (remembered in

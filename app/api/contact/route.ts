@@ -5,7 +5,7 @@ import { countRecentMessages, createMessage, hashIp } from "@/lib/messages";
 
 export const runtime = "nodejs";
 
-// Public endpoint for the /home contact window. Abuse limits: field bounds, a hidden honeypot
+// Public endpoint for the home page contact window. Abuse limits: field bounds, a hidden honeypot
 // field, and at most RATE_LIMIT messages per IP every RATE_WINDOW minutes.
 const RATE_LIMIT = 3;
 const RATE_WINDOW = 10;

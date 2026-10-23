@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { MacCloseButton } from "@/components/keyboard-rig";
 
-// macOS-style window (traffic lights + centred title) wrapping the /home side panels; the red light
+// macOS-style window (traffic lights + centred title) wrapping the home page side panels; the red light
 // closes the panel (brings the laptop back).
 export function MacWindow({ title, children, className }: { title: ReactNode; children: ReactNode; className?: string }) {
   return (

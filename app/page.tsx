@@ -1,33 +1,37 @@
-import Image from "next/image";
-import Link from "next/link";
+import type { Metadata } from "next";
+import { AboutContent } from "@/components/about-content";
+import { ContactForm } from "@/components/contact-form";
+import { HomeKeyboard } from "@/components/home-keyboard";
+import { MacWindow } from "@/components/mac-window";
+import { Bi } from "@/components/i18n";
+import { ProjectsContent } from "@/components/projects-content";
+import { getProjects } from "@/lib/projects";
 import { socials } from "@/lib/site";
 
+// Home page: the laptop keyboard.
+export const metadata: Metadata = {
+  title: "koddeur",
+};
+
+// Promethee only lives on the keyboard (it is not in `socials`).
+// On the keyboard, CodinGame's spot goes to the contact key and CodinGame takes Bluesky's place.
+const keyboardSocials = socials.filter((social) => social.id !== "codingame" && social.id !== "bluesky");
+const codingame = socials.find((social) => social.id === "codingame")!;
+const socialKeys = [...keyboardSocials.slice(0, 5), codingame, ...keyboardSocials.slice(5), { id: "promethee", href: "https://www.promethee.io/koddeur" }];
+
+// Projects are read from content/projects at request time, like /projects.
 export const dynamic = "force-dynamic";
 
-export default function Landing() {
+export default async function Home() {
+  const projects = await getProjects();
   return (
-    <main className="shell landing-shell">
-      <div className="landing-content">
-        <h1 className="landing-title">koddeur</h1>
-        <ul className="social-grid">
-          {socials.map((social) => {
-            const external = !social.href.startsWith("mailto:");
-            return (
-              <li key={social.id}>
-                <a href={social.href} target={external ? "_blank" : undefined} rel={external ? "noreferrer" : undefined} className={`social-tile social-${social.id}`}>
-                  <Image src={`/social/${social.id}.png`} alt="" width={35} height={35} />
-                </a>
-              </li>
-            );
-          })}
-        </ul>
-        <div className="landing-links">
-          <Link href="/projects" className="landing-link">Projects</Link>
-          <Link href="/blog" className="landing-link">Blog</Link>
-          <Link href="/about" className="landing-link">About</Link>
-        </div>
-      </div>
-      <footer><span>© {new Date().getFullYear()} koddeur</span></footer>
+    <main className="shell home-test">
+      <HomeKeyboard
+        socials={socialKeys}
+        contact={<MacWindow className="mac-window-compose" title={<Bi fr="Nouveau message" en="New message" />}><ContactForm /></MacWindow>}
+        projects={<MacWindow title={<Bi fr="Projets" en="Projects" />}><ProjectsContent projects={projects} /></MacWindow>}
+        about={<MacWindow title={<Bi fr="À propos" en="About" />}><AboutContent /></MacWindow>}
+      />
     </main>
   );
 }

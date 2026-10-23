@@ -5,7 +5,7 @@ import { Bi } from "@/components/i18n";
 import { useLang } from "@/components/use-lang";
 import { CONTACT_SUBJECTS, OTHER_SUBJECT, SUBJECT_MAX } from "@/lib/contact-subjects";
 
-// Mail-style compose form shown when the /home laptop slides up. Posts to /api/contact.
+// Mail-style compose form shown when the home page laptop slides up. Posts to /api/contact.
 type Status = "idle" | "sending" | "sent" | "error" | "rate";
 
 export function ContactForm() {
