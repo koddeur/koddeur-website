@@ -2,6 +2,9 @@ import { AboutPhoto } from "@/components/about-photo";
 import { highlightTitle } from "@/components/highlighted-title";
 import { Bi } from "@/components/i18n";
 
+// Booking link behind "Parlons-en" in the bio.
+const calUrl = "https://cal.com/mael-avennec/diagnostic";
+
 const experiences = [
   {
     role: "Ingénieur logiciel",
@@ -61,15 +64,15 @@ export function AboutContent() {
       <section className="about-profile">
         <AboutPhoto />
         <div className="about-identity">
-          <h2>Mael Avennec</h2>
+          <h2>Mael</h2>
           <p><Bi fr="29 ans · Développeur Full-stack · Lille, France" en="29 y/o · Full-stack Developer · Lille, France" /></p>
         </div>
       </section>
 
       <p className="about-bio">
         <Bi
-          fr={<>Développeur full-stack, ex-Decathlon. Ayant toujours aimé créer, notamment des projets en partant de 0, je le fais aujourd&rsquo;hui pleinement à travers différentes idées et concepts.<br /><br /><em>« Il n&rsquo;y a pas de problème, il n&rsquo;y a que des solutions. »</em> — André Gide<br /><br />Fan de football ⚽️, de football américain 🏈 et de formule 1 🏎️</>}
-          en={<>Full-stack developer, ex-Decathlon. I&rsquo;ve always loved building things, especially projects from scratch, and today I do it fully through different ideas and concepts.<br /><br /><em>&ldquo;There are no problems, only solutions.&rdquo;</em> — André Gide<br /><br />Fan of football ⚽️, American football 🏈 and Formula 1 🏎️</>}
+          fr={<>Développeur fullstack avec plus de 5 ans d&rsquo;expérience, dont plusieurs années chez Decathlon. Je conçois des sites, des apps et des automatisations sur mesure pour aider les entreprises et les indépendants à gagner du temps et à se développer.<br /><br />Je travaille actuellement à distance avec des clients partout dans le monde. Un projet en tête ? <a href={calUrl} target="_blank" rel="noopener noreferrer">Parlons-en</a>.<br /><br /><em>« Il n&rsquo;y a pas de problème, il n&rsquo;y a que des solutions. »</em> — André Gide<br /><br />Fan de football ⚽️, de football américain 🏈 et de formule 1 🏎️</>}
+          en={<>Fullstack developer with more than 5 years of experience, including several years at Decathlon. I build custom websites, apps and automations that help businesses and freelancers save time and grow.<br /><br />I currently work remotely with clients all over the world. Got a project in mind? <a href={calUrl} target="_blank" rel="noopener noreferrer">Let&rsquo;s talk</a>.<br /><br /><em>&ldquo;There are no problems, only solutions.&rdquo;</em> — André Gide<br /><br />Fan of football ⚽️, American football 🏈 and Formula 1 🏎️</>}
         />
       </p>
 

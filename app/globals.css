@@ -62,6 +62,15 @@ mark { padding: .05em .2em; border-radius: 2px; color: var(--canvas); background
 /* Light theme: the darker text accent would make a muddy highlight, so marks and selection keep the bright yellow. */
 :root[data-theme="light"] mark, :root[data-theme="light"] ::selection { color: var(--ink); background: #fff200; }
 
+/* Blog and articles stay black and white: the yellow accent is swapped for greys. */
+.blog-mono { --electric: #ffffff; --electric-dim: #aab2bd; --electric-hover: #e5e7eb; --tint: 255, 255, 255; }
+:root[data-theme="light"] .blog-mono { --electric: #000000; --electric-dim: #4b5563; --electric-hover: #1f2937; --tint: 0, 0, 0; }
+:root[data-theme="light"] .blog-mono mark, :root[data-theme="light"] .blog-mono ::selection { color: var(--canvas-soft); background: var(--ink); }
+.blog-mono .tag-chip.active { background: rgba(var(--tint), .1); }
+.blog-mono .article-card:hover { background: rgba(var(--tint), .06); }
+.blog-mono .ranking-item.top-1 { background: rgba(var(--tint), .06); }
+.blog-mono .prose-table tbody tr:hover { background: rgba(var(--tint), .05); }
+
 .shell { width: min(100% - 48px, 960px); margin: 0 auto; min-height: 100vh; min-height: 100svh; padding: 42px 0 28px; position: relative; }
 .shell::before { content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .5; background-image: linear-gradient(var(--scanline) 1px, transparent 1px); background-size: 100% 8px; mask-image: linear-gradient(to bottom, black, transparent 85%); }
 .home-header { padding: 0 0 70px; text-align: center; }
@@ -90,13 +99,13 @@ mark { padding: .05em .2em; border-radius: 2px; color: var(--canvas); background
 .sort-control a { color: var(--muted); transition: color .2s; }
 .sort-control a:hover { color: var(--electric); }
 .sort-control a.active { color: var(--electric); }
-.article-card { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 34px 8px; border-bottom: 1px solid var(--line); transition: background .2s ease; cursor: pointer; }
+.article-card { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 18px; padding: 20px 8px; border-bottom: 1px solid var(--line); transition: background .2s ease; cursor: pointer; }
 .article-card:hover { background: rgba(255, 242, 0, .09); }
 .article-meta, .article-kicker { display: flex; gap: 9px; align-items: center; color: var(--muted); font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; }
-.article-card h2 { margin: 12px 0 8px; font-family: "Space Mono", monospace; font-size: clamp(1.08rem, 2.5vw, 1.45rem); line-height: 1.35; font-weight: 700; }
+.article-card h2 { margin: 8px 0 6px; font-family: "Space Mono", monospace; font-size: clamp(1.08rem, 2.5vw, 1.45rem); line-height: 1.35; font-weight: 700; }
 .article-card h2 a { border-bottom: 1px solid transparent; transition: color .2s, border .2s; }
 .article-card:hover h2 a { color: var(--electric); }.article-card h2 a::after { content: ""; position: absolute; inset: 0; z-index: 1; }
-.article-card .tag-row a { position: relative; z-index: 2; }
+.article-card .tag-row { margin-top: 10px; }.article-card .tag-row a { position: relative; z-index: 2; }
 
 .article-card p { max-width: 650px; margin: 0; color: var(--body-soft); font-size: .87rem; }
 .tag-row { display: flex; flex-wrap: wrap; gap: 7px 13px; margin-top: 16px; color: var(--electric-dim); font-size: .68rem; }
@@ -140,6 +149,7 @@ footer { display: flex; justify-content: space-between; margin-top: 38px; color:
 .about-identity h2 { margin: 0; color: var(--ink); font-family: "Space Mono", monospace; font-size: clamp(1.3rem, 3vw, 1.7rem); letter-spacing: -.03em; }
 .about-identity p { margin: 8px 0 0; color: var(--muted); font-size: .78rem; letter-spacing: .03em; text-transform: uppercase; }
 .about-bio { max-width: 660px; margin: 0 0 46px; color: var(--body-soft); font-size: .95rem; line-height: 1.85; }
+.about-bio a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
 .about-section { margin-top: 42px; margin-bottom: 42px; }
 .about-section + .about-section { margin-top: 90px; }
 .about-section h2 { margin: 0 0 8px; padding-bottom: 14px; border-bottom: 1px solid var(--line); color: var(--ink); font-family: "Space Mono", monospace; font-size: 1.05rem; letter-spacing: -.02em; }
