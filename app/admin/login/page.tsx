@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="shell login-shell">
+    <main className="shell login-shell monochrome">
       <header className="article-nav"><Logo link={false} mark={false} /><ThemeToggle /></header>
       <section className="admin-heading"><span className="eyebrow">admin / connexion</span><h1>Espace réservé.</h1><p>Entrez le mot de passe pour accéder au dashboard.</p></section>
       <form className="article-form login-form" onSubmit={submit}>

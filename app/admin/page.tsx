@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const articles = await getArticles();
-  return <main className="shell admin-shell">
+  return <main className="shell admin-shell monochrome">
     <header className="article-nav">
       <Logo href="/" mark={false} />
       <div className="admin-nav-actions">

@@ -10,9 +10,19 @@ type VideoValue = { src: string; title: string; vertical: boolean };
 type RankingEntry = { rank: number; title: string; score: string; tags: string[]; notes: string[] };
 type Block = { kind: "h2" | "h3" | "p" | "list" | "code" | "img" | "table" | "container" | "ranking" | "video"; value: string | List | ImageValue | TableValue | Container | RankingEntry[] | VideoValue };
 
-function inline(value: string) {
-  const pieces = value.split(/(`[^`]+`|\*\*[^*]+\*\*|\*[^*\s](?:[^*]*[^*\s])?\*|<mark>[\s\S]*?<\/mark>)/g);
+// Only web, mail, site-relative and anchor links are rendered; anything else (javascript:, data:…) stays plain text.
+const safeHref = (href: string) => /^(https?:\/\/|mailto:|\/(?!\/)|#)/i.test(href) ? href : null;
+
+function inline(value: string): React.ReactNode[] {
+  const pieces = value.split(/(\[[^\]]+\]\([^)\s]+\)|`[^`]+`|\*\*[^*]+\*\*|\*[^*\s](?:[^*]*[^*\s])?\*|<mark>[\s\S]*?<\/mark>)/g);
   return pieces.map((piece, index) => {
+    const link = piece.match(/^\[([^\]]+)\]\(([^)\s]+)\)$/);
+    if (link) {
+      const href = safeHref(link[2]);
+      if (!href) return link[1];
+      const external = /^https?:/i.test(href);
+      return <a key={index} href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>{inline(link[1])}</a>;
+    }
     if (piece.startsWith("`") && piece.endsWith("`")) return <code key={index}>{piece.slice(1, -1)}</code>;
     if (piece.startsWith("**") && piece.endsWith("**")) return <strong key={index}>{piece.slice(2, -2)}</strong>;
     if (piece.length > 2 && piece.startsWith("*") && piece.endsWith("*")) return <em key={index}>{piece.slice(1, -1)}</em>;

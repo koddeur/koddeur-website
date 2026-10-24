@@ -44,7 +44,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     if (!hasSession) notFound();
   }
   return (
-    <main className="shell article-shell blog-mono">
+    <main className="shell article-shell monochrome">
       <header className="article-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></header>
       <article className="article-page">
         {!article.published ? <p className="draft-banner"><Bi fr="Article désactivé — visible uniquement en admin." en="Draft article — visible to admin only." /></p> : null}

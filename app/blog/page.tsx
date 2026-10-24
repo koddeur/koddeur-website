@@ -39,7 +39,7 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
   });
 
   return (
-    <main className="shell blog-mono">
+    <main className="shell monochrome">
       <header className="home-header">
         <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title">Blog</h1>

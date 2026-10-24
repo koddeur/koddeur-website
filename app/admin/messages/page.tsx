@@ -15,7 +15,7 @@ export default async function AdminMessagesPage() {
     failed = true;
   }
   const unread = messages.filter((message) => !message.read).length;
-  return <main className="shell admin-shell">
+  return <main className="shell admin-shell monochrome">
     <header className="article-nav">
       <Logo href="/" mark={false} />
       <div className="admin-nav-actions">
