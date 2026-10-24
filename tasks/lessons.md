@@ -38,3 +38,4 @@
 - Admin en noir et blanc : classe `.blog-mono` renommée `.monochrome` et posée aussi sur les `<main>` admin ; les statuts (publié, enregistré, non lu) passent par `--status-ok` pour garder leur couleur malgré la surcharge de `--electric`.
 - Les liens `[texte](url)` des articles s'affichaient bruts : le parseur maison `inline()` de markdown-content.tsx ne les gérait pas ; ajout du motif avec liste blanche de protocoles (http(s), mailto, /, #) pour bloquer javascript: et data:.
 - Blog/admin : seul `mark` reste jaune dans `.monochrome` (règle `.monochrome mark` explicite, car `--electric` y vaut blanc) ; vérifié par un scan des couleurs calculées de tous les éléments de `main` (aucun jaune hors mark).
+- `npm run build | grep … && git push` pousse même si le build échoue (le && suit le code de sortie du grep) : lancer le build seul, vérifier `$?`, puis pousser.
