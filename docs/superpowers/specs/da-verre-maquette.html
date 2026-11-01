@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DA Verre · maquette</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --canvas: #f5f5f7;
+  --ink: #1d1d1f;
+  --soft: #424245;
+  --muted: #86868b;
+  --glass: rgba(255, 255, 255, .48);
+  --glass-strong: rgba(255, 255, 255, .66);
+  --glass-edge: rgba(255, 255, 255, .7);
+  --hair: rgba(0, 0, 0, .08);
+  --tint: 0, 0, 0;
+  --shadow: 0 1px 1px rgba(0,0,0,.04), 0 8px 32px rgba(0,0,0,.08);
+  --blob-a: rgba(255, 242, 0, .22);
+  --blob-b: rgba(150, 165, 200, .28);
+  --blob-c: rgba(190, 180, 190, .22);
+  --on-ink: #ffffff;
+  --ease-out: cubic-bezier(.23, 1, .32, 1);
+}
+:root[data-theme="dark"] {
+  --canvas: #000000;
+  --ink: #f5f5f7;
+  --soft: #c7c7cc;
+  --muted: #8e8e93;
+  --glass: rgba(28, 28, 30, .42);
+  --glass-strong: rgba(28, 28, 30, .6);
+  --glass-edge: rgba(255, 255, 255, .12);
+  --hair: rgba(255, 255, 255, .1);
+  --tint: 255, 255, 255;
+  --shadow: 0 1px 1px rgba(0,0,0,.3), 0 12px 40px rgba(0,0,0,.5);
+  --blob-a: rgba(255, 242, 0, .08);
+  --blob-b: rgba(120, 135, 170, .16);
+  --blob-c: rgba(140, 130, 140, .12);
+  --on-ink: #000000;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; overflow-x: clip; }
+body {
+  min-height: 100vh; color: var(--ink); background: var(--canvas);
+  font: 17px/1.47 -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+  letter-spacing: -.01em; -webkit-font-smoothing: antialiased;
+  transition: background .3s ease, color .3s ease;
+}
+/* Fond : trois halos fixes et statiques, pour que le verre ait quelque chose à flouter. */
+.aurora { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.aurora i { position: absolute; border-radius: 50%; filter: blur(80px); }
+.aurora i:nth-child(1) { width: 520px; height: 520px; top: -160px; left: -120px; background: var(--blob-a); }
+.aurora i:nth-child(2) { width: 600px; height: 600px; top: 30%; right: -220px; background: var(--blob-b); }
+.aurora i:nth-child(3) { width: 460px; height: 460px; bottom: -180px; left: 20%; background: var(--blob-c); }
+
+.mono { font-family: "IBM Plex Mono", ui-monospace, monospace; letter-spacing: 0; }
+.glass {
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid var(--glass-edge); box-shadow: var(--shadow);
+}
+.page { position: relative; z-index: 1; width: min(100% - 32px, 820px); margin: 0 auto; padding: 96px 0 140px; }
+
+/* Barre de nav flottante */
+.nav { position: fixed; top: 14px; left: 50%; z-index: 10; transform: translateX(-50%); display: flex; align-items: center; gap: 4px; padding: 6px; border-radius: 999px; }
+.nav a, .nav button { display: inline-flex; align-items: center; height: 34px; padding: 0 14px; border: 0; border-radius: 999px; color: var(--soft); background: transparent; font: 500 14px/1 inherit; font-family: inherit; text-decoration: none; cursor: pointer; transition: background .2s ease, color .2s ease, transform .16s var(--ease-out); }
+.nav .logo { color: var(--ink); font-family: "IBM Plex Mono", monospace; font-weight: 500; }
+.nav a.current { color: var(--ink); background: rgba(var(--tint), .07); }
+.nav a:active, .nav button:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .nav a:hover, .nav button:hover { color: var(--ink); background: rgba(var(--tint), .05); } }
+.switch { display: flex; justify-content: center; gap: 8px; margin: 0 0 48px; }
+.switch button { height: 30px; padding: 0 14px; border: 1px solid var(--hair); border-radius: 999px; color: var(--soft); background: transparent; font: 500 13px/1 inherit; font-family: inherit; cursor: pointer; }
+.switch button[aria-pressed="true"] { color: var(--on-ink); background: var(--ink); border-color: var(--ink); }
+
+/* Typo : tracking négatif sur les grandes tailles */
+.eyebrow { margin: 0 0 10px; color: var(--muted); font-size: 13px; font-weight: 500; letter-spacing: .02em; }
+h1 { margin: 0; font-size: clamp(44px, 8vw, 72px); line-height: 1.04; font-weight: 700; letter-spacing: -.035em; }
+.lead { max-width: 560px; margin: 16px 0 0; color: var(--soft); font-size: 21px; line-height: 1.38; letter-spacing: -.015em; }
+mark { padding: 0 .15em; border-radius: 4px; color: #000; background: #fff200; }
+
+/* Contrôle segmenté avec pastille qui glisse */
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; margin: 44px 0 16px; }
+.segmented { position: relative; display: inline-grid; grid-auto-flow: column; grid-auto-columns: 1fr; padding: 3px; border-radius: 10px; background: rgba(var(--tint), .06); }
+.segmented button { position: relative; z-index: 1; height: 30px; padding: 0 16px; border: 0; color: var(--soft); background: none; font: 500 13px/1 inherit; font-family: inherit; cursor: pointer; transition: color .2s ease; }
+.segmented button[aria-pressed="true"] { color: var(--ink); }
+.segmented .thumb { position: absolute; top: 3px; bottom: 3px; left: 3px; border-radius: 7px; background: var(--glass-strong); box-shadow: 0 1px 3px rgba(0,0,0,.12), 0 0 0 .5px rgba(0,0,0,.04); transition: transform .32s var(--ease-out); }
+:root[data-theme="dark"] .segmented .thumb { background: rgba(255,255,255,.16); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { height: 30px; padding: 0 12px; border: 1px solid var(--glass-edge); border-radius: 999px; color: var(--soft); background: var(--glass); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font: 500 13px/28px inherit; font-family: inherit; cursor: pointer; transition: transform .16s var(--ease-out), background .2s ease; }
+.chip .mono { color: var(--muted); font-size: 11px; margin-left: 4px; }
+.chip.active { color: var(--on-ink); background: var(--ink); border-color: var(--ink); }
+.chip.active .mono { color: var(--on-ink); opacity: .6; }
+.chip:active { transform: scale(.96); }
+
+/* Liste groupée façon iOS : UNE plaque de verre, des rangées séparées par un filet */
+.group { border-radius: 22px; overflow: hidden; }
+.row { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; padding: 20px 22px; color: inherit; text-decoration: none; transition: background .2s ease; }
+.row + .row::before { content: ""; position: absolute; top: 0; left: 22px; right: 0; height: 1px; background: var(--hair); }
+.row:active { background: rgba(var(--tint), .06); }
+@media (hover: hover) and (pointer: fine) { .row:hover { background: rgba(var(--tint), .035); } .row:hover .chev { transform: translateX(3px); color: var(--ink); } }
+.meta { color: var(--muted); font-size: 12px; }
+.row h2 { margin: 4px 0 4px; font-size: 21px; line-height: 1.24; font-weight: 600; letter-spacing: -.02em; }
+.row p { margin: 0; color: var(--soft); font-size: 15px; line-height: 1.45; }
+.tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; color: var(--muted); font-size: 12px; }
+.chev { color: var(--muted); font-size: 22px; transition: transform .2s var(--ease-out), color .2s ease; }
+
+/* Devis : étapes, sections en verre, choix en pilules */
+.steps { display: flex; gap: 6px; margin: 40px 0 20px; }
+.steps span { flex: 1; height: 4px; border-radius: 2px; background: rgba(var(--tint), .1); overflow: hidden; }
+.steps span.on::after { content: ""; display: block; height: 100%; background: var(--ink); }
+.section { margin-top: 18px; padding: 8px 0; border-radius: 22px; }
+.section-head { display: flex; align-items: baseline; justify-content: space-between; padding: 14px 22px 6px; }
+.section-head h3 { margin: 0; font-size: 19px; font-weight: 600; letter-spacing: -.015em; }
+.field { position: relative; display: grid; grid-template-columns: 180px minmax(0, 1fr); align-items: center; gap: 12px; padding: 12px 22px; }
+.field + .field::before, .q::before { content: ""; position: absolute; top: 0; left: 22px; right: 0; height: 1px; background: var(--hair); }
+.field label { color: var(--ink); font-size: 15px; }
+.field label small, .q small { color: var(--muted); font-size: 13px; }
+.field input, .field textarea { width: 100%; min-width: 0; padding: 8px 0; border: 0; outline: 0; color: var(--ink); background: transparent; font: 15px/1.45 inherit; font-family: inherit; resize: vertical; }
+.field input::placeholder, .field textarea::placeholder { color: var(--muted); }
+.field:focus-within { background: rgba(var(--tint), .03); }
+.field.stack { grid-template-columns: 1fr; gap: 4px; }
+.q { position: relative; padding: 14px 22px 16px; }
+.q > div:first-child { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 15px; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { position: relative; display: inline-flex; cursor: pointer; }
+.pill input { position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; }
+.pill > span { display: inline-flex; align-items: center; gap: 6px; height: 34px; padding: 0 14px; border-radius: 999px; color: var(--ink); background: rgba(var(--tint), .06); font-size: 14px; transition: background .2s ease, color .2s ease, transform .16s var(--ease-out); }
+.pill > span::before { content: ""; width: 0; height: 10px; border: solid currentColor; border-width: 0 2px 2px 0; opacity: 0; transform: rotate(45deg) translate(-1px, -2px); transition: width .2s var(--ease-out), opacity .2s ease, margin .2s var(--ease-out); margin-right: -6px; }
+.pill input:checked + span { color: var(--on-ink); background: var(--ink); }
+.pill input:checked + span::before { width: 5px; opacity: 1; margin-right: 0; }
+.pill:active > span { transform: scale(.96); }
+.pill input:focus-visible + span { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* Barre d'envoi collante en verre */
+.dock { position: fixed; left: 50%; bottom: 18px; z-index: 10; transform: translateX(-50%); display: flex; align-items: center; gap: 16px; width: min(100% - 32px, 560px); padding: 10px 10px 10px 22px; border-radius: 999px; }
+.dock p { flex: 1; margin: 0; color: var(--soft); font-size: 13px; line-height: 1.3; }
+.btn { height: 44px; padding: 0 22px; border: 0; border-radius: 999px; color: var(--on-ink); background: var(--ink); font: 600 15px/1 inherit; font-family: inherit; cursor: pointer; transition: transform .16s var(--ease-out), opacity .2s ease; }
+.btn:active { transform: scale(.97); }
+
+[hidden] { display: none !important; }
+@media (max-width: 640px) {
+  .field { grid-template-columns: 1fr; gap: 2px; }
+  .nav a:not(.logo):not(.current) { display: none; }
+  .row { padding: 18px; }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .chip { background: var(--canvas); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition-duration: 0s !important; } }
+</style>
+</head>
+<body>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<nav class="nav glass">
+  <a class="logo" href="#">koddeur</a>
+  <a href="#" id="nav-blog" class="current">Blog</a>
+  <a href="#">Projets</a>
+  <a href="#" id="nav-devis">Devis</a>
+  <button type="button" id="theme" aria-label="Changer de thème">◐</button>
+</nav>
+
+<div class="page">
+  <div class="switch" role="group" aria-label="Page de la maquette">
+    <button type="button" data-view="blog" aria-pressed="true">Blog</button>
+    <button type="button" data-view="devis" aria-pressed="false">Devis</button>
+  </div>
+
+  <section id="view-blog">
+    <p class="eyebrow">Notes de dev · 12 articles</p>
+    <h1>Blog</h1>
+    <p class="lead">Ce que j'apprends en construisant des sites, des apps et des <mark>automatisations</mark>.</p>
+
+    <div class="toolbar">
+      <div class="chips">
+        <button class="chip active">#nextjs<span class="mono">5</span></button>
+        <button class="chip">#supabase<span class="mono">3</span></button>
+        <button class="chip">#ia<span class="mono">3</span></button>
+        <button class="chip">#mac<span class="mono">2</span></button>
+      </div>
+      <div class="segmented" id="sort">
+        <span class="thumb" aria-hidden="true"></span>
+        <button type="button" aria-pressed="true">Récents</button>
+        <button type="button" aria-pressed="false">Anciens</button>
+        <button type="button" aria-pressed="false">Plus vus</button>
+      </div>
+    </div>
+
+    <div class="group glass">
+      <a class="row" href="#">
+        <div>
+          <div class="meta mono">28 oct. 2026 · 412 vues</div>
+          <h2>Les sites <mark>vibecodés</mark> se ressemblent tous</h2>
+          <p>Pourquoi les sites générés finissent avec la même tête, et trois réglages pour en sortir.</p>
+          <div class="tags mono"><span>#ia</span><span>#design</span></div>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
+      <a class="row" href="#">
+        <div>
+          <div class="meta mono">14 oct. 2026 · 238 vues</div>
+          <h2>Ranger son dossier Documents une bonne fois</h2>
+          <p>La structure que j'utilise sur Mac pour ne plus chercher un fichier.</p>
+          <div class="tags mono"><span>#mac</span><span>#organisation</span></div>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
+      <a class="row" href="#">
+        <div>
+          <div class="meta mono">2 oct. 2026 · 190 vues</div>
+          <h2>RLS Supabase : les quatre erreurs que je refais</h2>
+          <p>Politiques trop larges, service role dans le front, et comment les repérer avant la prod.</p>
+          <div class="tags mono"><span>#supabase</span><span>#sécurité</span></div>
+        </div>
+        <span class="chev" aria-hidden="true">›</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="view-devis" hidden>
+    <p class="eyebrow">Réponse sous 48 h</p>
+    <h1>Pré-devis</h1>
+    <p class="lead">Site, app ou automatisation : quelques questions pour comprendre ton projet, puis je t'envoie un devis chiffré.</p>
+
+    <div class="steps" aria-label="Étape 2 sur 4"><span class="on"></span><span class="on"></span><span></span><span></span></div>
+
+    <div class="section glass">
+      <div class="section-head"><h3>Toi</h3><span class="meta mono">01 / 04</span></div>
+      <div class="field"><label for="m-email">E-mail</label><input id="m-email" type="email" placeholder="nom@entreprise.fr"></div>
+      <div class="field"><label for="m-name">Nom <small>facultatif</small></label><input id="m-name" placeholder="Camille Martin"></div>
+      <div class="field"><label for="m-site">Site actuel <small>facultatif</small></label><input id="m-site" placeholder="https://"></div>
+    </div>
+
+    <div class="section glass">
+      <div class="section-head"><h3>Le projet</h3><span class="meta mono">02 / 04</span></div>
+      <div class="q" style="padding-top: 8px;">
+        <div><span>Type de projet</span><small>plusieurs choix</small></div>
+        <div class="pills">
+          <label class="pill"><input type="checkbox" checked><span>Site vitrine</span></label>
+          <label class="pill"><input type="checkbox"><span>App web</span></label>
+          <label class="pill"><input type="checkbox" checked><span>Automatisation</span></label>
+          <label class="pill"><input type="checkbox"><span>E-commerce</span></label>
+        </div>
+      </div>
+      <div class="field stack" style="position: relative;"><label for="m-desc">Décris ton projet</label><textarea id="m-desc" rows="3" placeholder="Ce que tu veux faire, le problème à résoudre, comment ça se passe aujourd'hui."></textarea></div>
+      <div class="q">
+        <div><span>Délai souhaité</span></div>
+        <div class="pills">
+          <label class="pill"><input type="radio" name="d"><span>Urgent</span></label>
+          <label class="pill"><input type="radio" name="d" checked><span>1 à 3 mois</span></label>
+          <label class="pill"><input type="radio" name="d"><span>Pas pressé</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="dock glass" id="dock" hidden>
+      <p>2 sections sur 4 remplies.<br>Rien n'est envoyé avant ton clic.</p>
+      <button class="btn" type="button">Envoyer ma demande</button>
+    </div>
+  </section>
+</div>
+
+<script>
+const root = document.documentElement;
+document.getElementById("theme").onclick = () => { root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark"; };
+if (matchMedia("(prefers-color-scheme: dark)").matches) root.dataset.theme = "dark";
+
+document.querySelectorAll("[data-view]").forEach((button) => {
+  button.onclick = () => {
+    const view = button.dataset.view;
+    document.querySelectorAll("[data-view]").forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+    document.getElementById("view-blog").hidden = view !== "blog";
+    document.getElementById("view-devis").hidden = view !== "devis";
+    document.getElementById("dock").hidden = view !== "devis";
+    document.getElementById("nav-blog").classList.toggle("current", view === "blog");
+    document.getElementById("nav-devis").classList.toggle("current", view === "devis");
+    placeThumb();
+  };
+});
+
+const sort = document.getElementById("sort");
+const thumb = sort.querySelector(".thumb");
+const sortButtons = [...sort.querySelectorAll("button")];
+function placeThumb() {
+  const active = sortButtons.find((b) => b.getAttribute("aria-pressed") === "true");
+  thumb.style.width = active.offsetWidth + "px";
+  thumb.style.transform = `translateX(${active.offsetLeft - 3}px)`;
+}
+sortButtons.forEach((button) => button.onclick = () => {
+  sortButtons.forEach((b) => b.setAttribute("aria-pressed", String(b === button)));
+  placeThumb();
+});
+document.querySelectorAll(".chip").forEach((chip) => chip.onclick = () => chip.classList.toggle("active"));
+addEventListener("resize", placeThumb);
+placeThumb();
+</script>
+</body>
+</html>

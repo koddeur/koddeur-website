@@ -4,12 +4,11 @@ import { Bi } from "@/components/i18n";
 import { LanguageToggle } from "@/components/language-toggle";
 import { AdminLink } from "@/components/admin-link";
 import { Logo } from "@/components/logo";
+import { TagPicker } from "@/components/tag-picker";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getListedArticles } from "@/lib/articles";
 
 export const dynamic = "force-dynamic";
-
-const TOP_TAGS_COUNT = 8;
 
 type SortOrder = "asc" | "desc" | "views";
 
@@ -30,7 +29,7 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
   for (const article of allArticles) {
     for (const keyword of article.keywords) tagCounts.set(keyword, (tagCounts.get(keyword) ?? 0) + 1);
   }
-  const topTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]).slice(0, TOP_TAGS_COUNT);
+  const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
 
   const filtered = tag ? allArticles.filter((article) => article.keywords.includes(tag)) : allArticles;
   const articles = [...filtered].sort((a, b) => {
@@ -39,33 +38,24 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
   });
 
   return (
-    <main className="shell monochrome">
+    <main className="shell monochrome glass-ui">
       <header className="home-header">
         <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title">Blog</h1>
       </header>
 
-      {topTags.length ? (
-        <div className="tag-cloud" aria-label="Tags populaires">
-          <span className="tag-cloud-label"><Bi fr="Tags populaires" en="Popular tags" /></span>
-          <div className="tag-cloud-list">
-            {topTags.map(([keyword, count]) => (
-              <Link
-                key={keyword}
-                href={tag === keyword ? buildHref({ sort: sortOrder }) : buildHref({ tag: keyword, sort: sortOrder })}
-                className={tag === keyword ? "tag-chip active" : "tag-chip"}
-              >
-                #{keyword} <span className="tag-count">{count}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
       <section className="feed" aria-labelledby="latest-title">
         <div className="section-heading">
           <h2 id="latest-title" className="feed-title"><Bi fr="Derniers articles" en="Latest articles" /></h2>
           <div className="section-heading-right">
+            {allTags.length ? (
+              <TagPicker
+                key={tag ?? ""}
+                active={tag}
+                resetHref={buildHref({ sort: sortOrder })}
+                items={allTags.map(([keyword, count]) => ({ keyword, count, href: buildHref({ tag: keyword, sort: sortOrder }) }))}
+              />
+            ) : null}
             <div className="sort-control">
               <span><Bi fr="Trier" en="Sort" /></span>
               <Link href={buildHref({ tag, sort: "desc" })} className={sortOrder === "desc" ? "active" : undefined}><Bi fr="Plus récents" en="Newest" /></Link>
@@ -75,7 +65,7 @@ export default async function BlogHome({ searchParams }: { searchParams: Promise
           </div>
         </div>
         {tag ? <p className="filter-note"><Bi fr="Filtré par" en="Filtered by" /> <strong>#{tag}</strong><Link href={buildHref({ sort: sortOrder })}><Bi fr="réinitialiser" en="reset" /> ✕</Link></p> : null}
-        {articles.length ? articles.map((article) => <ArticleCard article={article} key={article.slug} />) : (
+        {articles.length ? <div className="glass-group">{articles.map((article) => <ArticleCard article={article} key={article.slug} />)}</div> : (
           <div className="empty">
             <span>∅</span>
             {tag ? <p><Bi fr={`Aucun article avec le mot-clé #${tag}.`} en={`No article with the tag #${tag}.`} /></p> : <p><Bi fr="Aucun article publié pour le moment." en="No articles published yet." /></p>}

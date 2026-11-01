@@ -1,8 +1,10 @@
 import { createHash } from "node:crypto";
 import { getSupabaseClient } from "@/lib/supabase";
 
-// Contact messages sent from the home page laptop, stored in Supabase (table contact_messages).
+// Contact messages sent from the home page laptop and /devis pre-quotes, stored in Supabase (table
+// contact_messages) and told apart by their kind.
 
+export type MessageKind = "contact" | "quote";
 export type ContactMessage = { id: string; created_at: string; email: string; subject: string; message: string; read: boolean };
 
 const TABLE = "contact_messages";
@@ -19,13 +21,13 @@ export async function countRecentMessages(ipHash: string, sinceMinutes: number):
   return count ?? 0;
 }
 
-export async function createMessage(input: { email: string; subject: string; message: string; ipHash: string }) {
-  const { error } = await getSupabaseClient().from(TABLE).insert({ email: input.email, subject: input.subject, message: input.message, ip_hash: input.ipHash });
+export async function createMessage(input: { email: string; subject: string; message: string; ipHash: string; kind?: MessageKind }) {
+  const { error } = await getSupabaseClient().from(TABLE).insert({ email: input.email, subject: input.subject, message: input.message, ip_hash: input.ipHash, kind: input.kind ?? "contact" });
   if (error) throw error;
 }
 
-export async function listMessages(): Promise<ContactMessage[]> {
-  const { data, error } = await getSupabaseClient().from(TABLE).select("id, created_at, email, subject, message, read").order("created_at", { ascending: false }).limit(200);
+export async function listMessages(kind: MessageKind = "contact"): Promise<ContactMessage[]> {
+  const { data, error } = await getSupabaseClient().from(TABLE).select("id, created_at, email, subject, message, read").eq("kind", kind).order("created_at", { ascending: false }).limit(200);
   if (error) throw error;
   return (data ?? []) as ContactMessage[];
 }

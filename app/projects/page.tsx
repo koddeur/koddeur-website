@@ -12,7 +12,7 @@ export const dynamic = "force-dynamic";
 export default async function ProjectsPage() {
   const projects = await getProjects();
   return (
-    <main className="shell">
+    <main className="shell glass-ui">
       <header className="home-header">
         <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title"><Bi fr="Projets" en="Projects" /></h1>
@@ -25,6 +25,7 @@ export default async function ProjectsPage() {
           <Link href="/blog">Blog</Link>
           <Link href="/projects"><Bi fr="Projets" en="Projects" /></Link>
           <Link href="/about">About</Link>
+          <Link href="/devis"><Bi fr="Devis" en="Quote" /></Link>
         </nav>
       </footer>
     </main>

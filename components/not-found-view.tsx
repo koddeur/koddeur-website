@@ -32,10 +32,11 @@ export function NotFoundView() {
   }, []);
 
   return (
-    <main className="shell">
+    <main className="shell glass-ui">
       <header className="home-header">
         <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title not-found-title">404 <span className="not-found-subtitle"><Bi fr="page introuvable" en="page not found" /></span></h1>
+        <code className="not-found-path">{pathname}</code>
       </header>
 
       <div className="not-found-hero">
@@ -43,10 +44,7 @@ export function NotFoundView() {
           <p><Bi fr="Cet article est introuvable — il a peut-être été renommé ou dépublié." en="This article can't be found — it may have been renamed or unpublished." /></p>
         ) : isProject ? (
           <p><Bi fr="Ce projet est introuvable." en="This project can't be found." /></p>
-        ) : (
-          <p><Bi fr="Cette page n'existe pas." en="This page doesn't exist." /></p>
-        )}
-        <code className="not-found-path">{pathname}</code>
+        ) : null}
         <div className="not-found-links landing-links">
           <Link href="/" className="landing-link"><Bi fr="Accueil" en="Home" /></Link>
           <Link href="/blog" className="landing-link">Blog</Link>
@@ -84,6 +82,7 @@ export function NotFoundView() {
           <Link href="/blog">Blog</Link>
           <Link href="/projects"><Bi fr="Projets" en="Projects" /></Link>
           <Link href="/about">About</Link>
+          <Link href="/devis"><Bi fr="Devis" en="Quote" /></Link>
         </nav>
       </footer>
     </main>

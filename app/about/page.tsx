@@ -8,7 +8,7 @@ import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AboutPage() {
   return (
-    <main className="shell">
+    <main className="shell glass-ui">
       <header className="home-header">
         <div className="home-nav"><Logo href="/" mark={false} /><div className="nav-actions"><AdminLink /><LanguageToggle /><ThemeToggle /></div></div>
         <h1 className="home-title">About</h1>
@@ -23,6 +23,7 @@ export default function AboutPage() {
           <Link href="/blog">Blog</Link>
           <Link href="/projects"><Bi fr="Projets" en="Projects" /></Link>
           <Link href="/about">About</Link>
+          <Link href="/devis"><Bi fr="Devis" en="Quote" /></Link>
         </nav>
       </footer>
     </main>

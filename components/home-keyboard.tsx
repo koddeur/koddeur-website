@@ -284,13 +284,14 @@ export function HomeKeyboard({ socials, contact, projects, about }: { socials: S
             <span className="keyboard-brand">koddeur</span>
             <span className="keyboard-leds"><i /><i /><i /></span>
           </div>
-          {/* Function row: esc closes the lid / shuts the laptop, F1 theme, F2 French, F3 English, F4 key sounds. */}
+          {/* Function row: esc closes the lid / shuts the laptop, F1 theme, F2 French, F3 English, F4 key sounds, F5 opens the /devis pre-quote form. */}
           <ul className="keyboard-row keyboard-fn">
             <li><EscKey className="key key-fn key-esc" /></li>
             <li><ThemeToggle className="key key-fn key-f1" /></li>
             <li><LanguageKey lang="fr" className="key key-fn key-f2 key-lang-fr" /></li>
             <li><LanguageKey lang="en" className="key key-fn key-f3 key-lang-en" /></li>
             <li><KeySoundKey className="key key-fn key-f4" /></li>
+            <li><Link href="/devis" className="key key-fn key-f5"><Bi fr="devis" en="quote" /></Link></li>
           </ul>
           {/* Social keys, five on the first row and four on the second after a wide contact key (like caps lock), with an ISO return key on the right. */}
           <ul className="keyboard-row keyboard-letters">

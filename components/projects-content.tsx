@@ -7,7 +7,7 @@ export function ProjectsContent({ projects }: { projects: Project[] }) {
   return (
     <section className="feed" aria-labelledby="projects-title">
       <div className="section-heading"><h2 id="projects-title"><Bi fr="Projets" en="Projects" /></h2><span className="count">{String(projects.length).padStart(2, "0")} <Bi fr="projets" en="projects" /></span></div>
-      {projects.length ? projects.map((project) => <ProjectCard project={project} key={project.slug} />) : (
+      {projects.length ? <div className="glass-group">{projects.map((project) => <ProjectCard project={project} key={project.slug} />)}</div> : (
         <div className="empty">
           <span>∅</span>
           <p><Bi fr="Aucun projet publié pour le moment." en="No projects published yet." /></p>

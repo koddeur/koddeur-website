@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { AdminSectionSwitch } from "@/components/admin-section-switch";
 import { ArticleForm } from "@/components/article-form";
+import { LogoutButton } from "@/components/logout-button";
 import { Logo } from "@/components/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { getArticles } from "@/lib/articles";
@@ -9,11 +10,11 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const articles = await getArticles();
-  return <main className="shell admin-shell monochrome">
+  return <main className="shell admin-shell monochrome glass-ui">
     <header className="article-nav">
       <Logo href="/" mark={false} />
       <div className="admin-nav-actions">
-        <form action="/api/auth/logout" method="POST"><button type="submit" className="reset-button">Se déconnecter</button></form>
+        <LogoutButton />
         <ThemeToggle />
       </div>
     </header>

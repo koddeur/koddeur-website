@@ -46,3 +46,13 @@ alter table public.contact_messages enable row level security;
 
 -- Subject of a contact message (preset choice or free text when "Autre" is picked).
 alter table public.contact_messages add column if not exists subject text not null default '' check (char_length(subject) <= 120);
+
+-- Pre-quote requests from /devis are stored as contact messages and run longer than a mail:
+-- raise the message limit from 2000 to 8000 characters (QUOTE_MESSAGE_MAX in lib/quote.ts).
+alter table public.contact_messages drop constraint if exists contact_messages_message_check;
+alter table public.contact_messages add constraint contact_messages_message_check check (char_length(message) between 10 and 8000);
+
+-- Kind of message: 'contact' (home page mail form) or 'quote' (/devis pre-quote form), so the admin
+-- lists them apart (/admin/messages and /admin/quotes). Backfills quotes sent before the column existed.
+alter table public.contact_messages add column if not exists kind text not null default 'contact' check (kind in ('contact', 'quote'));
+update public.contact_messages set kind = 'quote' where kind = 'contact' and subject like 'Pré-devis ·%';

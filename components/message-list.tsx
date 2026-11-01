@@ -3,8 +3,8 @@
 import { useState } from "react";
 import type { ContactMessage } from "@/lib/messages";
 
-// /admin/messages list: newest first, mark read/unread, delete, reply by e-mail.
-export function MessageList({ initial }: { initial: ContactMessage[] }) {
+// /admin/messages and /admin/quotes list: newest first, mark read/unread, delete, reply by e-mail.
+export function MessageList({ initial, empty = "Aucun message pour le moment." }: { initial: ContactMessage[]; empty?: string }) {
   const [messages, setMessages] = useState(initial);
   const [error, setError] = useState("");
 
@@ -21,7 +21,7 @@ export function MessageList({ initial }: { initial: ContactMessage[] }) {
     setMessages((list) => list.filter((item) => item.id !== message.id));
   }
 
-  if (!messages.length) return <p className="message-empty">Aucun message pour le moment.</p>;
+  if (!messages.length) return <p className="message-empty">{empty}</p>;
   return (
     <>
       {error ? <p className="message-error" role="alert">{error}</p> : null}
