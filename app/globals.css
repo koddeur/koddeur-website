@@ -324,6 +324,53 @@ html:has(.home-test), body:has(.home-test) { overflow-x: clip; }
 .mail-send { padding: 5px 16px; border: 0; border-radius: 6px; color: #ffffff; background: var(--mw-accent); font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer; }
 .mail-send:hover { filter: brightness(1.1); }
 .mail-send:disabled { opacity: .6; cursor: default; }
+/* Liquid Glass finish of the home page windows (after their base rules above). The canvas behind is plain, so the
+   material carries its own light: tinted gradients, a lit rim and inner highlights on top of the blur. */
+.mac-window { --mw-ink: #f5f5f7; --mw-soft: rgba(255, 255, 255, .72); --mw-group: rgba(255, 255, 255, .07); --mw-line: rgba(255, 255, 255, .1); --mw-bar: rgba(70, 70, 78, .42); --mw-bg: rgba(255, 255, 255, .08); --mw-top: rgba(255, 255, 255, .22); --mw-solid: #1e1e20; --mw-action: #f5f5f7; --mw-on-action: #000000;
+  --mw-rim: linear-gradient(135deg, rgba(255, 255, 255, .6), rgba(255, 255, 255, .06) 36%, rgba(255, 255, 255, .04) 64%, rgba(255, 255, 255, .3));
+  position: relative; border: 0; border-radius: 28px;
+  background: radial-gradient(90% 60% at 12% 0%, rgba(255, 255, 255, .16), transparent 70%), radial-gradient(80% 60% at 100% 100%, rgba(255, 255, 255, .1), transparent 70%), rgba(34, 34, 39, .62);
+  box-shadow: inset 0 1px 1px var(--mw-top), inset 0 -14px 34px rgba(255, 255, 255, .04), 0 2px 6px rgba(0, 0, 0, .35), 0 30px 80px rgba(0, 0, 0, .55);
+  -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); }
+:root[data-theme="light"] .mac-window { --mw-ink: #1d1d1f; --mw-soft: rgba(0, 0, 0, .62); --mw-group: rgba(255, 255, 255, .5); --mw-line: rgba(0, 0, 0, .08); --mw-bar: rgba(255, 255, 255, .55); --mw-bg: rgba(255, 255, 255, .6); --mw-top: #ffffff; --mw-solid: #ffffff; --mw-action: #1d1d1f; --mw-on-action: #ffffff;
+  --mw-rim: linear-gradient(135deg, #ffffff, rgba(255, 255, 255, .35) 40%, rgba(0, 0, 0, .05) 64%, rgba(255, 255, 255, .95));
+  background: radial-gradient(90% 60% at 12% 0%, rgba(255, 255, 255, .85), transparent 70%), radial-gradient(80% 60% at 100% 100%, rgba(190, 196, 214, .3), transparent 70%), rgba(232, 233, 238, .6);
+  box-shadow: inset 0 1px 1px var(--mw-top), 0 0 0 .5px rgba(0, 0, 0, .07), 0 2px 5px rgba(40, 40, 60, .08), 0 28px 70px rgba(40, 40, 60, .2); }
+/* Lit rim: 1px ring, bright top-left and bottom-right. */
+.mac-window::after { content: ""; position: absolute; z-index: 3; inset: 0; padding: 1px; border-radius: inherit; background: var(--mw-rim); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); pointer-events: none; }
+/* Title bar: floating glass capsule, the content fades out as it scrolls under it. */
+.mac-titlebar { position: absolute; z-index: 2; top: 10px; right: 10px; left: 10px; height: 42px; border: 0; border-radius: 999px; box-shadow: inset 0 1px 0 var(--mw-top), inset 0 0 0 .5px var(--mw-line), 0 4px 14px rgba(0, 0, 0, .12); -webkit-backdrop-filter: blur(16px) saturate(180%); backdrop-filter: blur(16px) saturate(180%); }
+.mac-lights { left: 16px; gap: 9px; }
+.mac-lights i, .mac-close { width: 14px; height: 14px; box-shadow: inset 0 0 0 .5px rgba(0, 0, 0, .2), inset 0 1px 1px rgba(255, 255, 255, .4); }
+.mac-close { position: relative; transition: transform .14s cubic-bezier(.23, 1, .32, 1); }
+.mac-close::before { content: ""; position: absolute; inset: -13px -5px -13px -13px; } /* larger hit area */
+.mac-close:active { transform: scale(.88); }
+.mac-window .mac-window-body { padding-top: 66px; -webkit-mask-image: linear-gradient(transparent 8px, #000 60px); mask-image: linear-gradient(transparent 8px, #000 60px); }
+/* Content: translucent fills only, no second blur. */
+.mac-window .feed, .mac-window .about-bio { border-radius: 18px; }
+.mac-window .about-section h2 + .about-item { border-radius: 18px 18px 0 0; }
+.mac-window .about-item:last-child { border-radius: 0 0 18px 18px; }
+.mac-window .about-section h2 + .about-item:last-child { border-radius: 18px; }
+.mac-window .about-section h2 { padding: 0 16px; }
+.mac-window .project-thumb { border-radius: 14px; }
+.mac-window .read-link { padding: 4px 13px; border: 0; border-radius: 999px; color: var(--mw-ink); box-shadow: inset 0 1px 0 var(--mw-top), inset 0 0 0 .5px var(--mw-line); transition: transform .16s cubic-bezier(.23, 1, .32, 1), background .2s ease; }
+.mac-window .read-link:hover { color: var(--mw-ink); filter: none; }
+.mac-window .read-link:active { transform: scale(.96); }
+@media (hover: hover) and (pointer: fine) { .mac-window .read-link:hover { background: color-mix(in srgb, var(--mw-ink) 14%, transparent); } }
+.mail-to { color: var(--mw-ink); }
+.mail-row { min-height: 44px; margin: 0 14px; padding: 0 12px 0 16px; background: var(--mw-group); }
+.mail-row:first-child { border-radius: 18px 18px 0 0; }
+.mail-row:has(+ .mail-body) { border-bottom: 0; border-radius: 0 0 18px 18px; }
+.mail-select::before { border-radius: 50%; background: var(--mw-action); }
+.mail-select::after { background: var(--mw-on-action); }
+.mail-row .mail-select select { border-radius: 999px; background: var(--mw-bg); }
+.mail-body { margin: 12px 14px 0; padding: 6px 12px; border-radius: 18px; background: var(--mw-group); }
+.mail-footer { padding: 12px 14px 14px 20px; border-top: 0; }
+.mail-send { height: 34px; padding: 0 20px; border-radius: 999px; color: var(--mw-on-action); background: var(--mw-action); transition: transform .16s cubic-bezier(.23, 1, .32, 1), opacity .2s ease; }
+.mail-send:hover { filter: none; opacity: .88; }
+.mail-send:active { transform: scale(.97); }
+@media (prefers-reduced-transparency: reduce) { .mac-window, :root[data-theme="light"] .mac-window, .mac-titlebar { background: var(--mw-solid); -webkit-backdrop-filter: none; backdrop-filter: none; } }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .mac-window, :root[data-theme="light"] .mac-window, .mac-titlebar { background: var(--mw-solid); } }
 /* /admin/messages */
 .message-list { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .message-item { padding: 16px 18px; border: 1px solid var(--line); background: var(--canvas-soft); }
