@@ -47,3 +47,4 @@
 - Onglet « Devis » qui débordait du sélecteur admin : .admin-switch avait max-width: 300px, trop étroit pour 4 onglets. Fix : width: fit-content; max-width: 100% + white-space: nowrap sur les onglets.
 - Fenêtres de l'accueil en Liquid Glass : fond uni derrière, donc rien à flouter → la matière porte sa propre lumière (dégradés internes, liseré masqué, reflets inset). La réfraction SVG (feTurbulence + feDisplacementMap) donne un bord déchiqueté, à éviter.
 - `next build` / `next dev` figés sans erreur (0 % CPU, bloqués dans read()) : ~/Documents est dans iCloud, qui évince des fichiers de node_modules (`find node_modules -flags +dataless`). Fix : builder une copie hors iCloud (rsync + npm ci), ou sortir les projets de ~/Documents.
+- Build Next 16.4.1 interrompu par `SecurityFatalError` (version avec failles connues) → passage à 16.4.6, vérifié par `npm audit` et un build dans une copie hors iCloud.
